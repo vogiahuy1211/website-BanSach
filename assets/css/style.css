@@ -4,6 +4,8 @@ html, body {
     box-sizing: border-box;
     height: 100%; /* Đảm bảo chiều cao 100% cho cả trang */
     width: 100%; /* Đảm bảo chiều rộng 100% cho cả trang */
+    font-family: 'Roboto', sans-serif; /* 'Roboto' là font được tải từ Google Fonts, sans-serif là font dự phòng */
+    
 }
 
 .hero-section {
@@ -48,11 +50,66 @@ hr{
     box-shadow: 0 8px 15px rgba(0, 128, 255, 0.8);
 }
 .newproducts{
+    margin-top: 30px;
     display :grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;
-    grid-template-rows: 250px;
+    grid-template-rows: 320px;
     gap:20px;
 }
-.item-newproducts{
-border: 1px solid black;
+.item-newproducts {
+    display: flex;
+    flex-direction: column;
+    border-radius: 10px; /* Bo tròn các góc sản phẩm */
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3); /* Bóng đổ màu đen nhẹ trên nền trắng */
+    transition: box-shadow 0.3s ease-in-out; /* Hiệu ứng chuyển động mượt mà khi hover */
+    background-color: #fff; /* Đảm bảo nền trắng */
+}
+
+.item-newproducts:hover {
+    box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.4); /* Bóng đổ đậm hơn khi hover */
+}
+
+
+.images-newbook{
+    margin-left:auto;
+    margin-right:auto;
+    margin-top:10px;
+    width:70%;
+    height:65%;
+    border-radius:1px;
+
+}
+.info-book {
+    padding-top:10px;
+    width:80%;
+    height:20px;
+    margin-left:15px;
+
+}
+.name{
+    font-size:14px;
+    color: gray;
+    text-align: center;
+}
+.category{
+    margin-top: 5px;
+    font-family: 'Lora', serif;
+    font-weight: 200px; /* Font chữ sẽ tự động có phong cách nghệ thuật */
+    font-size: 15px;
+    color: rgba(65, 94, 123, 0.891);
+}
+.fa-tag,.fa-coins{
+    color:rgb(10, 49, 157);
+    margin-right:8px;
+    font-size:15px;
+}
+.price{
+    font-family: 'Arial', sans-serif;  /* Font chữ sans-serif cho kiểu chữ nghiêm túc */
+    font-weight: 150px;  /* Chữ đậm để làm nổi bật */
+    font-size: 16px;  /* Kích thước chữ vừa phải */
+}
+img {
+    width: 100%; /* Ảnh chiếm toàn bộ chiều rộng của phần tử chứa */
+    height: 100%; /* Giữ tỷ lệ gốc của ảnh */
+    border-radius: 1px;
 }
