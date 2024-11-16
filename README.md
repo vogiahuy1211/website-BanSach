@@ -1,4 +1,10 @@
-# website-BanSach
-nhóm 9 làm website bán sách
-mọi người trước clone về lần đầu và làm các lần sau chỉ cần pull về
-nhớ ghi massage chú thích đầy đủ mỗi khi push
+-Phan Đăng Sáng:
++tìm kiếm, đăng nhập, đăng ký, slide show banner.
+-quốc khánh:
++phần giỏ hàng, mua hàng.
+-Hùng Khánh:
++hiển thị sản phẩn, chi tiết sản phẩm, thêm sản phẩm,sửa sản phẩm.
+-Gia huy:
++quản lý đơn hàng, xóa sản phẩm.
+-công lâm:
++admin, thống kê.
