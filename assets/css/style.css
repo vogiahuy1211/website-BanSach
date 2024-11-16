@@ -76,7 +76,7 @@ hr{
     margin-top:10px;
     width:70%;
     height:65%;
-    border-radius:1px;
+    border-radius:2px;
 
 }
 .info-book {
@@ -111,5 +111,5 @@ hr{
 img {
     width: 100%; /* Ảnh chiếm toàn bộ chiều rộng của phần tử chứa */
     height: 100%; /* Giữ tỷ lệ gốc của ảnh */
-    border-radius: 1px;
+    border-radius: 2px;
 }
