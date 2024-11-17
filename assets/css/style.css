@@ -5,7 +5,7 @@ html, body {
     height: 100%; /* Đảm bảo chiều cao 100% cho cả trang */
     width: 100%; /* Đảm bảo chiều rộng 100% cho cả trang */
     font-family: 'Roboto', sans-serif; /* 'Roboto' là font được tải từ Google Fonts, sans-serif là font dự phòng */
-    
+    background-color:rgb(245,245,250);
 }
 
 .hero-section {
@@ -30,7 +30,6 @@ html, body {
 }
 .container{
 width:100%;
-height:3000px;
 }
 .newproducts{
     margin:0 auto;
@@ -91,7 +90,7 @@ hr{
     color: gray;
     text-align: center;
 }
-.category{
+.categorynew{
     margin-top: 5px;
     font-family: 'Lora', serif;
     font-weight: 200px; /* Font chữ sẽ tự động có phong cách nghệ thuật */
@@ -112,4 +111,102 @@ img {
     width: 100%; /* Ảnh chiếm toàn bộ chiều rộng của phần tử chứa */
     height: 100%; /* Giữ tỷ lệ gốc của ảnh */
     border-radius: 2px;
+}
+.divider{
+    display: flex;
+    justify-content: flex-start;  /* Căn trái */
+    align-items: center;  
+    margin-top:20px;
+    width:100%;
+    height:50px;
+    border:1px solid black;
+    background-color: #0C53CC;
+}
+.dieuhuong{
+    margin-left:10px;
+    margin-right:10px;
+    color:#fff;
+    text-decoration: none;
+    transition: all 0.6s ease;
+}
+.dieuhuong:hover {
+    color: #f08c09;                /* Màu chữ vẫn là trắng */
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); /* Tạo hiệu ứng bóng */
+
+}
+.fa-angles-right{
+    color:#fff;
+}
+
+.content{
+    margin-top:20px;
+    background-color:rgb(245,245,250);
+    width:100%;
+    height:440px;
+    display :grid;
+    grid-template-columns: 30% 70%  ;
+    grid-column-gap: 20px; 
+    grid-row-gap: 20px; 
+}
+.leftmenu{
+    display:grid;
+    grid-template-columns: 100%;
+    grid-template-rows: repeat(8,1fr);
+    /* border:1px solid black; */
+    background-color: #ffffff;
+    border-radius: 10px; 
+    grid-row-gap: 2px;   
+}
+
+.catalog{
+    padding-left: 35px;
+    background-color: #0C53CC;
+    border-top-left-radius: 10px;  /* Bo góc trên trái */
+    border-top-right-radius: 10px; /* Bo góc trên phải */
+    display: flex;
+    justify-content: flex-start;  /* Căn trái */
+    align-items: center; 
+    color:#ffffff
+}
+.fa-list{
+    margin-left:10px;
+}
+.iconlist{
+    width:45px;
+    height:45px;
+    padding-right:20px;
+}
+.healing{
+    width:30px;
+    height:30px;
+
+}
+.history{
+    margin-right:20px;
+    width:30px;
+    height:30px;
+
+}
+.phattrien{
+    width:30px;
+    height:30px;
+    margin-left: 15px;
+}
+.booklove{
+    width:35px;
+    height:35px;
+    margin-left: 15px;
+}
+.products{
+    /* border:1px solid black; */
+    border-radius: 20px;
+    background-color: #ffffff;
+}
+
+.category{
+    box-shadow: 0 4px 6px rgba(0, 128, 255, 0.2); 
+    padding-right:30px;
+    display: flex;
+    justify-content:center;  /* Căn trái */
+    align-items: center; 
 }
