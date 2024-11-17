@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Quan li don hang</title>
+        <meta charset="utf-8">
+        <link rel="stylesheet" href="admin_style.css">
+        <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+        <link rel="stylesheet" href="/assets/css/orderManagement.css">
+        <link rel="stylesheet" href="./assets/icon/fontawesome-free-6.6.0-web/fontawesome-free-6.6.0-web/css/all.css">
+    </head>
+    <body>
+        <div id="admin_all">
+            <div id="admin_header">
+                <img src="logo.png" alt="" id="admin_logo">
+                <div id="admin_account"></div>
+            </div> 
+            <div id="admin_workplace">
+                    <ul id="admin_left-menu">
+                        <li class="nav_left-menu first active">
+                            <i class='bx bxs-user-detail' ></i>
+                            <span>Thông tin Admin</span>
+                        </li>
+                        <li class="nav_left-menu">
+                            <i class='bx bx-money-withdraw'></i>
+                            <span>Doanh thu</span>
+                        </li>
+                        <li class="nav_left-menu">
+                            <i class='bx bx-user'></i>
+                            <span>Khách hàng</span>
+                        </li>
+                        <li class="nav_left-menu">
+                            <i class='bx bxl-product-hunt' ></i>
+                            <span>Sản phẩm</span>
+                        </li>
+                        <li class="nav_left-menu">
+                            <i class='bx bx-clipboard'></i>
+                            <span><a href="#" id="donHangLink">Đơn hàng</a></span>
+                        </li>
+                    </ul>
+                    <div class="Huy_maincontent" style="display: none;">
+                        <h1>QUẢN LÍ ĐƠN HÀNG</h1>
+                        <div class="filter">
+                            <button id="filterBtn" class="filter-btn">Lọc</button>
+                        </div>
+                        <table id="orderTable" border="1">
+                            <thead>
+                                <tr>
+                                    <th>Mã đơn</th>
+                                    <th>Tên khách hàng</th>
+                                    <th>Ngày</th>
+                                    <th>Giá</th>
+                                    <th>Trạng thái</th>
+                                    <th>Chi tiết</th>
+                                </tr>
+                            </thead>
+                            <tbody id="orderTableBody"></tbody>
+                        </table>
+                    </div>
+                    
+            </div>
+        </div>
+        <div id="filterModal" class="modal">
+            <div class="modal-content">
+                <span id="closeModal" class="close-btn">&times;</span>
+                <h3>Lọc đơn hàng</h3>
+                <div class="filter-options">
+                    <div class="filter-item">
+                        <label for="fromDate">Từ:</label>
+                        <input type="date" id="fromDate">
+                    </div>
+                    <div class="filter-item">
+                        <label for="toDate">Đến:</label>
+                        <input type="date" id="toDate">
+                    </div>
+                    <div class="filter-item">
+                        <label for="address">Địa chỉ:</label>
+                        <select id="address">
+                            <option value="">Chọn địa chỉ</option>
+                        </select>
+                    </div>
+                    <button id="confirmFilter" class="confirm-btn">Xác nhận</button>
+                </div>
+            </div>
+        </div>
+    
+        <div id="orderDetailModal" class="modal">
+            <div class="modal-content">
+                <span id="closeDetailModal" class="close-btn">&times;</span>
+                <h3>Chi tiết đơn hàng</h3>
+                <div id="orderDetailContent">
+                    <!-- Chi tiết đơn hàng sẽ được hiển thị ở đây -->
+                </div>
+            </div>
+        </div>
+        <script src="admin_bill.js"></script>
+    </body>
+</html>
