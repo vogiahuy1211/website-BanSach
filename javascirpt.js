@@ -72,4 +72,5 @@ for(let i=0;i<arrnewproduct.length;i++){
     arrnewproduct[i].innerHTML=s;
 }
 
+
 }

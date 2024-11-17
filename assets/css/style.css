@@ -149,6 +149,7 @@ img {
     grid-row-gap: 20px; 
 }
 .leftmenu{
+    height:100%;
     display:grid;
     grid-template-columns: 100%;
     grid-template-rows: repeat(8,1fr);
@@ -198,6 +199,8 @@ img {
     margin-left: 15px;
 }
 .products{
+    margin-top:5px;
+    height:400px;
     /* border:1px solid black; */
     border-radius: 20px;
     background-color: #ffffff;
