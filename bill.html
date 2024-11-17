@@ -217,6 +217,47 @@
                 }
             });
         }
+
+        //ví dụ mảng đơn hàng
+        const orderList = [
+    {
+        orderId: 1,
+        customerName: "Nguyễn Văn A",
+        orderDate: "2024-11-15",
+        items: [
+            { Book_name: "Sách Giáo Khoa Toán", Book_price: 100000 },
+            { Book_name: "Sách Văn", Book_price: 80000 }
+        ],
+        status: "Chưa xử lý"
+    },
+    {
+        orderId: 2,
+        customerName: "Trần Thị B",
+        orderDate: "2024-11-16",
+        items: [
+            { Book_name: "Sách Lịch Sử", Book_price: 120000 },
+            { Book_name: "Sách Địa Lý", Book_price: 90000 },
+            { Book_name: "Sách Sinh Học", Book_price: 70000 }
+        ],
+        status: "Đã xử lý"
+    },
+    {
+        orderId: 3,
+        customerName: "Lê Văn C",
+        orderDate: "2024-11-17",
+        items: [
+            { Book_name: "Sách Tiếng Anh", Book_price: 150000 }
+        ],
+        status: "Đã giao"
+    }
+    ];
+
+
+    localStorage.setItem("orderList", JSON.stringify(orderList));
+
+
+
+
         
 
   </script>
