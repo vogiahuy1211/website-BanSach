@@ -1,0 +1,94 @@
+*{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+ul{
+    list-style-type: none;
+}
+
+a{
+    text-decoration: none;
+    color: black;
+}
+
+span{
+    text-align: center;
+    cursor: default;
+}
+/**************************************header**********************************/
+
+body{
+    background-color: #E4E9F7;
+}
+#admin_header{
+    height: 50px;
+    width: 100%;
+    background-image: linear-gradient(to right, #003CBF,#0C53CC, #1565D6);
+    display: flex;
+    position: relative;
+    padding: 0 50px;
+}
+
+#admin_workplace{
+    width: 100%;
+    padding: 10px 50px;
+    height: 92vh;
+    display: flex;
+    gap: 50px;
+}
+
+#admin_left-menu{
+    width: 15%;
+    background: #FFF;
+    height: 100%;
+}
+
+#admin_left-menu li{
+    margin-top: 10px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+}
+
+#admin_left-menu .first{
+    margin-top: 0;
+}
+
+.nav_left-menu i{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 50px;
+    font-size: 25px;
+}
+
+.nav_left-menu:hover {
+    background: #1565D6;
+}
+
+.nav_left-menu:hover i,
+.nav_left-menu:hover span{
+    color: white;
+    transition: all 0.3s ease;
+}
+
+.nav_left-menu.active {
+    background: #1565D6;
+}
+.nav_left-menu.active i,
+.nav_left-menu.active span{
+    color: white;
+}
+
+/*****************************/
+
+#admin_content{
+    width: 85%;
+    height: 100%;
+    background: white;
+    padding: 10px;
+}
+
+ 
