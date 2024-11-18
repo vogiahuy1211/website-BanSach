@@ -98,14 +98,25 @@ td {
 }
 
 /* Modal lọc */
-.fileter-title{
-    color: #006aff;
-    text-align: center;
+.title-box{
     display: flex;
-    align-items: center; 
     justify-content: center;
-    margin-bottom: 10px;
 }
+
+.filter-title {
+    color: white;
+    text-align: center;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5px;
+    margin-bottom: 10px;
+    box-sizing: border-box; 
+    border-color: #006aff;
+    border-radius: 3px;
+    background-color:#006aff 
+}
+
 
 .filter-btn {
     padding: 10px 15px;

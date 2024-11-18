@@ -86,7 +86,7 @@
               <td>
                   <select class="status-dropdown">
                       <option value="Chưa xử lý" ${order.status === "Chưa xử lý" ? "selected" : ""}>Chưa xử lý</option>
-                      <option value="Đã xử lý" ${order.status === "Đã xử lý" ? "selected" : ""}>Đã xử lý</option>
+                      <option value="Đã xử lý" ${order.status === "Đã xác nhận" ? "selected" : ""}>Đã xử lý</option>
                       <option value="Đã giao" ${order.status === "Đã giao" ? "selected" : ""}>Đã giao</option>
                       <option value="Đã hủy" ${order.status === "Đã hủy" ? "selected" : ""}>Đã hủy</option>
                   </select>
