@@ -1,14 +1,32 @@
- 
+  const menuItems = document.querySelectorAll('.nav_left-menu');
+  menuItems.forEach(item => {
+  item.addEventListener('click', function() {
+        menuItems.forEach(i => i.classList.remove('active'));
+        this.classList.add('active');
+  }); 
+  });
+  
+  // Xử lý sự kiện click vào "Đơn hàng"
   const donHangLink = document.getElementById("donHangLink");
   const mainContent = document.querySelector(".Huy_maincontent");
 
-  // Xử lý sự kiện click vào "Đơn hàng"
   donHangLink.addEventListener("click", function (event) {
-      event.preventDefault(); 
-      
-      // Hiển thị phần maincontent
-      mainContent.style.display = "block";
+  event.preventDefault(); 
+  mainContent.style.display = "block";
   });
+  
+  // Ẩn content khi click vào các li khác
+  menuItems.forEach(item => {
+  item.addEventListener('click', function () {
+    menuItems.forEach(i => i.classList.remove('active'));
+    this.classList.add('active');
+    if (this.id !== "donHangLink") {
+        mainContent.style.display = "none"; 
+    }
+  });
+  });
+
+  
 
   
   // Lấy các phần tử cần thiết
@@ -33,13 +51,13 @@
   }
   });
 
-  // Nút "Xác nhận" đóng modal và thực hiện hành động lọc
-//   confirmFilter.addEventListener("click", () => {
-//   filterModal.style.display = "none";
-//   console.log("Từ ngày:", document.getElementById("fromDate").value);
-//   console.log("Đến ngày:", document.getElementById("toDate").value);
-//   console.log("Địa chỉ:", document.getElementById("address").value);
-//   });
+  //  Nút "Xác nhận" đóng modal và thực hiện hành động lọc
+  confirmFilter.addEventListener("click", () => {
+  filterModal.style.display = "none";
+  console.log("Từ ngày:", document.getElementById("fromDate").value);
+  console.log("Đến ngày:", document.getElementById("toDate").value);
+  console.log("Địa chỉ:", document.getElementById("address").value);
+  });
 
 
   function hienThiDonHang() {
@@ -68,12 +86,12 @@
               <td>
                   <select class="status-dropdown">
                       <option value="Chưa xử lý" ${order.status === "Chưa xử lý" ? "selected" : ""}>Chưa xử lý</option>
-                      <option value="Đã xử lý" ${order.status === "Đã xử lý" ? "selected" : ""}>Đã xử lý</option>
+                      <option value="Đã xử lý" ${order.status === "Đã xác nhận" ? "selected" : ""}>Đã xử lý</option>
                       <option value="Đã giao" ${order.status === "Đã giao" ? "selected" : ""}>Đã giao</option>
                       <option value="Đã hủy" ${order.status === "Đã hủy" ? "selected" : ""}>Đã hủy</option>
                   </select>
               </td>
-              <td><button onclick="xemChiTiet(${order.orderId})">...</button></td>
+              <td><button onclick="xemChiTiet(${order.orderId})">(...)</button></td>
           `;
           tbody.appendChild(tr);
       });
