@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/assets/css/auth.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <title>Đăng nhập</title>
+  </head>
+  <body>
+    <div class="login-container">
+      <div class="close-btn">&times;</div>
+      <h2>Đăng nhập</h2>
+      <div class="tab-container">
+        <div class="tab active-tab" onclick="showLogin()">Đăng nhập</div>
+        <div class="tab" onclick="showRegister()">Đăng kí</div>
+      </div>
+      <div id="login-form">
+        <div class="input-group">
+          <input type="text" id="username" placeholder="Tên đăng nhập" />
+        </div>
+        <div class="input-group">
+          <input type="password" id="password" placeholder="Mật khẩu" />
+        </div>
+        <a href="#" class="forgot-password">Quên mật khẩu ?</a>
+        <button class="login-btn" onclick="login()">Đăng nhập</button>
+      </div>
+      <div id="register-form" style="display: none">
+        <div class="input-group">
+          <input
+            type="text"
+            id="register-username"
+            placeholder="Tên đăng nhập"
+          />
+        </div>
+        <div class="input-group">
+          <input
+            type="password"
+            id="register-password"
+            placeholder="Mật khẩu"
+          />
+        </div>
+        <div class="input-group">
+          <input
+            type="password"
+            id="confirm-password"
+            placeholder="Nhập lại mật khẩu"
+          />
+        </div>
+        <div class="input-group">
+          <input type="text" id="phone-number" placeholder="Số điện thoại" />
+        </div>
+        <button class="login-btn" onclick="register()">Đăng kí</button>
+      </div>
+    </div>
+
+    <script src="auth.js"></script>
+  </body>
+</html>
