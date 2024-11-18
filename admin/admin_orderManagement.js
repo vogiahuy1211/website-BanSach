@@ -3,11 +3,23 @@
   const mainContent = document.querySelector(".Huy_maincontent");
 
   // Xử lý sự kiện click vào "Đơn hàng"
+  const donHangLink = document.getElementById("donHangLink");
+  const mainContent = document.querySelector(".Huy_maincontent");
+
   donHangLink.addEventListener("click", function (event) {
-      event.preventDefault(); 
-      
-      // Hiển thị phần maincontent
-      mainContent.style.display = "block";
+  event.preventDefault(); 
+  mainContent.style.display = "block";
+  });
+  
+  // Ẩn content khi click vào các li khác
+  menuItems.forEach(item => {
+  item.addEventListener('click', function () {
+    menuItems.forEach(i => i.classList.remove('active'));
+    this.classList.add('active');
+    if (this.id !== "donHangLink") {
+        mainContent.style.display = "none"; 
+    }
+  });
   });
 
   
