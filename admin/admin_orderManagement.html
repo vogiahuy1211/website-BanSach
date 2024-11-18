@@ -32,10 +32,11 @@
                             <i class='bx bxl-product-hunt' ></i>
                             <span>Sản phẩm</span>
                         </li>
-                        <li class="nav_left-menu">
+                        <li class="nav_left-menu" id="donHangLink">
                             <i class='bx bx-clipboard'></i>
-                            <span><a href="#" id="donHangLink">Đơn hàng</a></span>
+                            <span><a href="#">Đơn hàng</a></span>
                         </li>
+                        
                     </ul>
                     <div class="Huy_maincontent" style="display: none;">
                         <h1>QUẢN LÍ ĐƠN HÀNG</h1>
@@ -59,29 +60,49 @@
                     
             </div>
         </div>
+        
         <div id="filterModal" class="modal">
             <div class="modal-content">
                 <span id="closeModal" class="close-btn">&times;</span>
-                <h3>Lọc đơn hàng</h3>
+                <h3 class="fileter-title">Lọc Đơn Hàng</h3>
                 <div class="filter-options">
-                    <div class="filter-item">
-                        <label for="fromDate">Từ:</label>
-                        <input type="date" id="fromDate">
+                    <!-- Từ ngày và Đến ngày ngang hàng -->
+                    <div class="filter-row">
+                        <div class="filter-item">
+                            <label for="fromDate">Từ:</label>
+                            <input type="date" id="fromDate">
+                        </div>
+                        <div class="filter-item">
+                            <label for="toDate">Đến:</label>
+                            <input type="date" id="toDate">
+                        </div>
                     </div>
-                    <div class="filter-item">
-                        <label for="toDate">Đến:</label>
-                        <input type="date" id="toDate">
-                    </div>
-                    <div class="filter-item">
-                        <label for="address">Địa chỉ:</label>
-                        <select id="address">
-                            <option value="">Chọn địa chỉ</option>
-                        </select>
+                    <!-- Địa chỉ với 3 option -->
+                    <div class="filter-row">
+                        <div class="filter-item">
+                            <label for="province">Tỉnh/Thành:</label>
+                            <select id="province">
+                                <option value="">Chọn tỉnh/thành</option>
+                            </select>
+                        </div>
+                        <div class="filter-item">
+                            <label for="district">Quận/Huyện:</label>
+                            <select id="district">
+                                <option value="">Chọn quận/huyện</option>
+                            </select>
+                        </div>
+                        <div class="filter-item">
+                            <label for="ward">Phường/Xã:</label>
+                            <select id="ward">
+                                <option value="">Chọn phường/xã</option>
+                            </select>
+                        </div>
                     </div>
                     <button id="confirmFilter" class="confirm-btn">Xác nhận</button>
                 </div>
             </div>
         </div>
+        
     
         <div id="orderDetailModal" class="modal">
             <div class="modal-content">
