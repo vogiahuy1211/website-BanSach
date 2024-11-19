@@ -2,11 +2,11 @@ function createProduct() {
     if (localStorage.getItem('product') === null) {
         var productArray = [
             { productId: 1, src: 'assets/images/sanpham1.webp', category: 'tuoitho', name: 'Tôi thấy hoa vàng trên cỏ xanh', price: 99000 },
-            { productId: 2, src: 'assets/images/sanpham2.webp', category: 'kynangsong', name: 'sống chậm', price: 60000 },
+            { productId: 2, src: 'assets/images/sanpham2.webp', category: 'kynangsong', name: '3 người thầy vỹ đại', price: 60000 },
             { productId: 3, src: 'assets/images/sanpham3.webp', category: 'kynangsong', name: 'nếu chỉ còn một ngày để sống', price: 200000 },
             { productId: 4, src: 'assets/images/sanpham4.webp', category: 'tuoitho', name: 'cây cam ngọt của tôi', price: 220000 },
             { productId: 5, src: 'assets/images/sanpham5.webp', category: 'kynangsong', name: 'đừng chỉ đẹp mà không hiểu chuyện', price: 139000 },
-            { productId: 6, src: 'assets/images/sanpham6.webp', category: 'tinhcam', name: 'em sẽ đến cùng cơn mưa', price: 290000 },
+            { productId: 6, src: 'assets/images/sanpham6.webp', category: 'tinhcam', name: 'nhà nàng ở cạnh nhà tôi', price: 290000 },
             { productId: 7, src: 'assets/images/sanpham7.webp', category: 'chualanh', name: 'hiểu về trái tim', price: 99000 },
             { productId: 8, src: 'assets/images/sanpham8.webp', category: 'chualanh', name: 'trong con say níu sợi dây đứt', price: 230000 },
             { productId: 9, src: 'assets/images/sanpham9.webp', category: 'tinhcam', name: 'nàng và con mèo của nàng', price: 99000 },
@@ -24,13 +24,13 @@ function createProduct() {
             { productId: 21, src: 'assets/images/sanpham21.webp', category: 'lichsu', name: 'những tù nhân của địa lý', price: 139000 },
             { productId: 22, src: 'assets/images/sanpham22.webp', category: 'tuoitho', name: 'tuổi thơ dữ dội', price: 130000 },
             { productId: 23, src: 'assets/images/sanpham23.webp', category: 'tinhcam', name: 'hạ đỏ', price: 260000 },
-            { productId: 24, src: 'assets/images/sanpham24.webp', category: 'tinhcam', name: 'nhà nàng ở cạnh nhà tôi', price: 230000 },
+            { productId: 24, src: 'assets/images/sanpham24.webp', category: 'tinhcam', name: 'em sẽ đến cùng cơn mưa', price: 230000 },
             { productId: 25, src: 'assets/images/sanpham25.webp', category: 'kynangsong', name: 'thao túng tâm lý', price: 240000 },
             { productId: 26, src: 'assets/images/sanpham26.webp', category: 'chualanh', name: 'mẹ làm gì có ước mơ', price: 139000 },
             { productId: 27, src: 'assets/images/sanpham27.webp', category: 'tinhcam', name: 'Yêu miêu', price: 99000 },
             { productId: 28, src: 'assets/images/sanpham28.webp', category: 'tinhcam', name: 'trường an ly ca', price: 130000 },
             { productId: 29, src: 'assets/images/sanpham29.webp', category: 'kynangsong', name: 'từ tốt đến vỹ đại', price: 270000 },
-            { productId: 30, src: 'assets/images/sanpham30.webp', category: 'kynangsong', name: '3 người thầy vỹ đại', price: 260000 },
+            { productId: 30, src: 'assets/images/sanpham30.webp', category: 'kynangsong', name: 'Sống Chậm', price: 260000 },
             { productId: 31, src: 'assets/images/sanpham31.webp', category: 'chualanh', name: 'trèo lên mái nhà để khóc', price: 99000 },
             { productId: 32, src: 'assets/images/sanpham32.webp', category: 'chualanh', name: 'những kẻ lãng du', price: 220000 },
             { productId: 33, src: 'assets/images/sanpham33.webp', category: 'kynangsong', name: 'làm sao học ít hiểu nhiều', price: 270000 },
@@ -70,7 +70,7 @@ function createnewbook() {
     <div class="images-newbook"><img src="${newbooks[i].src}" alt=""></div>
     <div class="info-book name">${newbooks[i].name}</div>
     <div class="info-book categorynew"><i class="fa-solid fa-tag"></i>${newbooks[i].category}</div>
-    <div class="info-book price"> <i class="fas fa-coins"></i>giá: ${newbooks[i].price}Đ</div>`
+    <div class="info-book price"> <i class="fas fa-coins newcoin"></i>giá: ${newbooks[i].price}Đ</div>`
         arrnewproduct[i].innerHTML = s;
     }
 }
@@ -124,3 +124,15 @@ window.onload = function() {
     resetActivePage();
    // Ví dụ, mảng arrproducts đã được xác định
 }
+document.querySelectorAll('.add-cart').forEach(button => {
+    button.addEventListener('click', function() {
+      // Khi click vào nút, thêm class 'clicked' để thay đổi màu và phóng to
+      this.classList.add('clicked');
+    });
+  
+    // Khi di chuột ra ngoài nút, xóa class 'clicked'
+    button.addEventListener('mouseleave', function() {
+      this.classList.remove('clicked');
+    });
+  });
+  
