@@ -6,12 +6,12 @@
         <link rel="stylesheet" href="admin_style.css">
         <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
         <link rel="stylesheet" href="/assets/css/orderManagement.css">
-        <link rel="stylesheet" href="./assets/icon/fontawesome-free-6.6.0-web/fontawesome-free-6.6.0-web/css/all.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"/>
     </head>
     <body>
         <div id="admin_all">
             <div id="admin_header">
-                <img src="logo.png" alt="" id="admin_logo">
+<!--                 <img src="logo.png" alt="" id="admin_logo"> -->
                 <div id="admin_account"></div>
             </div> 
             <div id="admin_workplace">
@@ -44,7 +44,7 @@
                     <div class="Huy_maincontent" style="display: none;">
                         <h1>QUẢN LÍ ĐƠN HÀNG</h1>
                         <div class="filter">
-                            <button id="filterBtn" class="filter-btn">Lọc</button>
+                            <button id="filterBtn" class="filter-btn"><i class="fa-solid fa-filter"></i> Lọc</button>
                         </div>
                         <table id="orderTable" border="1">
                             <thead>
@@ -70,7 +70,7 @@
                 <div class="title-box"><h3 class="filter-title">LỌC ĐƠN HÀNG</h3></div>
                 <div class="filter-options">
 
-                    <!-- Từ ngày và Đến ngày ngang hàng -->
+                   
                     <div class="filter-row">
                         <div class="filter-item">
                             <label for="fromDate">Từ ngày:</label>
@@ -80,13 +80,6 @@
                             <label for="toDate">Đến ngày:</label>
                             <input type="date" id="toDate">
                         </div>
-                    <div class="filter-item">
-                        <label for="fromDate">Từ ngày:</label>
-                        <input type="date" id="fromDate">
-                    </div>
-                    <div class="filter-item">
-                        <label for="toDate">Đến ngày:</label>
-                        <input type="date" id="toDate">
                     </div>
                     <!-- Địa chỉ với 3 option -->
                     <div class="filter-row">
