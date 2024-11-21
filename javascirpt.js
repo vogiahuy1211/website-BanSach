@@ -122,6 +122,7 @@ window.onload = function() {
     createnewbook();
     rederpage(arrProducts); 
     resetActivePage();
+    resetcategory();
    // Ví dụ, mảng arrproducts đã được xác định
 }
 document.querySelectorAll('.add-cart').forEach(button => {
@@ -136,3 +137,18 @@ document.querySelectorAll('.add-cart').forEach(button => {
     });
   });
   
+  function resetcategory(category){
+       var cate=document.querySelectorAll('.category');
+       for(let i=0;i<cate.length;i++){
+        cate[i].classList.remove('activepage');
+       }
+        cate[0].classList.add('activepage');
+  }
+function changecategory (category){
+  var changecate= document.querySelectorAll('.category');
+    for(let i=0;i<changecate.length;i++){
+        changecate[i].classList.remove('activepage');
+    }
+    var categorynow=document.querySelector(`.category${category}`);
+    categorynow.classList.add('activepage');
+}
