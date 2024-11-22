@@ -17,6 +17,10 @@ span{
     text-align: center;
     cursor: default;
 }
+th , td{
+    text-align: center;
+    border: solid black 0.5px;
+}
 /**************************************header**********************************/
 
 body{
@@ -28,16 +32,40 @@ body{
     background-image: linear-gradient(to right, #003CBF,#0C53CC, #1565D6);
     display: flex;
     position: relative;
-    padding: 0 50px;
+    padding: 0 80px;
 }
 
-#admin_workplace{
+#admin_account{
+    position: absolute;
+    top: 0;
+    right: 80px;
+    height: 100%;
+    min-width: 150px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+}
+
+#admin_account i{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 35px;
+    font-size: 20px;
+}
+#admin_account span{
+    padding: 0 10px;
+}
+
+#admin_workplace{   
     width: 100%;
     padding: 10px 50px;
     height: 92vh;
     display: flex;
     gap: 50px;
 }
+
 
 #admin_left-menu{
     width: 15%;
@@ -61,7 +89,7 @@ body{
     align-items: center;
     justify-content: center;
     min-width: 50px;
-    font-size: 25px;
+    font-size: 20px;
 }
 
 .nav_left-menu:hover {
@@ -82,7 +110,7 @@ body{
     color: white;
 }
 
-/*****************************/
+/**************************content****************/
 
 #admin_content{
     width: 85%;
@@ -91,4 +119,397 @@ body{
     padding: 10px;
 }
 
- 
+#content_name{
+    display: flex;
+    width: 100%;
+    height: 50px;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+    font-size: 30px;
+}
+
+/********Form thêm khách hàng********/
+#form_add_infor{
+    display: none;
+}
+#form_add_infor{
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    translate: -50% -50%;
+    width: 550px;
+    height: 500px;
+    background-color: #fff;
+    z-index: 2;
+    border-radius: 15px;
+    padding: 10px;
+    border: solid #1565D6;
+}
+
+#thoat_form{
+    position: absolute;
+    right: 0;
+    top: 0;
+    height: 50px;
+    width: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+
+#thoat_form i{
+    font-size: 30px;
+    color: red;
+}
+
+.text_infor{
+    font-size: 25px;
+    margin-bottom: 10px;
+    color: #1565D6;
+    margin-top: 5px;
+}
+
+
+
+#infor_user input{
+    height: 30px;
+    padding: 8px;
+    margin: 10px;
+    border-radius: 8px;
+    color: #0C53CC;
+    font-size: 16px;
+    border: solid grey 0.5px;
+}
+
+#infor_user input:focus{
+    border: solid #1565D6;
+    outline: none;
+}
+
+#infor_user #Hoten{
+    width: 50%;
+}
+
+#infor_user #Duong_soNha{
+    width: 60%;
+}
+
+#chon_diachi select{
+    height: 30px;
+    border-radius: 5px;
+    margin: 10px;
+}
+
+#chon_diachi{
+    display: flex;
+    justify-content: flex-start;
+    gap: 10px;
+}
+
+#chon_diachi #User_Tinh-tp{
+    width: 40%;
+}
+
+#user_account input{
+    height: 30px;
+    padding: 8px;
+    margin: 15px;
+    border-radius: 8px;
+    color: #0C53CC;
+    font-size: 16px;
+    border: solid grey 0.5px;
+    width: 50%;
+}
+
+#user_account input:focus{
+    border: solid #1565D6;
+    outline: none;
+}
+
+#add_button{
+    width: 120px;
+    height: 30px;
+    background-color: #1565D6;
+    color: white;
+    border: none;
+    position: absolute;
+    right: 0;
+    border-radius: 5px;
+    margin: 10px 30px;
+    cursor: pointer;
+}
+
+#add_button:hover{
+    box-shadow: 0 3px 5px 0 rgba(0, 0, 0, 0.3);
+}
+/*Bảng khách hàng*/
+
+#khach_hang{
+    position: relative;
+}
+
+#table_from-khach_hang{
+    width: 100%;
+    margin-top: 25px;
+    border: solid #1565D6 0.5px;
+    border-collapse: collapse;
+}
+
+#table_from-khach_hang th{
+    height: 40px;
+    background: #FFBF00;
+}
+
+#table_from-khach_hang td{
+    height: 60px;
+}
+
+.user_body_table{
+    background: #F5FFFA;
+}
+
+.user_body_table .cot7{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.khach_hang_chitiet{
+    border: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    background: #1565D6;
+    width: 60px;
+    height: 25px;
+    font-size: 14px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.khach_hang_delete{
+    border: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 25px;
+    height: 25px;
+    color: white;
+    background-color: red;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.khach_hang_chitiet:hover{
+    box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.3);
+}
+
+.khach_hang_delete:hover{
+    box-shadow: 0 3px 5px 0 rgba(0, 0, 0, 0.3);
+}
+
+#khong_co_khach_hang{
+    width: 100%;
+    text-align: center;
+    color: rgba(0, 0, 0, 0.6);
+    margin: 20px;
+    font-size: 18px;
+    font-style: italic;
+}
+
+#them_khach_hang{
+    position: absolute;
+    right: 10px;
+    top: 35px;
+    width: 60px;
+    height: 25px;
+    background: #1565D6;
+    color: white;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+#them_khach_hang:hover{
+    box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.3);
+}
+/* Bảng thông tin chi tiết*/
+#Show_user_Chitiet_va_Sua{
+    display: none;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    translate: -50% -50%;
+    width: 550px;
+    height: 550px;
+    z-index: 2;
+    background-color: white;
+    border-radius: 10px;
+    border: solid #1565D6;
+    padding: 10px;
+}
+
+#CSUser_thoat{
+    position: absolute;
+    right: 0;
+    top: 0;
+    height: 50px;
+    width: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+
+#CSUser_thoat i{
+    font-size: 30px;
+    color: red;
+}
+
+.text_CSUser{
+    font-size: 25px;
+    margin-bottom: 10px;
+    color: #1565D6;
+    margin-top: 5px;
+}
+
+#CSUser_show p{
+    font-size: 18px;
+    margin: 15px 0;
+}
+
+#CSUser_control{
+    margin-top: 10px;
+    width: 100%;
+    height: 180px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 40px;
+}
+
+#CSUser_control div{
+    color: white   ;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#CSUse_set{
+    background-color: #1565D6;
+}
+#CSUser_control div:hover{
+    box-shadow: 2px 4px 6px 0 rgba(0, 0, 0, 0.3);
+}
+
+#CSUse_lock{
+    background-color: red;
+}
+
+#CSUser_status{
+    display: flex;
+}
+#CSUser_status span{
+    font-size: 18px;
+}
+
+#CSUser_status #stas{
+    margin-left: 10px;
+    font-style: italic;
+}
+
+/*Tạm thời*/
+#Show_user_Chitiet_va_Sua2{
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    translate: -50% -50%;
+    width: 550px;
+    height: 550px;
+    z-index: 2;
+    background-color: white;
+    border-radius: 10px;
+    border: solid #1565D6;
+    padding: 10px;
+}
+
+#CSUser_thoat2{
+    position: absolute;
+    right: 0;
+    top: 0;
+    height: 50px;
+    width: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+
+#CSUser_thoat2 i{
+    font-size: 30px;
+    color: red;
+}
+
+#infor_user_set input{
+    height: 30px;
+    padding: 8px;
+    margin: 10px;
+    border-radius: 8px;
+    color: #0C53CC;
+    font-size: 16px;
+    border: solid grey 0.5px;
+}
+
+#infor_user_set input:focus{
+    border: solid #1565D6;
+    outline: none;
+}
+
+#infor_user_set #Hoten_set{
+    width: 50%;
+}
+
+#infor_user_set #Duong_soNha_set{
+    width: 60%;
+}
+
+#chon_diachi_set select{
+    height: 30px;
+    border-radius: 5px;
+    margin: 10px;
+}
+
+#chon_diachi_set{
+    display: flex;
+    justify-content: flex-start;
+    gap: 10px;
+}
+
+#chon_diachi_set #User_Tinh-tp_set{
+    width: 40%;
+}
+
+#user_account_set input{
+    height: 30px;
+    padding: 8px;
+    margin: 15px;
+    border-radius: 8px;
+    color: #0C53CC;
+    font-size: 16px;
+    border: solid grey 0.5px;
+    width: 50%;
+}
+
+#user_account_set input:focus{
+    border: solid #1565D6;
+    outline: none;
+}
