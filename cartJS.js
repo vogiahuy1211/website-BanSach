@@ -9,17 +9,20 @@ function openSelectAddress() {
     document.querySelector('.modal').classList.remove('modal-hidden');
     document.querySelector('.select-address').classList.remove('hidden');
 }
+let userLogin = {};
+let addressInfoList = [];
+let address2Deliver = {};
 
-let userAccount = JSON.parse(localStorage.getItem('USER'));
-document.querySelector('#idName').value = userAccount[0].FullName;
-document.querySelector('#idNumberphone').value = userAccount[0].Sdt;
-let addressInfoList = [
-    { userID: userAccount[0].UserID, userName: userAccount[0].FullName, numberPhone: userAccount[0].Sdt, addressDetail: userAccount[0].Address1 },
-    { userID: userAccount[0].UserID, userName: userAccount[0].FullName, numberPhone: userAccount[0].Sdt, addressDetail: userAccount[0].Address2 },
-    { userID: userAccount[0].UserID, userName: userAccount[0].FullName, numberPhone: userAccount[0].Sdt, addressDetail: userAccount[0].Address3 },
-    { userID: userAccount[0].UserID, userName: userAccount[0].FullName, numberPhone: userAccount[0].Sdt, addressDetail: userAccount[0].Address4 },
-];
-let address2Deliver = addressInfoList[0];
+function getLocalStorageUserLogin() {
+    userLogin = JSON.parse(localStorage.getItem('userLogin'));
+    document.querySelector('#idName').value = userLogin.fullname;
+    document.querySelector('#idNumberphone').value = userLogin.phoneNumber;
+    let addressInfoList = [
+        { userID: userLogin.userId, userFullName: userLogin.fullname, numberPhone: userLogin.phoneNumber, addressDetail: "abcdfgh" },
+    ];
+    address2Deliver = addressInfoList[0];
+
+}
 
 function displayAddressInfoList() {
     let s = '';
@@ -39,7 +42,7 @@ function displayAddressInfoList() {
 
             <div class="address-info">
                 <div class="user-basic-info">
-                    <div class="userName">${addressInfoList[i].userName}</div>
+                    <div class="userFullName">${addressInfoList[i].userFullName}</div>
                     <div class="distance"></div>
                     <div class="phoneNumber">${addressInfoList[i].numberPhone}</div>
                 </div>
@@ -85,7 +88,7 @@ function getAddressBefore() {  //Khi đã select vào 1 selection và ấn hủy
 
     selections.forEach(selection => {
         let addressDetail = selection.closest('.address-item').querySelector('.address-detail').textContent;
-        if (addressDetail.trim() === address2Deliver.addressDetail.trim()) {
+        if (addressDetail.trim() === address2Deliver.addressDetail) {
             selection.checked = true;
         }
     })
@@ -94,7 +97,7 @@ getAddressBefore();
 function changeDeliveInfo() {
     let s = '';
     s += `
-        <div class="buyer-info">${address2Deliver.userName} ` + ` ${address2Deliver.numberPhone}</div>
+        <div class="buyer-info">${address2Deliver.userFullName} ` + ` ${address2Deliver.numberPhone}</div>
         <div class="address-info">${address2Deliver.addressDetail}</div>
     `;
 
@@ -110,16 +113,16 @@ function getAddress2Deliver() {
         if (address.checked) {
             let addressItem = address.closest('.address-item');
 
-            let userName = addressItem.querySelector('.userName').textContent;
+            let userFullName = addressItem.querySelector('.userFullName').textContent;
             let numberPhone = addressItem.querySelector('.phoneNumber').textContent;
             let addressDetail = addressItem.querySelector('.address-detail').textContent;
 
-            address2Deliver.userName = userName;
+            address2Deliver.userFullName = userFullName;
             address2Deliver.numberPhone = numberPhone;
             address2Deliver.addressDetail = addressDetail;
         }
     });
-    console.log(address2Deliver.userName);
+    console.log(address2Deliver.userFullName);
     changeDeliveInfo();
 }
 
@@ -257,8 +260,8 @@ function getWardNameByID(id) {
 
 function saveNewAddress(provinceID, districtID, wardID) {
     let newAddress = [];
-    newAddress.userName = userAccount[0].FullName;
-    newAddress.numberPhone = userAccount[0].Sdt;
+    newAddress.userFullName = userLogin.fullname;
+    newAddress.numberPhone = userLogin.numberPhone;
     newAddress.addressDetail = document.querySelector('#idAddress').value;
 
     let wardName = getWardNameByID(wardID);
@@ -463,6 +466,13 @@ function muaHang() {
 
     thanhToan();
 }
+function deleteItem() {
+    productIsPayed.forEach(product => {
+        let index = books.findIndex(book => book.name === product.name);
+        books.splice(index, 1);
+    });
+    productIsPayed.length = 0;
+}
 
 function xoaKhoiGioHang() {
     if (productIsPayed.length === 0) {
@@ -470,12 +480,8 @@ function xoaKhoiGioHang() {
         return;
     }
 
-    productIsPayed.forEach(product => {
-        let index = books.findIndex(book => book.name === product.name);
-        books.splice(index, 1);
-    });
+    deleteItem();
 
-    productIsPayed.length = 0;
     displayOrderItems();
     ganSuKienChoCheckbox();
 }
@@ -503,7 +509,7 @@ function quayLaiGioHang() {
 
 
 let orderSummary = {
-    FullName: address2Deliver.userName,
+    FullName: address2Deliver.userFullName,
     Sdt: address2Deliver.numberPhone,
     Address: address2Deliver.addressDetail,
     OrderDate: getDateNow(),
@@ -513,9 +519,9 @@ let orderSummary = {
 
 
 
-function getTotalAmount() {
+function getTotalAmount(productList) {
     let totalAmount = 0;
-    productIsPayed.forEach(product => {
+    productList.forEach(product => {
         totalAmount += product.price * product.quantity;
     })
     totalAmount = totalAmount.toLocaleString('vi-VN');
@@ -546,7 +552,7 @@ function displayOrderItemsIsPayed() {
         <div class = "summary">
             <div class = "total-amount">
                 <div ><strong>Tổng Tiền: </strong></div>
-                <div class = "text-total">${getTotalAmount()}đ</div>
+                <div class = "text-total">${getTotalAmount(productIsPayed)}đ</div>
             </div> 
         </div> 
     `;
@@ -715,29 +721,69 @@ function displayOrderItemsSummary() {
         <div class = "summary">
             <div class = "total-amount">
                 <div ><strong>Tổng Tiền: </strong></div>
-                <div class = "text-total">${getTotalAmount()}đ</div>
+                <div class = "text-total">${getTotalAmount(productIsPayed)}đ</div>
             </div> 
         </div> 
     `;
     document.querySelector('.order-summary .product-is-payed .orderItems-list').innerHTML = s;
-
+    console.log(books);
     saveAsLocalStorage();
 }
 
 function saveAsLocalStorage() {
-    let DonHang = JSON.parse(localStorage.getItem('Don_Hang'));
+    let DonHang = JSON.parse(localStorage.getItem('orderList'));
     if (DonHang === null) DonHang = [];
 
     let new_DonHang = {
+        OrderID: "",
         UserID: address2Deliver.userID,
-        FullName: address2Deliver.userName,
+        FullName: address2Deliver.userFullName,
         Sdt: address2Deliver.numberPhone,
-        Address: address2Deliver.addressDetail.trim(),
+        Address: address2Deliver.addressDetail.trim,
         OrderItems: productIsPayed,
         OrderDate: getDateNow(),
         Status: "Chưa xác nhận",
     };
-
+    console.log(new_DonHang.OrderItems[0]);
     DonHang.push(new_DonHang);
-    localStorage.setItem('Don_Hang', JSON.stringify(DonHang));
+    localStorage.setItem('orderList', JSON.stringify(DonHang));
+}
+
+
+function displayOrderHistory() {
+    let s = '';
+    const orderHistoryList = JSON.parse(localStorage.getItem('orderList'));
+
+    for (let i = 0; i < orderHistoryList.length; i++) {
+        const order = orderHistoryList[i];
+        let orderItems = '';
+        let orderTotalPrice = 0;
+        order.OrderItems.forEach(item => {
+            orderItems += `${item.name} x ${item.quantity}, `;
+            orderTotalPrice += item.quantity * item.price;
+        });
+
+        s += `
+            <div class="orderHistory">
+                <div>${order.OrderID}</div>
+
+                <div class="product">
+                    ${orderItems}
+                </div>
+
+                <div>${orderTotalPrice.toLocaleString('vn-VN') || 'N/A'}đ</div>
+                <div>${order.Status}</div>
+
+                <div>
+                    <button onclick="viewOrderDetails(${order.OrderID})">Xem</button>
+                </div>
+            </div>
+        `;
+    }
+
+    document.querySelector('.orderHistory-list').innerHTML = s;
+}
+
+function viewOrderDetails(orderId) {
+    console.log(`Xem chi tiết đơn hàng với ID: ${orderId}`);
 }
