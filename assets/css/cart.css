@@ -301,7 +301,7 @@ body {
 
 /* Start Checkout-Section */
 .hidden {
-    display: none;
+    display: none !important;
 }
 
 .checkout-section .address-section {
@@ -503,6 +503,20 @@ body {
     border-right: solid 1px black;
     padding: 10px;
     color: #0F4EA8;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.none-orderHistory-list {
+    background-color: white;
+    height: 200px;
+    border: 1px solid;
+    border-top: 1.5px solid;
+    font-size: 24px;
+    align-items: center;
+    justify-content: center;
+    display: flex;
 }
 
 .orderHistory-list .orderHistory {
@@ -527,9 +541,31 @@ body {
     background-color: white;
 }
 
+.orderHistory div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.orderHistory .btn-detail {
+    background-color: #3498db;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    padding: 7px 14px;
+    cursor: pointer;
+}
+
+.orderHistory .btn-detail:hover {
+    background-color: #4a9fea;
+}
+
+.orderHistory .btn-detail:active {
+    background-color: #2e86c1;
+}
+
 /* End History-Cart */
 /* End Right-Content */
-
 
 /* End Content */
 
