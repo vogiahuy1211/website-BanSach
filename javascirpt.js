@@ -1,3 +1,4 @@
+
 function createProduct() {
     if (localStorage.getItem('product') === null) {
         var productArray = [
@@ -50,11 +51,34 @@ function createProduct() {
 
         localStorage.setItem('product', JSON.stringify(productArray));
     }
+
 }
+
+function createproductincart(){
+if(localStorage.getItem('productIncart') === null){
+var productIncartarr=[
+    {
+        "productId": 1,
+        "src": "assets/images/sanpham1.webp",
+        "category": "tuoitho",
+        "name": "Tôi thấy hoa vàng trên cỏ xanh",
+        "price": 99000,"quantity": 1
+    },
+    {
+        "productId": 2,
+        "src": "assets/images/sanpham2.webp",
+        "category": "tuoitho",
+        "name": "Sản phẩm 2",
+        "price": 120000,
+        "quantity": 3
+    }
+ ];
+    localStorage.setItem('productIncart', JSON.stringify(productIncartarr));
+}
+
+}
+
 const arrProducts = JSON.parse(localStorage.getItem('product'));
-
-
-
 
 // Kiểm tra xem trong localStorage đã có productscategory chưa, nếu chưa thì tạo và lưu vào
 if (localStorage.getItem('productscategory') === null) {
@@ -93,63 +117,117 @@ function createnewbook() {
         arrnewproduct[i].innerHTML = s;
     }
 }
-function changePage(pageNumber) {
+function changePage1(pageNumber) {
     // Lấy tất cả các button có class "page-item"
     let pages = document.querySelectorAll('.page');
 
     // Loại bỏ lớp "active" khỏi tất cả các class
     for (let i = 0; i < pages.length; i++) {
-        pages[i].classList.remove('activepage');
+        pages[i].classList.remove('activePage');
     }
 
     // Thêm lớp "active" vào page tương ứng với trang được chọn
     let currentPage = document.getElementsByClassName(`page${pageNumber}`);
-    currentPage[0].classList.add('activepage');
+    currentPage[0].classList.add('activePage');
 }
 function resetActivePage() {
     // Lấy tất cả các phần tử có class "page"
     let page1 = document.querySelectorAll('.page');
     // Loại bỏ lớp "active" khỏi tất cả các phần tử
     for (let i = 0; i < page1.length; i++) {
-        page1[i].classList.remove('activepage');
+        page1[i].classList.remove('activePage');
     }
     // Thêm lớp "active" vào trang 1
     let pagedefaut = document.querySelector('.page1');
-    pagedefaut.classList.add('activepage');
+    pagedefaut.classList.add('activePage');
 }
+
 function rederpage(categoryproducts) {
     if (!localStorage.getItem('product')) {
         createProduct();
     }
-        const arrproductdisplay=JSON.parse(localStorage.getItem('product'));
-        let arrdisplay = [];
-        if (categoryproducts=='all'){
-            arrdisplay=arrproductdisplay;
-        }
-        else{
-            arrdisplay = arrproductdisplay.filter(function(product) {
-                return product.category === categoryproducts;
-            });
-        }
+    const arrProducts = JSON.parse(localStorage.getItem('product'));
+    var arrdisplay = [];
+    if (categoryproducts == 'all') {
+        arrdisplay = arrProducts;
+    } 
+    else if (categoryproducts === 'priceup') {
+        arrdisplay = arrProducts;  // Gán arrdisplay từ arrProducts
+        arrdisplay = arrdisplay.sort(function(a, b) {
+            return a.price - b.price;  // Sắp xếp tăng dần theo giá
+        });
+    } else if (categoryproducts === 'pricedown') {
+        arrdisplay = arrProducts;  // Gán arrdisplay từ arrProducts
+        arrdisplay = arrdisplay.sort(function(a, b) {
+            return b.price - a.price;  // Sắp xếp giảm dần theo giá
+        });
+    }
+    
+    else {
+        arrdisplay = arrProducts.filter(function(product) {
+            return product.category === categoryproducts;
+        });
+    }
     let result = arrdisplay.length;
     let numberpage = Math.ceil(result / 8);
     var pagination = document.querySelector('.pagination');
     let pagesHtml = '';  // Khai báo biến pagesHtml để tránh ghi đè
     for (let i = 1; i <= numberpage; i++) {
         // Tạo các phần tử cho các số trang và gán vào pagesHtml
-        pagesHtml += `<div class="page page${i}" onclick="changePage(${i});showproduct(${i},arrdisplay)">${i}</div>`;
+        pagesHtml += `<div class="page page${i}" onclick="changePage1(${i})">${i}</div>`;
     }
-    // Gắn HTML đã tạo vào phần tử pagination
     pagination.innerHTML = pagesHtml;
-    showproduct(1,arrdisplay);
+    // Gắn HTML đã tạo vào phần tử pagination
+    const pages = document.querySelectorAll('.page');
+    
+    // Duyệt qua tất cả các phần tử
+    for (let i = 0; i < pages.length; i++) {
+        // Thêm sự kiện 'click' cho mỗi phần tử
+        pages[i].addEventListener('click', function() {
+            // Lấy số trang từ phần tử được click (ở đây lấy số trang từ phần tử HTML)
+            const pageNumber = i + 1; // Vì chỉ số mảng bắt đầu từ 0 nên ta cộng thêm 1
+            
+            // Gọi hàm showproduct để hiển thị sản phẩm của trang đó
+            showproduct(pageNumber, arrdisplay);
+        });
+    }
+showproduct(1,arrdisplay);
+resetActivePage();
 }
+
+function showproduct (page,arrdisplay1){
+        let productsinPage = 8;
+        let startIndex = (page - 1) * productsinPage;
+        let endIndex = page * productsinPage;
+        if(endIndex>arrdisplay1.length){
+            endIndex=arrdisplay1.length;
+        }
+        var s='';
+        var renderproduct=document.querySelector('.products');
+        renderproduct.innerHTML=' ';
+        for(let i=startIndex;i<endIndex;i++){
+     s +=  `<div class="productitems">
+            <img class="product-img" src="${arrdisplay1[i].src}" alt="sanpham">
+            <div class="product-name">${arrdisplay1[i].name}</div>
+            <div class="product-price">${arrdisplay1[i].price.toLocaleString('vi-VN', {style: 'currency', currency: 'VND'})}</div>
+            <div class="iconfreeship">
+                <i class="fa-solid fa-truck"></i>
+                <div class="freeship">Freeship</div>
+            </div>
+            <div class="add-cart">Thêm vào giỏ</div>
+        </div>`;
+        }
+        renderproduct.innerHTML=s;
+}    
+
+
 window.onload = function() {
     // Các hàm bạn muốn gọi khi trang tải xong
     createProduct();
     createnewbook();
     rederpage('all'); 
     resetActivePage();
-    
+
    // Ví dụ, mảng arrproducts đã được xác định
 }
 
@@ -157,36 +235,20 @@ window.onload = function() {
 function changecategory (category){
   var changecate= document.querySelectorAll('.category');
     for(let i=0;i<changecate.length;i++){
-        changecate[i].classList.remove('activepage');
+        changecate[i].classList.remove('activePage');
     }
     var categorynow=document.querySelector(`.category${category}`);
-    categorynow.classList.add('activepage');
+    categorynow.classList.add('activePage');
 }
 
-function showproduct (page,arrdisplay){
-  
-        let productsinPage = 8;
-        let startIndex = (page - 1) * productsinPage;
-        let endIndex = page * productsinPage;
-        if(endIndex>arrdisplay.length){
-            endIndex=arrdisplay.length;
-        }
-        var s='';
-        var renderproduct=document.querySelector('.products');
-        for(let i=startIndex;i<endIndex;i++){
-        s+= `<div class="productitems"><img class="product-img"src="${arrdisplay[i].src}" alt="sanpham"><div class="product-name">${arrdisplay[i].name}</div><div class="product-price">${arrdisplay[i].price}</div><div class="iconfreeship"> <i class="fa-solid fa-truck"></i> <div class="freeship">Freeship</div></div><div class="add-cart">Thêm vào giỏ</div></div>`
-        }
-        renderproduct.innerHTML=s;
-        // Sau khi render xong, gắn lại sự kiện cho các nút 'add-cart'
-    document.querySelectorAll('.add-cart').forEach(button => {
-        button.addEventListener('click', function() {
-            // Khi click vào nút, thêm class 'clicked' để thay đổi màu và phóng to
-            this.classList.add('clicked');
-        });
-
-        // Khi di chuột ra ngoài nút, xóa class 'clicked'
-        button.addEventListener('mouseleave', function() {
-            this.classList.remove('clicked');
-        });
+document.querySelectorAll('.add-cart').forEach(button => {
+    button.addEventListener('click', function() {
+      // Khi click vào nút, thêm class 'clicked' để thay đổi màu và phóng to
+      this.classList.add('clicked');
     });
-}    
+  
+    // Khi di chuột ra ngoài nút, xóa class 'clicked'
+    button.addEventListener('mouseleave', function() {
+      this.classList.remove('clicked');
+    });
+  });
