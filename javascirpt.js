@@ -72,8 +72,6 @@ if (localStorage.getItem('productscategory') === null) {
 // Lấy dữ liệu từ localStorage
 const productscategory = JSON.parse(localStorage.getItem('productscategory'));
 
-
-
 function createnewbook() {
     if (localStorage.getItem('newbook') === null) {
         var newbookarray = [
@@ -149,7 +147,7 @@ window.onload = function() {
     // Các hàm bạn muốn gọi khi trang tải xong
     createProduct();
     createnewbook();
-    rederpage("all"); 
+    rederpage('all'); 
     resetActivePage();
     
    // Ví dụ, mảng arrproducts đã được xác định

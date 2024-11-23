@@ -1,3 +1,20 @@
+* {
+    box-sizing: border-box; 
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.item {
+    border: 2px solid black;
+    padding: 10px;
+    width: 200px;
+    height: 100px;
+}
 
 .Huy_maincontent {
     width: 85%;
@@ -46,6 +63,7 @@ th, td {
 th {
     background-color: #ffc107;
     color: #000;
+    font-size: 20px;
 }
 
 td {
@@ -199,6 +217,23 @@ td {
     background-color: #c9302c;
 }
 
+.status-dropdown {
+    padding: 5px 10px;
+    font-size: 14px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    outline: none;
+    background-color: #fff;
+    cursor: pointer;
+}
+
+.status-dropdown option {
+    padding: 8px;
+    color: black;
+    
+}
+
+
 /* Modal chi tiết */
 #orderDetailModal {
     display: none; 
@@ -330,5 +365,9 @@ td {
 .detail-button:hover {
     transform: scale(1.1); 
     background-color: #2e86c1; 
+}
+
+.centering {
+    text-align: center;
 }
 

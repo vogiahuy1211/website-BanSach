@@ -53,8 +53,8 @@
                                     <th>Khách hàng</th>
                                     <th>Ngày đặt</th>
                                     <th>Tổng tiền</th>
-                                    <th>Trạng thái</th>
-                                    <th >Chi tiết</th>
+                                    <th class="centering">Trạng thái</th>
+                                    <th class="centering">Chi tiết</th>
                                 </tr>
                             </thead>
                             <tbody id="orderTableBody"></tbody>
@@ -82,6 +82,12 @@
                         </div>
                     </div>
                     <div class="filter-row">
+                        <div class="filter-item">
+                            <label for="status">Trạng thái đơn hàng:</label>
+                            <select id="status">
+                                <option value="">Chọn trạng thái</option>
+                            </select>
+                        </div>
                         <div class="filter-item">
                             <label for="province">Tỉnh/Thành:</label>
                             <select id="province">
