@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -57,6 +58,23 @@
         <div class="input-group">
           <input type="text" id="phone-number" placeholder="Số điện thoại" />
         </div>
+        <div class="input-group">
+          <input type="text" id="address" placeholder="Địa chỉ" onclick="toggleAddressDropdown()" readonly>
+        </div>
+        <div class="address-dropdown" style="display: none;">
+          <input type="text" id="address-number" placeholder="Số nhà, tên đường">
+          <select id="provinces" onchange="populateDistricts()">
+              <option value="">Chọn Tỉnh / Thành phố</option>
+          </select>
+
+          <select id="districts" onchange="populateWards()">
+              <option value="">Chọn Quận / Huyện</option>
+          </select>
+
+          <select id="wards">
+              <option value="">Chọn Phường / Xã</option>
+          </select>
+      </div>
         <button class="login-btn" onclick="register()">Đăng kí</button>
       </div>
     </div>
