@@ -15,20 +15,49 @@
 <body >
     <header>
         <div class="logo">
-        <img src="./assets/images/logo.png" alt="logo" />
+          <img src="assets/images/logo.png" alt="logo" />
         </div>
         <div class="search-bar">
-        <input type="text" placeholder="Nhập từ khoá..." />
-        <button><i class="fas fa-search"></i></button>
+          <input type="text" placeholder="Nhập từ khoá..." />
+          <button><i class="fas fa-search"></i></button>
+      <!--đưa lên-->    <button class="filter-btn"><i class="fa-solid fa-filter"></i><span>Lọc</span></button>
         </div>
         <div class="user-menu">
-        <a href="auth.html" id="login-link"><i class="fas fa-user"></i> Tài khoản</a>
-        <a href="#" id="logout-link" style="display: none;"><i class="fas fa-sign-out-alt"></i> Đăng xuất</a>
-        <a href="#"><i class="fas fa-shopping-cart"></i> Giỏ hàng</a>
+          <a href="auth.html" id="login-link"><i class="fas fa-user"></i> Tài khoản</a>
+          <a href="#" id="logout-link" style="display: none;"><i class="fas fa-sign-out-alt"></i> Đăng xuất</a>
+          <a href="#" class="user-btn" id="account-info-link" style="display: none;"><i class="fa-solid fa-circle-user"></i> Thông tin tài khoản</a>
+          <a href="#"><i class="fas fa-shopping-cart"></i> Giỏ hàng</a>
         </div>
-    </header>
+      </header>
+      <!--đưa lên -->
+      <div class="advanced-search">
+        <div class="container">
+            <div class="advanced-search-category">
+                <span>Phân loại </span>
+                <select name="" id="advanced-search-category-select" onchange="searchProducts()">
+                    <option>Tất cả</option>
+                    <option value="tuoitho">Thiếu nhi & tuổi thơ</option>
+                    <option value="tinhcam">Tiểu thuyết & tình cảm</option>
+                    <option value="chualanh">Tâm lý & chữa lành</option>
+                    <option value="kynangsong">Phát triển kỹ năng sống</option>
+                    <option value="lichsu">Lịch sử & tôn giáo</option>
+                </select>
+            </div>
+            <div class="advanced-search-price">
+                <span>Giá từ</span>
+                <input type="number" value="0" placeholder="tối thiểu" id="min-price" onchange="searchProducts()">
+                <span>đến</span>
+                <input type="number" placeholder="tối đa" id="max-price" onchange="searchProducts()">
+                <button id="advanced-search-price-btn"><i class="fa-solid fa-magnifying-glass-dollar"></i></button>
+            </div>
+            <div class="advanced-search-control">
+                <button id="reset-search" onclick="searchProducts(0)"><i class="fa-solid fa-arrow-rotate-right"></i></button>
+                <button onclick="closeSearchAdvanced()"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+        </div>
+    </div> <!--đến đây-->
 
-<section class="hero-section">
+    <section class="hero-section">
         <div class="swiper mySwiper">
             <div class="swiper-wrapper">
             <div class="swiper-slide">
@@ -51,8 +80,7 @@
             <div class="swiper-button-next"></div>
             <div class="swiper-button-prev"></div>
         </div>
-        </section>
-
+    </section>
     <div class="container">
     <!-- phần này tui viết sẵn cho ông làm header dễ hiểu  -->
     <h1>SÁCH MỚI XUẤT BẢN</h1>
@@ -67,7 +95,7 @@
 <div class="divider"><a class="dieuhuong"href="#logo">TRANG CHỦ</a><i class="fa-solid fa-angles-right"></i><a class="dieuhuong"href="#sanpham">Sản Phẩm</a></div>
 <div id ="san pham " class="content">
     <div class="leftmenu">
-        <div class="category category1" onclick="changecategory(1)">Tất Cả <i class="fa-solid fa-list"></i></div>
+        <div class="category category1 activepage" onclick="changecategory(1)">Tất Cả <i class="fa-solid fa-list"></i></div>
         <div class="category category2"onclick="changecategory(2)"><img class="iconlist child" src="./assets/images/iconchild.webp.png" alt="">Thiếu nhi & tuổi thơ</div>
         <div class="category category3"onclick="changecategory(3)"><img class="iconlist booklove" src="./assets/images/iconbooklove.webp" alt="">Tiểu thuyết & tình cảm</div>
         <div class="category category4"onclick="changecategory(4)"><img class="iconlist healing" src="./assets/images/iconhealing.png" alt="">Tâm lý & Chữa Lành</div>
@@ -77,15 +105,15 @@
         <div class="category category8"onclick="changecategory(8)"><i class="fa-solid fa-arrow-down-short-wide"></i>sắp xếp giá giảm</div>
     </div>
     <div class="products">
-  <div class="productitems"><img class="product-img"src="./assets/images/sanpham1.webp" alt=""><div class="product-price"><i class="fa-solid fa-truck"></i>145000Đ</div> <div class="add-cart">Thêm vào giỏ</div></div>
-  <div class="productitems"><img class="product-img"src="./assets/images/sanpham2.webp" alt=""><div class="product-price"><i class="fa-solid fa-truck"></i>145000Đ</div> <div class="add-cart">Thêm vào giỏ</div></div>
-  <div class="productitems"><img class="product-img"src="./assets/images/sanpham3.webp" alt=""><div class="product-price"><i class="fa-solid fa-truck"></i>19.99Đ</div><div class="add-cart">Thêm vào giỏ</div></div>
-  <div class="productitems"><img class="product-img"src="./assets/images/sanpham4.webp" alt=""><div class="product-price"><i class="fa-solid fa-truck"></i>120000Đ</div><div class="add-cart">Thêm vào giỏ</div></div>
-  <div class="productitems"><img class="product-img"src="./assets/images/sanpham5.webp" alt=""><div class="product-price"><i class="fa-solid fa-truck"></i>19.99Đ</div><div class="add-cart">Thêm vào giỏ</div></div>
-  <div class="productitems"><img class="product-img"src="./assets/images/sanpham6.webp" alt=""><div class="product-price"><i class="fa-solid fa-truck"></i>19.99Đ</div><div class="add-cart">Thêm vào giỏ</div></div>
-  <div class="productitems"><img class="product-img"src="./assets/images/sanpham7.webp" alt=""><div class="product-price"><i class="fa-solid fa-truck"></i>19.99Đ</div><div class="add-cart">Thêm vào giỏ</div></div>
-  <div class="productitems"><img class="product-img"src="./assets/images/sanpham8.webp" alt=""><div class="product-price"><i class="fa-solid fa-truck"></i>19.99Đ</div><div class="add-cart">Thêm vào giỏ</div></div>
-
+  <!-- <div class="productitems"><img class="product-img"src="./assets/images/sanpham1.webp" alt=""><div class="product-name">tôi thấy hoa vàng trên cỏ xanh   </div><div class="product-price"> 14500Đ</div><div class="iconfreeship"> <i class="fa-solid fa-truck"></i> <div class="freeship">Freeship</div></div><div class="add-cart">Thêm vào giỏ</div></div>
+  <div class="productitems"><img class="product-img"src="./assets/images/sanpham2.webp" alt=""><div class="product-name">3 người thầy vĩ đại              </div><div class="product-price"> 14500Đ</div><div class="iconfreeship"> <i class="fa-solid fa-truck"></i> <div class="freeship">Freeship</div></div><div class="add-cart">Thêm vào giỏ</div></div>
+  <div class="productitems"><img class="product-img"src="./assets/images/sanpham3.webp" alt=""><div class="product-name">nếu chỉ còn một ngày để sống     </div><div class="product-price"> 19.99Đ</div><div class="iconfreeship"> <i class="fa-solid fa-truck"></i> <div class="freeship">Freeship</div></div><div class="add-cart">Thêm vào giỏ</div></div>
+  <div class="productitems"><img class="product-img"src="./assets/images/sanpham4.webp" alt=""><div class="product-name">cây cam ngọt của tôi             </div><div class="product-price"> 12000Đ</div><div class="iconfreeship"> <i class="fa-solid fa-truck"></i> <div class="freeship">Freeship</div></div><div class="add-cart">Thêm vào giỏ</div></div>
+  <div class="productitems"><img class="product-img"src="./assets/images/sanpham5.webp" alt=""><div class="product-name">đừng chỉ đẹp mà không hiểu chuyện</div><div class="product-price"> 19.99Đ</div><div class="iconfreeship"> <i class="fa-solid fa-truck"></i> <div class="freeship">Freeship</div></div><div class="add-cart">Thêm vào giỏ</div></div>
+  <div class="productitems"><img class="product-img"src="./assets/images/sanpham6.webp" alt=""><div class="product-name">nhà nàng ở cạnh nhà tôi          </div><div class="product-price"> 19.99Đ</div><div class="iconfreeship"> <i class="fa-solid fa-truck"></i> <div class="freeship">Freeship</div></div><div class="add-cart">Thêm vào giỏ</div></div>
+  <div class="productitems"><img class="product-img"src="./assets/images/sanpham7.webp" alt=""><div class="product-name">hiểu về trái tim                 </div><div class="product-price"> 19.99Đ</div><div class="iconfreeship"> <i class="fa-solid fa-truck"></i> <div class="freeship">Freeship</div></div><div class="add-cart">Thêm vào giỏ</div></div>
+  <div class="productitems"><img class="product-img"src="./assets/images/sanpham8.webp" alt=""><div class="product-name">trong cơn say níu sợi dây đứt    </div><div class="product-price"> 19.99Đ</div><div class="iconfreeship"> <i class="fa-solid fa-truck"></i> <div class="freeship">Freeship</div></div><div class="add-cart">Thêm vào giỏ</div></div>
+ -->
 
 
 

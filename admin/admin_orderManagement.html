@@ -42,19 +42,19 @@
                         
                     </ul>
                     <div class="Huy_maincontent" style="display: none;">
-                        <h1>QUẢN LÍ ĐƠN HÀNG</h1>
+                        <h1>DANH SÁCH ĐƠN HÀNG</h1>
                         <div class="filter">
                             <button id="filterBtn" class="filter-btn"><i class="fa-solid fa-filter"></i> Lọc</button>
                         </div>
-                        <table id="orderTable" border="1">
+                        <table id="orderTable">
                             <thead>
                                 <tr>
                                     <th>Mã đơn</th>
-                                    <th>Tên khách hàng</th>
-                                    <th>Ngày</th>
-                                    <th>Giá</th>
+                                    <th>Khách hàng</th>
+                                    <th>Ngày đặt</th>
+                                    <th>Tổng tiền</th>
                                     <th>Trạng thái</th>
-                                    <th>Chi tiết</th>
+                                    <th >Chi tiết</th>
                                 </tr>
                             </thead>
                             <tbody id="orderTableBody"></tbody>
@@ -81,7 +81,6 @@
                             <input type="date" id="toDate">
                         </div>
                     </div>
-                    <!-- Địa chỉ với 3 option -->
                     <div class="filter-row">
                         <div class="filter-item">
                             <label for="province">Tỉnh/Thành:</label>
@@ -111,12 +110,10 @@
         <div id="orderDetailModal" class="modal">
             <div class="modal-content">
                 <span id="closeDetailModal" class="close-btn">&times;</span>
-                <h3>Chi tiết đơn hàng</h3>
-                <div id="orderDetailContent">
-                    <!-- Chi tiết đơn hàng sẽ được hiển thị ở đây -->
-                </div>
+                <div id="orderDetailContent"></div>
             </div>
         </div>
+        
         <script src="admin_orderManagement.js"></script>
     </body>
 </html>
