@@ -56,22 +56,21 @@ const arrProducts = JSON.parse(localStorage.getItem('product'));
 
 
 
-
+// Kiểm tra xem trong localStorage đã có productscategory chưa, nếu chưa thì tạo và lưu vào
 if (localStorage.getItem('productscategory') === null) {
-var productscategory=[
-    {category:'tuoitho',categoryname:"Thiếu nhi & tuổi thơ"},
-    {category:'kynangsong',categoryname:"Phát triển kỹ năng sống"},
-    {category:'tinhcam',categoryname:"Tiểu thuyết & tình cảm"},
-    {category:'chualanh',categoryname:"Tâm lý & chữa lành"},
-    {category:'lichsu',categoryname:"Lịch sử & tôn giáo"},
-]
-localStorage.setItem('productscategory', JSON.stringify(productscategory));
+    const productscategory = [
+        {category: 'tuoitho', categoryname: "Thiếu nhi & tuổi thơ"},
+        {category: 'kynangsong', categoryname: "Phát triển kỹ năng sống"},
+        {category: 'tinhcam', categoryname: "Tiểu thuyết & tình cảm"},
+        {category: 'chualanh', categoryname: "Tâm lý & chữa lành"},
+        {category: 'lichsu', categoryname: "Lịch sử & tôn giáo"},
+    ];
+    // Lưu vào localStorage
+    localStorage.setItem('productscategory', JSON.stringify(productscategory));
 }
+
+// Lấy dữ liệu từ localStorage
 const productscategory = JSON.parse(localStorage.getItem('productscategory'));
-
-
-
-
 
 
 
