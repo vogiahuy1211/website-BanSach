@@ -4,188 +4,244 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Giỏ Hàng</title>
+    <link rel="stylesheet" href="/assets/css/cart.css">
     <link rel="stylesheet" href="assets/css/style.css"> <!-- Sửa dấu > bị thiếu -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="./assets/icon/fontawesome-free-6.6.0-web/fontawesome-free-6.6.0-web/css/all.css">
-    <link rel="stylesheet" href="/assets/css/cart.css">
+    <style>
+
+    </style>
 </head>
 
 <body>
-    <div class="QKhanh_header">
-        <div class="QKhanh_logo">
-            <a>KhoTàngSách</a>
-        </div>
-        <div class="QKhanh_nav">
-            <div class="QKhanh_user">
-                <i class="logo-size fa-regular fa-user"></i>
-                <a class="text-size">Tài khoản</a>
-            </div>
-
-            <div class="QKhanh_cart">
-                <i class="logo-size fa-solid fa-cart-shopping"></i>
-                <a class="text-size">Giỏ hàng</a>
-            </div>
+    <header>
+        <div class="logo">
+            <img src="./assets/images/logo.png" alt="logo" />
         </div>
 
-    </div>
+        <div class="user-menu">
+            <a href="auth.html" id="login-link"><i class="fas fa-user"></i> Tài khoản</a>
+            <a href="#" id="logout-link" style="display: none;"><i class="fas fa-sign-out-alt"></i> Đăng xuất</a>
+            <div class="">
+                <a href="http://127.0.0.1:5500/cart.html">
+                    <i class="fas fa-shopping-cart"></i> Giỏ hàng
+                </a>
+            </div>
+        </div>
+    </header>
 
     <div class="QKhanh_content">
         <div class="left-content">
-            <div class="text-size selected product-in-cart"><a>Sản phẩm trong giỏ</a></div>
-            <div class="text-size orderHistory"><a>Lịch sử mua hàng</a></div>
+            <div class="text-size  product-in-cart">
+                <i class="fa-solid fa-cart-plus"></i>
+                <a id="load-again-cart" href="#">Sản phẩm trong giỏ</a>
+            </div>
+            <div class="text-size selected orderHistory">
+                <i class="fa-solid fa-clock"></i>
+                <a href="#">Lịch sử mua hàng</a>
+            </div>
 
-            <ul class="status-section">
-                <li class="text-size selected-orderHistory status-success">
-                    <a>Giao dịch thành công</a>
-                </li>
 
-                <li class="text-size  status-pending">
-                    <a>Đang chờ xử lý</a>
-                </li>
-
-                <li class="text-size  status-canceled">
-                    <a>Đơn đã huỷ</a>
-                </li>
-            </ul>
 
             <div class="text-size back-mainPage">
-                <i class="fa-solid fa-arrow-left"></i>
-                <a>Tiếp tục mua sắm</a>
+                <i class="fa-solid fa-reply"></i>
+                <a id="backIndexHtml" href="http://127.0.0.1:5500/index.html">Tiếp tục mua sắm</a>
             </div>
         </div>
 
         <div class="right-content">
-            <div class="cart-section hidden">
-                <h1>Giỏ Hàng</h1>
+            <div class="items-in-cart hidden">
+                <div class="cart-section ">
+                    <h1>Giỏ Hàng</h1>
 
-                <div class="product-table-header">
-                    <div><input id="select-all" type="checkbox" onclick="chonTatCa()"></div>
-                    <div class="text-size product-descript">Sản Phẩm</div>
-                    <div class="text-size other">Đơn Giá</div>
-                    <div class="text-size other">Số Lượng</div>
-                    <div class="text-size other">Số Tiền</div>
-                </div>
-
-                <!-- Sản phẩm trong đơn hàng -->
-                <div class="orderItems-list">
-
-                </div>
-            </div>
-
-
-            <div class="checkout-section ">
-                <h1>Thanh toán</h1>
-
-                <div class="address-section">
-                    <div class="title-address">
-                        <i class="fa-solid fa-location-dot"></i>
-                        <h2>Địa Chỉ Nhận Hàng</h2>
-                    </div>
-
-                    <div class="delive-info">
-
-                    </div>
-                </div>
-
-                <div class="product-is-payed">
                     <div class="product-table-header">
+                        <div><input id="select-all" type="checkbox" onclick="chonTatCa()"></div>
                         <div class="text-size product-descript">Sản Phẩm</div>
                         <div class="text-size other">Đơn Giá</div>
                         <div class="text-size other">Số Lượng</div>
                         <div class="text-size other">Số Tiền</div>
                     </div>
 
+                    <!-- Sản phẩm trong đơn hàng -->
                     <div class="orderItems-list">
 
                     </div>
                 </div>
 
-                <div class="payment-method">
-                    <div class="payment">
-                        <div class="text-size payment-title">Phương thức thanh toán</div>
-                        <div class="payment-option">
-                            <div>Chọn phương thức thanh toán</div>
-                            <select>
-                                <option value="1">Thanh toán khi nhận hàng</option>
-                                <option value="2">Chuyển khoản</option>
-                                <option value="3">Thanh toán qua thẻ</option>
-                            </select>
+                <!-- Nút xóa và thanh toán -->
+                <div class="footer-cart-actions ">
+                    <button class="text-size delete" onclick="xoaKhoiGioHang()">Xóa</button>
+                    <button class="text-size buy" onclick="muaHang()">Mua hàng</button>
+                </div>
+
+                <!-- chuyển qua giao diện thanh toán -->
+                <div class="checkout-section hidden">
+                    <h1>Thanh toán</h1>
+
+                    <div class="address-section">
+                        <div class="title-address">
+                            <i class="fa-solid fa-location-dot"></i>
+                            <h2>Địa Chỉ Nhận Hàng</h2>
+                        </div>
+
+                        <div class="delive-info">
+
                         </div>
                     </div>
 
-                    <button style="width: 50px; height:  50px;" id="back-cart-shoppping" onclick="quayLaiGioHang()">Quay
-                        lai</button>
-                </div>
+                    <div class="product-is-payed">
+                        <div class="product-table-header">
+                            <div class="text-size product-descript">Sản Phẩm</div>
+                            <div class="text-size other">Đơn Giá</div>
+                            <div class="text-size other">Số Lượng</div>
+                            <div class="text-size other">Số Tiền</div>
+                        </div>
 
-                <br>
+                        <div class="orderItems-list">
 
-            </div>
-
-            <!-- Nút xóa và thanh toán -->
-            <div class="footer-cart-actions hidden">
-                <button class="text-size delete" onclick="xoaKhoiGioHang()">Xóa</button>
-                <button class="text-size buy" onclick="muaHang()">Mua hàng</button>
-            </div>
-
-
-            <div class='footer-page'>
-
-            </div>
-        </div>
-
-        <div class="modal">
-            <div class="alert-cart hidden">
-                <div class="message">Bạn chưa chọn sản phẩm nào để mua.</div>
-                <button class="close-alert-btn" onclick="closeAlertNotSelect()">OK</button>
-            </div>
-
-            <div class="select-address hidden">
-                <div class="title text-size">Địa Chỉ Của Tôi</div>
-
-                <div class="address-list">
-                </div>
-
-                <div class="footer-modal-address">
-                    <button class="accept-address" onclick="closeSelectAddress(); getAddress2Deliver()">Xác
-                        nhận</button>
-                    <button class="reject-address" onclick="closeSelectAddress()">Hủy</button>
-                </div>
-            </div>
-
-            <div class="add-address ">
-                <div class="title text-size">Địa Chỉ Mới</div>
-
-                <div class="info-new-address">
-                    <input class="ipName" type="text" placeholder="Họ và tên">
-                    <input class="ipNumberphone" type="text" placeholder="Số điện thoại">
-                    <input class="ipAddress" type="text" placeholder="Địa chỉ">
-                    <div>
-                        <select id="provinces" onchange="">
-                            <option value="">Chọn Tỉnh / Thành phố</option>
-                        </select>
-
-                        <select id="districts" onchange="">
-                            <option value="">Chọn Quận / Huyện</option>
-                        </select>
-
-                        <select id="wards">
-                            <option value="">Chọn Phường / Xã</option>
-                        </select>
+                        </div>
                     </div>
 
+                    <div class="payment-method">
+                        <div class="payment">
+                            <div class="text-size payment-title">Phương thức thanh toán</div>
+                            <div class="payment-option">
+                                <div>
+                                    <input type="radio" class="select-checkout" value="cash"
+                                        onclick="showPaymentForm('cash')">
+                                    Thanh toán khi nhận hàng
+                                </div>
+                                <div>
+                                    <input type="radio" class="select-checkout" value="bank-transfer"
+                                        onclick="showPaymentForm('bank-transfer')">
+                                    Chuyển khoản
+                                </div>
+                                <div>
+                                    <input type="radio" class="select-checkout" value="card"
+                                        onclick="showPaymentForm('card')">
+                                    Thanh toán qua thẻ
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Giao diện thanh toán khi nhận hàng -->
+                        <div class="cash-payment-form hidden">
+                            <h3>Vui lòng thanh toán khi nhận hàng!</h3>
+
+                        </div>
+                        <!-- Giao diện thanh toán qua banking -->
+                        <div class="bank-payment-form hidden">
+                            <h3>Thông tin chuyển khoản</h3><br>
+                            <div>Số tài khoản: <strong>123456789</strong></div><br>
+                            <div>Ngân hàng: <strong>Ngân hàng XYZ</strong></div><br>
+                            <div>Hướng dẫn: Vui lòng chuyển khoản vào số tài khoản trên và nhập Sđt</div>
+                        </div>
+
+                        <!-- Giao diện thanh toán qua thẻ -->
+                        <div class="card-payment-form hidden">
+                            <h3>Thông tin thẻ</h3><br>
+                            <div>
+                                <label for="card-number">Số thẻ:</label>
+                                <input type="text" id="card-number" placeholder="Nhập số thẻ" maxlength="16">
+                            </div>
+                            <div>
+                                <label for="card-expiry">Ngày hết hạn:</label>
+                                <input type="text" id="card-expiry" placeholder="MM/YY">
+                            </div>
+                            <div>
+                                <label for="card-cvv">CVV:</label>
+                                <input type="text" id="card-cvv" placeholder="CVV" maxlength="3">
+                            </div>
+                        </div>
+
+                        <div class="btn-payment-method">
+                            <button class=" back" onclick="quayLaiGioHang()">Quay lại</button>
+                            <button class=" checkout" onclick="hoanTatThanhToan()">Thanh
+                                toán</button>
+                        </div>
+
+                    </div>
 
                 </div>
+                <!-- Giao diện tóm tắt đơn hàng -->
+                <div class="order-summary">
 
-                <div class="footer-modal-address">
-                    <button class="accept-address" onclick="saveNewAddress()">Hoàn thành</button>
-                    <button class="reject-address" onclick="closeAddNewAddress()">Trở lại</button>
+
+                </div>
+            </div>
+
+            <div class="history-in-cart ">
+                <h1>Lịch sử</h1>
+                <div class="orderHistory-table-header">
+                    <div>Mã đơn hàng</div>
+                    <div>Mã khách hàng</div>
+                    <div class="product">Sản phẩm</div>
+                    <div>Tổng giá</div>
+                    <div>Trạng thái</div>
+                    <div>Chi tiết</div>
+                </div>
+
+                <div class="orderSummary-list">
+
+                </div>
+            </div>
+
+
+            <div class="modal modal-hidden">
+                <div class="alert-cart hidden">
+                    <div class="message">Bạn chưa chọn sản phẩm nào để mua.</div>
+                    <button class="close-alert-btn" onclick="closeAlertNotSelect()">OK</button>
+                </div>
+
+                <div class="select-address hidden">
+                    <div class="title text-size">Địa Chỉ Của Tôi</div>
+
+                    <div class="address-list">
+                    </div>
+
+                    <div class="footer-modal-address">
+                        <button class="accept-address" onclick="closeSelectAddress(); getAddress2Deliver()">Xác
+                            nhận</button>
+                        <button class="reject-address" onclick="closeSelectAddress(); getAddressBefore()">Hủy</button>
+                    </div>
+                </div>
+
+                <div class="add-address hidden">
+                    <div class="title text-size">Địa Chỉ Mới</div>
+
+                    <div class="info-new-address">
+                        <input id="idName" type="text" disabled>
+                        <input id="idNumberphone" type="text" disabled>
+                        <input id="idAddress" type="text" placeholder="Địa chỉ">
+                        <div>
+                            <select id="provinces" onchange="getProvinceID()">
+
+                            </select>
+
+                            <select id="districts" onchange="getDistrictID()">
+                                <option value="0">Chọn Quận / Huyện</option>
+                            </select>
+
+                            <select id="wards">
+                                <option value="0">Chọn Phường / Xã</option>
+                            </select>
+                        </div>
+
+
+                    </div>
+
+                    <div class="footer-modal-address">
+                        <button class="accept-address" onclick="checkInfoNewAddress()">Hoàn thành</button>
+                        <button class="reject-address" onclick="closeAddNewAddress()">Trở lại</button>
+                    </div>
                 </div>
             </div>
         </div>
+
 
 
         <script src="cartJS.js"></script>
-        <script src="addressCart.js"></script>
     </div>
 
 
