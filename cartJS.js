@@ -8,6 +8,8 @@ function closeSelectAddress() {
 function openSelectAddress() {
     document.querySelector('.modal').classList.remove('modal-hidden');
     document.querySelector('.select-address').classList.remove('hidden');
+    displayAddressInfoList();
+    getAddressBefore();
 }
 let userLogin = {};
 let addressInfoList = [];
@@ -17,10 +19,12 @@ function getLocalStorageUserLogin() {
     userLogin = JSON.parse(localStorage.getItem('userLogin'));
     document.querySelector('#idName').value = userLogin.fullname;
     document.querySelector('#idNumberphone').value = userLogin.phoneNumber;
-    let addressInfoList = [
-        { userID: userLogin.userId, userFullName: userLogin.fullname, numberPhone: userLogin.phoneNumber, addressDetail: "abcdfgh" },
+    addressInfoList = [
+        { userID: userLogin.userId, userFullName: userLogin.fullname, numberPhone: userLogin.phoneNumber, addressDetail: userLogin.address1 },
     ];
     address2Deliver = addressInfoList[0];
+    console.log(address2Deliver);
+    changeDeliveInfo();
 
 }
 
@@ -58,7 +62,6 @@ function displayAddressInfoList() {
     document.querySelector('.address-list').innerHTML = s;
 }
 
-displayAddressInfoList();
 
 function uncheckAllSelection(selections) {
     selections.forEach(select => {
@@ -93,7 +96,7 @@ function getAddressBefore() {  //Khi đã select vào 1 selection và ấn hủy
         }
     })
 }
-getAddressBefore();
+
 function changeDeliveInfo() {
     let s = '';
     s += `
@@ -104,7 +107,6 @@ function changeDeliveInfo() {
     s += `<button class="change-address" onclick="openSelectAddress()">Thay Đổi</button>`;
     document.querySelector('.checkout-section .delive-info').innerHTML = s;
 }
-changeDeliveInfo();
 
 
 function getAddress2Deliver() {
