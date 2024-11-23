@@ -24,7 +24,7 @@
             <a href="auth.html" id="login-link"><i class="fas fa-user"></i> Tài khoản</a>
             <a href="#" id="logout-link" style="display: none;"><i class="fas fa-sign-out-alt"></i> Đăng xuất</a>
             <div class="">
-                <a href="http://127.0.0.1:5500/cart.html">
+                <a href="#">
                     <i class="fas fa-shopping-cart"></i> Giỏ hàng
                 </a>
             </div>
@@ -33,11 +33,11 @@
 
     <div class="QKhanh_content">
         <div class="left-content">
-            <div class="text-size  product-in-cart">
+            <div class="text-size selected  product-in-cart">
                 <i class="fa-solid fa-cart-plus"></i>
                 <a id="load-again-cart" href="#">Sản phẩm trong giỏ</a>
             </div>
-            <div class="text-size selected orderHistory">
+            <div class="text-size  orderHistory" onclick="displayOrderHistory()">
                 <i class="fa-solid fa-clock"></i>
                 <a href="#">Lịch sử mua hàng</a>
             </div>
@@ -46,12 +46,12 @@
 
             <div class="text-size back-mainPage">
                 <i class="fa-solid fa-reply"></i>
-                <a id="backIndexHtml" href="http://127.0.0.1:5500/index.html">Tiếp tục mua sắm</a>
+                <a id="backIndexHtml" href="#">Tiếp tục mua sắm</a>
             </div>
         </div>
 
         <div class="right-content">
-            <div class="items-in-cart hidden">
+            <div class="items-in-cart ">
                 <div class="cart-section ">
                     <h1>Giỏ Hàng</h1>
 
@@ -171,19 +171,18 @@
                 </div>
             </div>
 
-            <div class="history-in-cart ">
+            <div class="history-in-cart hidden">
                 <h1>Lịch sử</h1>
-                <div class="orderHistory-table-header">
-                    <div>Mã đơn hàng</div>
-                    <div>Mã khách hàng</div>
-                    <div class="product">Sản phẩm</div>
-                    <div>Tổng giá</div>
-                    <div>Trạng thái</div>
-                    <div>Chi tiết</div>
-                </div>
+                <div style="border: 1.5px solid;">
+                    <div class="orderHistory-table-header">
+                        <div>Mã đơn hàng</div>
+                        <div class="product">Sản phẩm</div>
+                        <div>Tổng giá</div>
+                        <div>Trạng thái</div>
+                        <div>Chi tiết</div>
+                    </div>
 
-                <div class="orderSummary-list">
-
+                    <div class="orderHistory-list"></div>
                 </div>
             </div>
 
