@@ -61,7 +61,8 @@ body{
 #admin_workplace{   
     width: 100%;
     padding: 10px 50px;
-    height: 92vh;
+    min-height: 92vh;
+    height: auto;
     display: flex;
     gap: 50px;
 }
@@ -70,7 +71,8 @@ body{
 #admin_left-menu{
     width: 15%;
     background: #FFF;
-    height: 100%;
+    min-height: 90vh;
+    height: auto;
 }
 
 #admin_left-menu li{
@@ -112,8 +114,174 @@ body{
 
 /**************************content****************/
 
+/*--------------------login_Admin_form------------------------*/
+
+#form_login_Admin{
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    translate: -50% -50%;
+    width: 100%;
+    height: 100vh;
+    background: url(loginAdmin.jpg);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+#login_Admin{
+    width: 350px;
+    height: 350px;
+    background-color: rgba(255, 255, 255, 0.8);
+    border-radius: 20px;
+    margin-top: 20px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    box-shadow: 0 6px 9px 0 rgba(0, 0, 0, 0.5);
+}
+
+#LoiChaoToiAd{
+    width: 100%;
+    text-align: center;
+    font-size: 35px;
+    color: white;
+}
+
+#Yeucau{
+    width: 100%;
+    text-align: center;
+    color: white;
+    font-size: 20px;
+    margin-top: 5px;
+}
+
+
+#login_Admin input[type = text]{
+    width: 80%;
+    height: 35px;
+    border-radius: 10px;
+    padding: 2px 10px;
+    color: #1565D6;
+    font-size: 16px;
+    border: none;
+}
+
+#login_Admin input[type = text]:focus{
+    border: solid #1565D6;
+    outline: none;
+}
+
+#login_Admin label{
+    width: 100%;
+    padding: 0 35px;
+    color: #1565D6;
+    font-size: larger;
+    margin-bottom: 5px;
+}
+
+#login_Admin #ben_duoi{
+    margin-top: 30px;
+}
+
+#login_Admin_bnt{
+    width: 40%;
+    height: 30px;
+    margin-top: 50px;
+    font-size: 17px;
+    color: white;
+    background-color: #1565D6;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+#login_Admin_bnt:hover{
+    box-shadow: 0 4px 7px 0 rgba(0, 0, 0, 0.5);
+}
+
+
+#Thong_tin_Admin{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 20px;
+}
+#Thong_tin_Admin p{
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.title_admin{
+    color: #1565D6;
+    font-size: 25px;
+    font-weight: bold;
+}
+
+#Thong_tin_Admin .infor_shop{
+    margin-top: 20px;
+}
+
+#Thong_tin_Admin_control{
+    margin-top: 80px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    gap: 100px;
+}
+
+#Thong_tin_Admin_control div i{
+    font-size: 18px;
+    margin-right: 10px;
+}
+
+.text_admin{
+    font-size: 18px;
+    font-weight: bold;
+    margin-left: 70px;
+}
+
+#back_home_bnt, #logout_bnt, #lock_login{
+    height: 40px;
+    color: white;
+    padding: 5px;
+    font-weight: bold;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+#back_home_bnt{
+    width: 200px;
+    background-color: #ffbf00;
+    color: rgb(0, 0, 0);
+}
+#logout_bnt{
+    width: 150px;
+    background-color: #1565D6;
+}
+#lock_login{
+    width: 150px;
+    background-color: red;
+}
+#back_home_bnt:hover, #logout_bnt:hover, #lock_login:hover{
+    box-shadow: 0 4px 7px 0 rgba(0, 0, 0, 0.5);
+}
+/*------------------------------------------------------------*/
+
 #admin_content{
     width: 85%;
+    min-height: 90vh;
     height: 100%;
     background: white;
     padding: 10px;
@@ -141,7 +309,7 @@ body{
     width: 550px;
     height: 500px;
     background-color: #fff;
-    z-index: 2;
+    z-index: 3;
     border-radius: 15px;
     padding: 10px;
     border: solid #1565D6;
@@ -349,7 +517,7 @@ body{
     translate: -50% -50%;
     width: 550px;
     height: 550px;
-    z-index: 2;
+    z-index: 3;
     background-color: white;
     border-radius: 10px;
     border: solid #1565D6;
@@ -426,22 +594,23 @@ body{
     font-style: italic;
 }
 
-/*Tạm thời*/
-#Show_user_Chitiet_va_Sua2{
+/*Phần chỉnh sửa User*/
+#Set_User{
+    display: none;
     position: absolute;
     left: 50%;
     top: 50%;
     translate: -50% -50%;
     width: 550px;
     height: 550px;
-    z-index: 2;
+    z-index: 4;
     background-color: white;
     border-radius: 10px;
     border: solid #1565D6;
     padding: 10px;
 }
 
-#CSUser_thoat2{
+#Thoat_Set_User{
     position: absolute;
     right: 0;
     top: 0;
@@ -454,12 +623,12 @@ body{
 }
 
 
-#CSUser_thoat2 i{
+#Thoat_Set_User i{
     font-size: 30px;
     color: red;
 }
 
-#infor_user_set input{
+#Set_infor_user input{
     height: 30px;
     padding: 8px;
     margin: 10px;
@@ -469,36 +638,37 @@ body{
     border: solid grey 0.5px;
 }
 
-#infor_user_set input:focus{
+#Set_infor_user input:focus{
     border: solid #1565D6;
     outline: none;
 }
 
-#infor_user_set #Hoten_set{
+#Set_infor_user #Set_Hoten{
     width: 50%;
 }
 
-#infor_user_set #Duong_soNha_set{
+#Set_infor_user #Set_Duong_soNha{
     width: 60%;
 }
 
-#chon_diachi_set select{
-    height: 30px;
-    border-radius: 5px;
-    margin: 10px;
-}
-
-#chon_diachi_set{
+#Set_diachi_user{
     display: flex;
     justify-content: flex-start;
     gap: 10px;
 }
 
-#chon_diachi_set #User_Tinh-tp_set{
+#Set_diachi_user select{
+    height: 30px;
+    border-radius: 5px;
+    margin: 10px;
+}
+
+
+#Set_diachi_user #Set_User_Tinh-tp{
     width: 40%;
 }
 
-#user_account_set input{
+#Set_user_account input{
     height: 30px;
     padding: 8px;
     margin: 15px;
@@ -509,7 +679,40 @@ body{
     width: 50%;
 }
 
-#user_account_set input:focus{
+#Set_user_account input:focus{
     border: solid #1565D6;
     outline: none;
 }
+
+#Set_button{
+    width: 120px;
+    height: 30px;
+    background-color: #1565D6;
+    color: white;
+    border: none;
+    position: absolute;
+    right: 0;
+    border-radius: 5px;
+    margin: 10px 30px;
+    cursor: pointer;
+}
+
+#Set_button:hover{
+    box-shadow: 0 3px 5px 0 rgba(0, 0, 0, 0.3);
+}
+
+#luu_id_User{
+    display: none;
+}
+
+#nganThoat{
+    display: none;
+    position: absolute;
+    left: 50%;
+    right: 50%;
+    translate: -50% -50%;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+}
+
