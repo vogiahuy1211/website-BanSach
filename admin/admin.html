@@ -12,12 +12,12 @@
                 <img src="logo.png" alt="" id="admin_logo">
                 <div id="admin_account">
                     <i class="fa-solid fa-user"></i>
-                    <span id="name_account">Nguyen Cong Lam</span>
+                    <span id="name_account"></span>
                 </div>
             </div> 
             <div id="admin_workplace">
                     <ul id="admin_left-menu">
-                        <li class="nav_left-menu first active">
+                        <li class="nav_left-menu first active" onclick="Show_Admin_infor()">
                             <i class="fa-solid fa-user-gear"></i>
                             <span>Thông tin Admin</span>
                         </li>
@@ -39,7 +39,20 @@
                         </li>
                     </ul>
 
-                <!--------------------------form thêm khách hàng------------------------->
+            <!-------------------------------------form đăng nhập trang admin--------------------------------------------->
+            <div id="form_login_Admin">
+                <div id="LoiChaoToiAd">Chào mừng đến trang Admin</div>
+                <div id="Yeucau">Vui lòng đăng nhập</div>
+                <form action="login_Admin" id="login_Admin">
+                    <label for="Admin_Name">Tên đăng nhập:</label>
+                    <input type="text" name="" id="Admin_Name">
+                    <label for="Admin_Password" id="ben_duoi">Mật khẩu:</label>
+                    <input type="text" name="" id="Admin_Password">
+                    <input type="button" name="btnLA" id="login_Admin_bnt" value="Đăng nhập" onclick="Login_Admin()">
+                </form>
+            </div>   
+             <!----------------------------------form thêm khách hàng---------------------------------->
+                <div id="nganThoat"></div>
                 <div id="form_add_infor">
                     <div id="thoat_form" onclick="HideForm_Add_User()"><i class="fa-solid fa-xmark"></i></div>
                     <form action="add_user" id="add_user">
@@ -70,122 +83,103 @@
                         <input type="button" value="Thêm +" id="add_button" onclick="AddUser()">
                     </form>
                 </div>
-                 <!--------------------------------------------------------------------------------->
 
-                 <!------------------------bảng thông tin chi tiết và chỉnh sửa--------------------->
+                 <!----------------------------bảng thông tin chi tiết người dùng-------------------------->
                 <div id="Show_user_Chitiet_va_Sua">
                     <div id="CSUser_thoat" onclick="exitCSUser()"><i class="fa-solid fa-xmark"></i></div>
                     <div id="CSUser_show">
-                        <!--
-                        <div class="text_CSUser">Thông tin chi tiết khách hàng:</div>
-                        <p >Họ và tên: Nguyễn Công Lâm</p>
-                        <p >Số điện thoại: 0366997176</p>
-                        <p >Địa chỉ: số 65, Nguyễn Thời Trung, Phường 6, Quận 5 , TP.Hồ Chí Minh</p>
-                        <div class="text_CSUser">Thông tin tài khoản:</div>
-                        <p >Tài khoản : NguyenLam</p>
-                        <p >Mật khẩu : 654789789</p>
-                        <div id="CSUser_status"><span>Trạng thái tài khoản:</span> <span id="stas">Đang hoạt động</span></div>
-                        <div id="CSUser_control">
-                            <div id="CSUse_set"><i class="fa-solid fa-gear"></i> Chỉnh sửa</div>
-                            <div id="CSUse_lock"><i class="fa-solid fa-lock"></i> Khoá tài khoản</div>
-
-                        </div>
-                        -->
                     </div>
                 </div>
-<!--
-                <div id="Show_user_Chitiet_va_Sua2">
-                    <div id="CSUser_thoat2" onclick="exitCSUser()"><i class="fa-solid fa-xmark"></i></div>
+
+                <!----------------------------------bảng chỉnh sửa người dùng-------------------------------->
+                <div id="Set_User">
+                    <div id="Thoat_Set_User" onclick="Thoat_Set_User()"><i class="fa-solid fa-xmark"></i></div>
                     <div id="CSUser_show2">
-                        <form action="set_user" id="set_user">
+                        <form action="set_user_form" id="set_user_form">
                             <div class="text_infor">Thông tin khách hàng:</div>
-                            <div id="infor_user_set">
-                                <input type="text" name="ho_va_ten" id="Hoten_set" placeholder="Họ và tên">
-                                <input type="text" name="SDT_set" id="SDT_set" placeholder="Số điện thoại" maxlength="10">
-                                <label for="Duong_soNha_set">Địa chỉ:</label>
-                                <input type="text" name="Duong_soNha_set" id="Duong_soNha_set" placeholder="Tên đường/số nhà">
-                                <div id="chon_diachi_set">
-                                    <select id="User_Phuong-xa_set">
+                            <div id="Set_infor_user">
+                                <input type="text" name="ho_va_ten_set" id="Set_Hoten" placeholder="Họ và tên">
+                                <input type="text" name="SDT_set" id="Set_SDT" placeholder="Số điện thoại" maxlength="10">
+                                <label for="Set_Duong_soNha">Địa chỉ:</label>
+                                <input type="text" name="Duong_soNha_set" id="Set_Duong_soNha" placeholder="Tên đường/số nhà">
+
+                                <div id="Set_diachi_user">
+                                    <select id="Set_User_Phuong-xa">
                                         <option value="0" selected>Phường/xã</option>
                                     </select>
-                                    <select id="User_Quan-huyen_set">
+                                    <select id="Set_User_Quan-huyen" onchange="Set_HienPhuongXaUsert()">
                                         <option value="0" selected>Quận/huyện</option>
                                     </select>
-                                    <select id="User_Tinh-tp_set">
+                                    <select id="Set_User_Tinh-tp" onchange="Set_HienQuanUser()">
                                         <option value="0" selected>Tỉnh/thành phố</option>
                                     </select>
                                 </div>
                             </div>
+
                             <div class="text_infor">Thông tin tài khoản:</div>
-                            <div id="user_account_set">
-                                <input type="text" name="tenDangnhap_set" id="tenDangnhap_set" placeholder="Tên đăng nhập">
-                                <input type="text" name="mkhau_set" id="mkhau_set" placeholder="Mật khẩu">
-                                <input type="text" name="re_mkhau_set" id="re_mkhau_set" placeholder="Nhập lại mật khẩu">
+                            <div id="Set_user_account">
+                                <input type="text" name="Set_tenDangnhap" id="Set_tenDangnhap" placeholder="Tên đăng nhập">
+                                <input type="text" name="Set_mkhau" id="Set_mkhau" placeholder="Mật khẩu">
+                                <input type="text" name="Set_re_mkhau" id="Set_re_mkhau" placeholder="Nhập lại mật khẩu">
                             </div>
-                            <input type="button" value="Xác nhận" id="add_button">
+                            <input type="button" value="Xác nhận" id="Set_button">
                         </form>
                     </div>
-            
                 </div>
-            -->
-                <!---------------------------------------------------------------------------------->
+
+
+
                 <div id="admin_content">
-                    
-                     <!--
-                    <div id="khach_hang">
-                        <p id="content_name">Danh sách khách hàng</p>
-                        <div id="them_khach_hang">Thêm +</div>
-                        <div id="show_list">
-                            <table id="table_from-khach_hang">
-                                <tr id="user_head_table">
-                                    <th >STT</th>
-                                    <th >Mã khách hàng</th>
-                                    <th>Họ và tên</th>
-                                    <th>Tên đăng nhập</th>
-                                    <th>Số điện thoại</th>
-                                    <th>Trạng thái TK</th>
-                                    <th class="cot7"></th>
-                                </tr>
-                                <tr class="user_body_table">
-                                    <td>1</td>
-                                    <td>10001</td>
-                                    <td>Nguyễn Công Lâm</td>
-                                    <td>nguyenlam</td>
-                                    <td>0376516504</td>
-                                    <td>Đang hoạt động</td>
-                                    <td class="cot7">
-                                        <div class="khach_hang_chitiet">
-                                            Chi tiết
-                                        </div>
-                                        <div title="Xoá" class="khach_hang_delete">
-                                            <i class="fa-solid fa-xmark"></i>
-                                        </div>
-                                    </td>
-                                </tr>
-                                
-                                <tr class="user_body_table">
-                                    <td>2</td>
-                                    <td>10002</td>
-                                    <td>Nguyễn văn A</td>
-                                    <td>nguyenA</td>
-                                    <td>0376516504</td>
-                                    <td>Đang bị khoá</td>
-                                    <td class="cot7">
-                                        <div class="khach_hang_chitiet">
-                                            Chi tiết
-                                        </div>
-                                        <div class="khach_hang_delete">
-                                            <i class="fa-solid fa-xmark"></i>
-                                        </div>
-                                    </td>
-                                </tr>
-                            
-                            </table>
-                            <div id="khong_co_khach_hang">Không có khách hàng nào</div>
+<!--                     
+                     <div id="doanh_thu">
+                        <div id="thongke_doanh_thu">
+                            <div id="title_doanhthu">Thống kê doanh thu cửa hàng</div>
+                        <div id="control_doanh_thu_1">
+                            <select name="" id="chon_ThoiGian">
+                                <option value="0">Từ trước tới nay</option>
+                                <option value="1">Trong khoảng thời gian</option>
+                            </select>
+                            <div id="day_control">
+                                <label for="from_day">Từ ngày:</label>
+                                <input type="date" name="" id="from_day">
+                                <label for="to_day">Đến ngày:</label>
+                                <input type="date" name="" id="to_day">
+                            </div>
                         </div>
-                    </div>
-                    -->
+                        <div id="All_infor_doanh_thu">
+                            <p id="infor_1">Tổng doanh thu: 500000VNĐ</p>
+                            <p id="infor_2">Tổng số lượng sản phẩm bán ra: 100 sản phẩm</p>
+                        </div>
+                        <div id="control_doanh_thu_2">
+                            <select name="" id="chon_ThoiGian">
+                                <option value="0">Thống kê theo mặt hàng</option>
+                                <option value="1">Thống kê theo khách hàng</option>
+                            </select>
+                        </div>
+                        <div id="thong_ke_theo_mat_hang"></div>
+                        <p id="title_thongke">Các khách hàng đã mua hàng</p>
+                        
+                        </div>
+                    </div>  -->
                     
+                    <!-- <div id="Thong_tin_Admin">
+                        <p class="title_admin">Thông tin Admin:</p>
+                        <p class="text_admin">Họ và Tên: Nguyễn Công Lâm</p>
+                        <p class="text_admin">Số điện thoại: 0376516504</p>
+                        <p class="text_admin">Email: nguyenconglam2k5@gmail.com</p>
+
+                        <p class="title_admin infor_shop">Thông tin SHOP:</p>
+                        <p class="text_admin">Địa chỉ : số 06, An Dương Vương, Phường 3, Quận 5 TP.Hồ Chí Minh</p>
+                        <p class="text_admin">Hotline: 0376516504</p>
+                        <p class="text_admin">Loại hình kinh doanh: Bán sách trực tuyến</p>
+
+                    </div>
+
+                    <div id="Thong_tin_Admin_control">
+                        <div id="back_home_bnt"><i class="fa-solid fa-arrow-left"></i> Trở lại trang bán hàng</div>
+                        <div id="logout_bnt"><i class="fa-solid fa-arrow-right-from-bracket"></i>Đăng xuất</div>
+                        <div id="lock_login"><i class="fa-solid fa-floppy-disk"></i>Lưu đăng nhập</div>
+                    </div> -->
                 </div>
             </div>
         </div>
