@@ -109,13 +109,11 @@
                             <div class="payment-option">
                                 <div>
                                     <input type="radio" class="select-checkout" value="cash"
-                                        onclick="showPaymentForm('cash')">
-                                    Thanh toán khi nhận hàng
+                                        onclick="showPaymentForm('cash')">Thanh toán khi nhận hàng
                                 </div>
                                 <div>
                                     <input type="radio" class="select-checkout" value="bank-transfer"
-                                        onclick="showPaymentForm('bank-transfer')">
-                                    Chuyển khoản
+                                        onclick="showPaymentForm('bank-transfer')">Chuyển khoản
                                 </div>
                                 <div>
                                     <input type="radio" class="select-checkout" value="card"
@@ -157,8 +155,7 @@
 
                         <div class="btn-payment-method">
                             <button class=" back" onclick="quayLaiGioHang()">Quay lại</button>
-                            <button class=" checkout" onclick="hoanTatThanhToan()">Thanh
-                                toán</button>
+                            <button class=" checkout" onclick="hoanTatThanhToan()">Thanh toán</button>
                         </div>
 
                     </div>
@@ -182,6 +179,9 @@
                         <div>Chi tiết</div>
                     </div>
 
+                    <div class="none-orderHistory-list hidden">
+                        <p>Chưa mua sản phẩm nào</p>
+                    </div>
                     <div class="orderHistory-list"></div>
                 </div>
             </div>
@@ -211,7 +211,7 @@
 
                     <div class="info-new-address">
                         <input id="idName" type="text" disabled>
-                        <input id="idNumberphone" type="text" disabled>
+                        <input id="idPhoneNumber" type="text" disabled>
                         <input id="idAddress" type="text" placeholder="Địa chỉ">
                         <div>
                             <select id="provinces" onchange="getProvinceID()">
