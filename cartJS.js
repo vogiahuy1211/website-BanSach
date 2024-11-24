@@ -1,33 +1,35 @@
-
+let userLogin = {};
+let addressInfoList = [];
+let address2Deliver = {};
+// Đóng ô chọn địa chỉ
 function closeSelectAddress() {
     document.querySelector('.modal').classList.add('modal-hidden');
     document.querySelector('.select-address').classList.add('hidden');
 
 }
-
+// Mở ô chọn địa chỉ 
 function openSelectAddress() {
     document.querySelector('.modal').classList.remove('modal-hidden');
     document.querySelector('.select-address').classList.remove('hidden');
+
     displayAddressInfoList();
+    setupAddressSelection();
     getAddressBefore();
 }
-let userLogin = {};
-let addressInfoList = [];
-let address2Deliver = {};
 
+// Lấy dữ liệu từ User khi đăng nhập
 function getLocalStorageUserLogin() {
     userLogin = JSON.parse(localStorage.getItem('userLogin'));
     document.querySelector('#idName').value = userLogin.fullname;
-    document.querySelector('#idNumberphone').value = userLogin.phoneNumber;
+    document.querySelector('#idPhoneNumber').value = userLogin.phoneNumber;
     addressInfoList = [
-        { userID: userLogin.userId, userFullName: userLogin.fullname, numberPhone: userLogin.phoneNumber, addressDetail: userLogin.address1 },
+        { userID: userLogin.userId, userFullName: userLogin.fullname, phoneNumber: userLogin.phoneNumber, addressDetail: userLogin.address1 },
     ];
     address2Deliver = addressInfoList[0];
-    console.log(address2Deliver);
     changeDeliveInfo();
-
 }
 
+// Hiển thị những địa chỉ có sẵn của user
 function displayAddressInfoList() {
     let s = '';
     let behindS = `
@@ -48,12 +50,10 @@ function displayAddressInfoList() {
                 <div class="user-basic-info">
                     <div class="userFullName">${addressInfoList[i].userFullName}</div>
                     <div class="distance"></div>
-                    <div class="phoneNumber">${addressInfoList[i].numberPhone}</div>
+                    <div class="phoneNumber">${addressInfoList[i].phoneNumber}</div>
                 </div>
 
-                <div class="address-detail">
-                    ${addressInfoList[i].addressDetail}
-                </div>
+                <div class="address-detail">${addressInfoList[i].addressDetail}</div>
             </div>
         </div>
         `
@@ -62,7 +62,7 @@ function displayAddressInfoList() {
     document.querySelector('.address-list').innerHTML = s;
 }
 
-
+// Tắt tất cả các selection đã chọn
 function uncheckAllSelection(selections) {
     selections.forEach(select => {
         if (select.checked) {
@@ -72,6 +72,7 @@ function uncheckAllSelection(selections) {
 
 }
 
+// Chọn địa chỉ này sẽ tắt checked của địa chỉ trước
 function setupAddressSelection() {
     let selections = document.querySelectorAll('.select-btn-address');
 
@@ -82,25 +83,25 @@ function setupAddressSelection() {
         });
     });
 }
-setupAddressSelection();
 
-
-function getAddressBefore() {  //Khi đã select vào 1 selection và ấn hủy sẽ tự động chọn về cái trước đó
+//Chọn địa chỉ và ấn hủy sẽ tự động chọn về cái trước đó
+function getAddressBefore() {
     let selections = document.querySelectorAll('.select-btn-address');
     uncheckAllSelection(selections);
 
     selections.forEach(selection => {
         let addressDetail = selection.closest('.address-item').querySelector('.address-detail').textContent;
-        if (addressDetail.trim() === address2Deliver.addressDetail) {
+        if (addressDetail === address2Deliver.addressDetail) {
             selection.checked = true;
         }
     })
 }
 
+// Đổi địa chỉ ở chỗ thanh toán sau khi đã chọn 
 function changeDeliveInfo() {
     let s = '';
     s += `
-        <div class="buyer-info">${address2Deliver.userFullName} ` + ` ${address2Deliver.numberPhone}</div>
+        <div class="buyer-info">${address2Deliver.userFullName} ` + ` ${address2Deliver.phoneNumber}</div>
         <div class="address-info">${address2Deliver.addressDetail}</div>
     `;
 
@@ -108,36 +109,42 @@ function changeDeliveInfo() {
     document.querySelector('.checkout-section .delive-info').innerHTML = s;
 }
 
-
-function getAddress2Deliver() {
+// Lấy địa chỉ để giao        
+function getAddress2Deliver() {            //Hàm này đúng rồi 
     let addresses = document.querySelectorAll('.select-btn-address');
     addresses.forEach(address => {
         if (address.checked) {
             let addressItem = address.closest('.address-item');
 
             let userFullName = addressItem.querySelector('.userFullName').textContent;
-            let numberPhone = addressItem.querySelector('.phoneNumber').textContent;
+            let phoneNumber = addressItem.querySelector('.phoneNumber').textContent;
             let addressDetail = addressItem.querySelector('.address-detail').textContent;
 
-            address2Deliver.userFullName = userFullName;
-            address2Deliver.numberPhone = numberPhone;
-            address2Deliver.addressDetail = addressDetail;
+            address2Deliver = {
+                userFullName,
+                phoneNumber,
+                addressDetail,
+            };
         }
     });
-    console.log(address2Deliver.userFullName);
     changeDeliveInfo();
 }
 
+
+// Mở ô nhập địa chỉ mới
 function openAddNewAddress() {
     document.querySelector('.add-address').classList.remove('hidden');
     document.querySelector('.select-address').classList.add('hidden');
 }
 
+// Đóng ô nhập địa chỉ mới
 function closeAddNewAddress() {
     document.querySelector('.add-address').classList.add('hidden');
     document.querySelector('.select-address').classList.remove('hidden');
 }
 
+
+// Hiển thị tỉnh
 function showProvinces() {
     let s = '<option value="0">Chọn Tỉnh / Thành phố</option>';
     let dataTinh_TP = JSON.parse(localStorage.getItem('Tinh_TP'));
@@ -150,11 +157,13 @@ function showProvinces() {
 }
 showProvinces();
 
+// Lấy Id tỉnh để hiển thị huyện thuộc tỉnh đó
 function getProvinceID() {
     let provinceID = document.querySelector('#provinces').value;
     showDistricts(provinceID);
 }
 
+// Hiển thị huyện sau khi chọn tỉnh
 function showDistricts(provinceID) {
     let s = '<option value="0">Chọn Quận / Huyện</option>';
     let dataQuan_Huyen = JSON.parse(localStorage.getItem('Quan_Huyen'));
@@ -173,6 +182,8 @@ function getDistrictID() {
     showWards(districtID);
 }
 
+
+// Hiển thị xã sau khi chọn 
 function showWards(districtID) {
     let s = '<option value="0">Chọn Phường / Xã</option>';
     let dataPhuong_Xa = JSON.parse(localStorage.getItem('Phuong_Xa'));
@@ -187,7 +198,7 @@ function showWards(districtID) {
     document.querySelector('#wards').innerHTML = s;
 }
 
-
+// Kiểm tra địa chỉ mới đã nhập đủ ch
 function checkInfoNewAddress() {
     let address = document.getElementById('idAddress');
     let province = document.getElementById('provinces');
@@ -262,8 +273,9 @@ function getWardNameByID(id) {
 
 function saveNewAddress(provinceID, districtID, wardID) {
     let newAddress = [];
+    newAddress.userID = userLogin.UserID;
     newAddress.userFullName = userLogin.fullname;
-    newAddress.numberPhone = userLogin.numberPhone;
+    newAddress.phoneNumber = userLogin.phoneNumber;
     newAddress.addressDetail = document.querySelector('#idAddress').value;
 
     let wardName = getWardNameByID(wardID);
@@ -279,7 +291,6 @@ function saveNewAddress(provinceID, districtID, wardID) {
     displayAddressInfoList();
     setupAddressSelection();
     getAddressBefore();
-
     console.log("Lưu Địa Chỉ mới");
 }
 // End ADDRESS CART !!!!!
@@ -304,6 +315,7 @@ function saveNewAddress(provinceID, districtID, wardID) {
 
 
 // START CART
+let orderSummary = {};
 const productInCart = document.querySelector('.product-in-cart');
 const orderHistory = document.querySelector('.orderHistory');
 const continueShopping = document.querySelector('.back-mainPage');
@@ -327,6 +339,15 @@ orderHistory.addEventListener('click', () => {
 continueShopping.addEventListener('click', () => {
     document.getElementById('backIndexHtml').click();
 })
+
+function addNoneOrderHistory() {
+    if (localStorage.getItem('orderList') === null)
+        document.querySelector('.none-orderHistory-list').classList.remove('hidden');
+}
+function closeNoneOrderHistory() {
+    document.querySelector('.none-orderHistory-list').classList.add('hidden');
+}
+addNoneOrderHistory();
 // Thêm bớt sản phẩm và tính tiền tổng của 1 sản phẩm
 function tongTien1SP(orderItem, book) {
     const totalPrice1Item = orderItem.querySelector('.total-price');
@@ -509,15 +530,14 @@ function quayLaiGioHang() {
     document.querySelector('.footer-cart-actions').classList.remove('hidden');
 }
 
-
-let orderSummary = {
-    FullName: address2Deliver.userFullName,
-    Sdt: address2Deliver.numberPhone,
-    Address: address2Deliver.addressDetail,
-    OrderDate: getDateNow(),
-    PaymentMethod: "",
-    Status: "Chưa xác nhận",
-};
+function createOrderSummary() {
+    orderSummary.FullName = address2Deliver.userFullName;
+    orderSummary.Sdt = address2Deliver.phoneNumber;
+    orderSummary.Address = address2Deliver.addressDetail;
+    orderSummary.OrderDate = getDateNow();
+    orderSummary.Status = "Chưa xác nhận";
+    // Thuộc tính PaymentMethod sẽ được add vào sau khi chọn paymentMethod
+}
 
 
 
@@ -627,7 +647,7 @@ function hoanTatThanhToan() {
     selectionsCheckout.forEach(selection => {
         if (selection.checked) {
             haveSelect = true;
-            orderSummary.PaymentMethod = selection.closest('.payment-option div').textContent;
+            orderSummary.PaymentMethod = selection.closest('.payment-option div').textContent.trim();
         }
     })
 
@@ -635,9 +655,11 @@ function hoanTatThanhToan() {
         alert("Vui lòng chọn phương thức thanh toán");
         return;
     }
-
+    console.log(orderSummary.PaymentMethod);
     if (!checkInfoCardMethod()) return;
     closeCheckoutSection();
+    closeNoneOrderHistory()
+    createOrderSummary();
     displayOrderItemsSummary()
 }
 
@@ -659,7 +681,7 @@ function getDateNow() {
 function displayOrderSummary() {
     let userFullName = orderSummary.FullName;
     let userSDT = orderSummary.Sdt;
-    let userAddress = address2Deliver.addressDetail;
+    let userAddress = orderSummary.Address;
     let orderDate = orderSummary.OrderDate;
     let statusText = orderSummary.Status;
     let paymentMethod = orderSummary.PaymentMethod;
@@ -737,20 +759,30 @@ function saveAsLocalStorage() {
     if (DonHang === null) DonHang = [];
 
     let new_DonHang = {
-        OrderID: "",
+        OrderID: "N/A",
         UserID: address2Deliver.userID,
         FullName: address2Deliver.userFullName,
-        Sdt: address2Deliver.numberPhone,
+        Sdt: address2Deliver.phoneNumber,
         Address: address2Deliver.addressDetail.trim,
         OrderItems: productIsPayed,
         OrderDate: getDateNow(),
-        Status: "Chưa xác nhận",
+        Status: 0,
     };
     console.log(new_DonHang.OrderItems[0]);
     DonHang.push(new_DonHang);
     localStorage.setItem('orderList', JSON.stringify(DonHang));
 }
 
+// Hàm chuyển đổi trạng thái số thành chuỗi 
+function getStatusLabel(status) {
+    switch (status) {
+        case 0: return "Chưa xử lý";
+        case 1: return "Đã xử lý";
+        case 2: return "Đã giao";
+        case 3: return "Đã hủy";
+        default: return "Không xác định";
+    }
+}
 
 function displayOrderHistory() {
     let s = '';
@@ -760,6 +792,7 @@ function displayOrderHistory() {
         const order = orderHistoryList[i];
         let orderItems = '';
         let orderTotalPrice = 0;
+        let orderStatus = getStatusLabel(order.Status);
         order.OrderItems.forEach(item => {
             orderItems += `${item.name} x ${item.quantity}, `;
             orderTotalPrice += item.quantity * item.price;
@@ -774,10 +807,10 @@ function displayOrderHistory() {
                 </div>
 
                 <div>${orderTotalPrice.toLocaleString('vn-VN') || 'N/A'}đ</div>
-                <div>${order.Status}</div>
+                <div>${orderStatus}</div>
 
                 <div>
-                    <button onclick="viewOrderDetails(${order.OrderID})">Xem</button>
+                    <button class = "btn-detail" onclick="viewOrderDetails(${order.OrderID})">Xem</button>
                 </div>
             </div>
         `;
