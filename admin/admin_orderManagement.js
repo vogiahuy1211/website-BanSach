@@ -281,7 +281,10 @@ document.addEventListener("DOMContentLoaded", () => {
     initFilterModal();
     let orderList = JSON.parse(localStorage.getItem("orderList")) || [];
     updateOrderID(orderList);
+
     // hienThiDonHang(orderList);
+    hienThiDonHang(orderList);
+
 });
 
 

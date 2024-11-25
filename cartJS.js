@@ -1,15 +1,20 @@
+// ===========================================================-----------------------------=========================================================
+// ===========================================================      Start Address Cart     =========================================================
+// ===========================================================-----------------------------=========================================================
+
+
 let userLogin = {};
 let addressInfoList = [];
 let address2Deliver = {};
 // Đóng ô chọn địa chỉ
 function closeSelectAddress() {
-    document.querySelector('.modal').classList.add('modal-hidden');
+    document.querySelector('.modal').classList.add('hidden');
     document.querySelector('.select-address').classList.add('hidden');
 
 }
 // Mở ô chọn địa chỉ 
 function openSelectAddress() {
-    document.querySelector('.modal').classList.remove('modal-hidden');
+    document.querySelector('.modal').classList.remove('hidden');
     document.querySelector('.select-address').classList.remove('hidden');
 
     displayAddressInfoList();
@@ -26,7 +31,7 @@ function getLocalStorageUserLogin() {
         { userID: userLogin.userId, userFullName: userLogin.fullname, phoneNumber: userLogin.phoneNumber, addressDetail: userLogin.address1 },
     ];
     address2Deliver = addressInfoList[0];
-    changeDeliveInfo();
+    changeDeliveInfo(); // Dùng để đổi địa chỉ hiển thị ở Địa Chỉ Nhận Hàng
 }
 
 // Hiển thị những địa chỉ có sẵn của user
@@ -97,7 +102,7 @@ function getAddressBefore() {
     })
 }
 
-// Đổi địa chỉ ở chỗ thanh toán sau khi đã chọn 
+// Dùng để đổi địa chỉ hiển thị ở Địa Chỉ Nhận Hàng
 function changeDeliveInfo() {
     let s = '';
     s += `
@@ -110,7 +115,7 @@ function changeDeliveInfo() {
 }
 
 // Lấy địa chỉ để giao        
-function getAddress2Deliver() {            //Hàm này đúng rồi 
+function getAddress2Deliver() {
     let addresses = document.querySelectorAll('.select-btn-address');
     addresses.forEach(address => {
         if (address.checked) {
@@ -127,7 +132,7 @@ function getAddress2Deliver() {            //Hàm này đúng rồi
             };
         }
     });
-    changeDeliveInfo();
+    changeDeliveInfo();  // Dùng để đổi địa chỉ hiển thị ở Địa Chỉ Nhận Hàng
 }
 
 
@@ -142,7 +147,6 @@ function closeAddNewAddress() {
     document.querySelector('.add-address').classList.add('hidden');
     document.querySelector('.select-address').classList.remove('hidden');
 }
-
 
 // Hiển thị tỉnh
 function showProvinces() {
@@ -177,6 +181,7 @@ function showDistricts(provinceID) {
     document.querySelector('#districts').innerHTML = s;
 }
 
+// Lấy id huyện
 function getDistrictID() {
     let districtID = document.querySelector('#districts').value;
     showWards(districtID);
@@ -198,6 +203,7 @@ function showWards(districtID) {
     document.querySelector('#wards').innerHTML = s;
 }
 
+// Được gọi khi ấn nút Hoàn thành địa chỉ mới
 // Kiểm tra địa chỉ mới đã nhập đủ ch
 function checkInfoNewAddress() {
     let address = document.getElementById('idAddress');
@@ -271,6 +277,8 @@ function getWardNameByID(id) {
     }
 }
 
+// Được gọi sau khi kiểm tra đã nhập đầy đủ thông tin địa chỉ mới chưa
+// Lưu địa chỉ mới trong giỏ hàng (chỉ sử dụng được ở giỏ hàng)
 function saveNewAddress(provinceID, districtID, wardID) {
     let newAddress = [];
     newAddress.userID = userLogin.UserID;
@@ -282,18 +290,21 @@ function saveNewAddress(provinceID, districtID, wardID) {
     let districtName = getDistrictNameByID(districtID);
     let provinceName = getProvinceNameByID(provinceID);
 
+    // Lấy địa chỉ cụ thể, tỉnh, huyện, xã gộp thành 1.
     newAddress.addressDetail = document.querySelector('#idAddress').value +
         ", " + wardName + ", " + districtName + ", " + provinceName;
 
     addressInfoList.push(newAddress);
 
-    closeAddNewAddress();
-    displayAddressInfoList();
-    setupAddressSelection();
-    getAddressBefore();
+    closeAddNewAddress();    //Đóng bảng tạo địa chỉ mới
+    displayAddressInfoList();//Hiển thị thông tin các địa chỉ
+    setupAddressSelection(); //chọn cái này sẽ tắt cái kia
+    getAddressBefore();      //lấy địa chỉ trước nếu như không xác nhận
     console.log("Lưu Địa Chỉ mới");
 }
-// End ADDRESS CART !!!!!
+// ===========================================================----------------------------=========================================================
+// ===========================================================      End Address Cart      =========================================================
+// ===========================================================----------------------------=========================================================
 
 
 
@@ -312,100 +323,115 @@ function saveNewAddress(provinceID, districtID, wardID) {
 
 
 
-
-
-// START CART
+// ===========================================================----------------------=========================================================
+// ===========================================================      Start Cart      =========================================================
+// ===========================================================----------------------=========================================================
 let orderSummary = {};
 const productInCart = document.querySelector('.product-in-cart');
 const orderHistory = document.querySelector('.orderHistory');
 const continueShopping = document.querySelector('.back-mainPage');
+
+// Bấm vào các lựa chọn bên trái giỏ hàng sẽ đổi màu
 function thayDoiLuaChonLeftMenu(activeElement, inactiveElement) {
     activeElement.classList.add('selected');
     inactiveElement.classList.remove('selected');
 }
 
+// Để Hiện Phần giao diện của Sản phẩm trong Giỏ
 productInCart.addEventListener('click', () => {
     thayDoiLuaChonLeftMenu(productInCart, orderHistory);
     document.querySelector('.items-in-cart').classList.remove('hidden');
     document.querySelector('.history-in-cart').classList.add('hidden');
 });
 
+// Để Hiện Phần giao diện Lịch Sử mua hàng
 orderHistory.addEventListener('click', () => {
     thayDoiLuaChonLeftMenu(orderHistory, productInCart);
     document.querySelector('.items-in-cart').classList.add('hidden');
     document.querySelector('.history-in-cart').classList.remove('hidden');
 });
 
+// Để quay lại mua hàng
 continueShopping.addEventListener('click', () => {
     document.getElementById('backIndexHtml').click();
 })
 
+// Mở bảng Không có sản phẩm nào trong Lịch Sử
 function addNoneOrderHistory() {
     if (localStorage.getItem('orderList') === null)
         document.querySelector('.none-orderHistory-list').classList.remove('hidden');
 }
+addNoneOrderHistory();
+
+// Đóng bảng Không có sản phẩm nào trong Lịch Sử
 function closeNoneOrderHistory() {
     document.querySelector('.none-orderHistory-list').classList.add('hidden');
 }
-addNoneOrderHistory();
+
+
 // Thêm bớt sản phẩm và tính tiền tổng của 1 sản phẩm
-function tongTien1SP(orderItem, book) {
+function tongTien1SP(orderItem, item) {
     const totalPrice1Item = orderItem.querySelector('.total-price');
-    let totalPrice = book.quantity * book.price;
-
-    book.totalPrice1Item = totalPrice;
+    let totalPrice = item.quantity * item.price;
     totalPrice1Item.textContent = totalPrice.toLocaleString('vi-VN') + 'đ';
-}
-function themBotSanPham(btn) {
-    const quantityProduct = btn.parentElement.querySelector('input[id = "quantity"]');
 
-    const bookName = btn.parentElement.parentElement.querySelector('.product-descript a').textContent;
-    const book = books.find(b => b.name === bookName);
+    item.totalPrice1Item = totalPrice; // Thêm thuộc tính tổng tiền 1 loại sản phẩm
+}
+
+function themBotSanPham(btn) {
+    const itemQuantity = btn.parentElement.querySelector('input[id = "quantity"]');
+
+    const itemName = btn.parentElement.parentElement.querySelector('.product-descript a').textContent; // Lấy tên sản phẩm
+    const item = orderItems.find(item => item.name === itemName); // Tìm sản phẩm trong giỏ đã được thêm trước đó
 
     if (btn.classList.contains('increase-btn')) {
-        quantityProduct.value++;
-    } else if (btn.classList.contains('decrease-btn') && quantityProduct.value > 1) {
-        quantityProduct.value--;
+        itemQuantity.value++;  // Bấm nút tăng thì tăng Sl
+    } else if (btn.classList.contains('decrease-btn') && itemQuantity.value > 1) {
+        itemQuantity.value--;  // Bấm nút giảm thì giảm Sl
     }
 
-    book.quantity = quantityProduct.value;
-    tongTien1SP(btn.parentElement.parentElement, book);
+    item.quantity = itemQuantity.value;
+    tongTien1SP(btn.parentElement.parentElement, item);
 }
 
-// Làm việc với mảng chứa các sách
-var books = [
+// Tạo tạm 1 cái giỏ có sẵn sách
+var orderItems = [
     { productId: 40, img: 'assets/images/sanpham40.webp', cateory: 'tinhcam', name: 'Vẽ em bằng màu nội nhớ', price: 220000 },
     { productId: 41, img: 'assets/images/sanpham41.webp', cateory: 'tinhcam', name: 'kiếp nào ta cũng tìm thấy nhau', price: 250000 },
     { productId: 42, img: 'assets/images/sanpham42.webp', cateory: 'lich su', name: 'các triều đại Việt Nam', price: 290000 },
     { productId: 43, img: 'assets/images/sanpham43.webp', cateory: 'tinhcam', name: 'Ngày xưa có một chuyện tình', price: 270000 }
 ]
-// var books = JSON.parse(localStorage.getItem('product'));
+// Lấy sản phẩm được thêm vào giỏ
+// var orderItems = JSON.parse(localStorage.getItem('productIncart'));
+
+// Hàm này thêm thuộc tính Số Lượng và Giá 1 SP cho từng SP trong giỏ
 function addQuantity() {
-    for (let i = 0; i < books.length; i++) {
-        books[i].quantity = 1;
-        books[i].totalPrice1Item = books[i].price;
+    for (let i = 0; i < orderItems.length; i++) {
+        orderItems[i].quantity = 1;
+        orderItems[i].totalPrice1Item = orderItems[i].price;
     }
 }
 addQuantity();
 
+// Hiển thị các sản phẩm được thêm trong giỏ
 function displayOrderItems() {
     var s = "";
-    for (let i = 0; i < books.length; i++) {
+    for (let i = 0; i < orderItems.length; i++) {
         s += `
                 <div class="order-item">
                     <div><input class="select-1" type="checkbox"></div>
                     <div class="text-size product-descript">
-                        <img src="` + books[i].img + `">
-                        <a>`+ books[i].name + `</a>
+                        <img src="` + orderItems[i].img + `">
+                        <a>`+ orderItems[i].name + `</a>
                     </div>
-                    <div class="text-size other">` + books[i].price.toLocaleString('vi-VN') + `đ</div>
+                    <div class="text-size other">` + orderItems[i].price.toLocaleString('vi-VN') + `đ</div>
                     <div class="text-size other alter-quantity">
                         <button class="text-size decrease-btn" onclick = "themBotSanPham(this)">-</button>
-                        <input type="number" id="quantity" value="${books[i].quantity}"  readonly>
+                        <input type="number" id="quantity" value="${orderItems[i].quantity}"  readonly>
                         <button class="text-size increase-btn" onclick = "themBotSanPham(this)">+</button>
                     </div>
                     <div class="text-size other">
-                        <span class = "total-price">` + books[i].price.toLocaleString('vi-VN') + `đ</span>
+                        <span class = "total-price">` + orderItems[i].price.toLocaleString('vi-VN') + `đ</span>
                     </div>
 
                 </div>`
@@ -415,14 +441,15 @@ function displayOrderItems() {
 
 
 // Chọn từng sản phẩm hoặc tất cả để xóa hoặc mua
-let productIsPayed = [];
+let orderItemIsPayed = [];
 
-
+// Nút lấy hết
 const selectAll = document.getElementById('select-all');
+// Nút lấy 1 cái
 const select1 = document.getElementsByClassName('select-1');
 
 function nangCapChonTatCa() { //khi chọn từng cái sản phẩm 1/ khi chọn hết rồi thì checkbox của chọn tất cả = true
-    let allChecked = true;    //                           2/ khi bỏ chọn 1 sản phẩm khi đang chọn tất cả thì ctc = false
+    let allChecked = true;    //                           2/ khi bỏ chọn 1 sản phẩm khi đang chọn tất cả thì ctấtcả = false
     for (let i = 0; i < select1.length; i++) {
         if (!select1[i].checked)
             allChecked = false;
@@ -430,29 +457,33 @@ function nangCapChonTatCa() { //khi chọn từng cái sản phẩm 1/ khi chọ
     selectAll.checked = allChecked;
 }
 
+// Chọn sản phẩm nào thì sản phẩm đó sẽ bỏ vào Mảng SP sẽ Xóa hoặc Thanh toán
 function chon1SanPham(selection) {
     let bookName = selection.parentElement.parentElement.querySelector('.product-descript a').textContent;
-    let book = books.find(book => book.name === bookName);
+    let book = orderItems.find(book => book.name === bookName);
 
-    if (selection.checked) productIsPayed.push(book);
+    if (selection.checked) orderItemIsPayed.push(book);                               //Thêm vào
     else {
-        let index = productIsPayed.findIndex(product => product.name === bookName);
-        productIsPayed.splice(index, 1);
+        let index = orderItemIsPayed.findIndex(product => product.name === bookName); //Bỏ ra
+        orderItemIsPayed.splice(index, 1);
     }
 }
 
-
+// Lấy hết vào Mảng SP sẽ Xóa hoặc Thanh toán khi chọn nút Tất cả
 function chonTatCa() {
-    if (selectAll.checked) productIsPayed = Array.from(books);
-    else productIsPayed = [];
+    // Nếu nút chọn tất cả = true. Sao chép mảng từ mảng SP được thêm vào giỏ
+    if (selectAll.checked) orderItemIsPayed = Array.from(orderItems);
+    // Ngược lại gán thành rỗng
+    else orderItemIsPayed = [];
 
+    // Gán tất cả các nút chọn 1 SP thành true nếu nút tất cả = true
     for (let i = 0; i < select1.length; i++) {
         select1[i].checked = selectAll.checked;
     }
 }
 
 
-
+//  Khi chọn sẽ kích hoạt hàm chon1SanPham(selection);
 function ganSuKienChoCheckbox() {
     const select1 = document.getElementsByClassName('select-1');
     for (let i = 0; i < select1.length; i++) {
@@ -464,41 +495,35 @@ function ganSuKienChoCheckbox() {
     }
 }
 
-
 displayOrderItems();
 ganSuKienChoCheckbox();
 
-
+// Đóng thông báo nếu chưa chọn SP nào để thanh toán
 function closeAlertNotSelect() {
-    document.querySelector('.modal').classList.add('modal-hidden');
+    document.querySelector('.modal').classList.add('hidden');
     document.querySelector('.modal .alert-cart').classList.add('hidden');
 }
+// Mở thông báo nếu chưa chọn SP nào để thanh toán
 function openAlertNotSelect(word) {
     let modal = document.querySelector('.modal');
     const alertModalBuy = modal.querySelector('.message');
     alertModalBuy.textContent = `Bạn vẫn chưa chọn sản phẩm để ${word}`;
-    document.querySelector('.modal').classList.remove('modal-hidden');
+    document.querySelector('.modal').classList.remove('hidden');
     document.querySelector('.modal .alert-cart').classList.remove('hidden');
 }
 
+// Được gọi khi ấn nút Mua Hàng.
 function muaHang() {
-    if (productIsPayed.length === 0) {
+    if (orderItemIsPayed.length === 0) {
         openAlertNotSelect("mua");
         return;
     }
 
     thanhToan();
 }
-function deleteItem() {
-    productIsPayed.forEach(product => {
-        let index = books.findIndex(book => book.name === product.name);
-        books.splice(index, 1);
-    });
-    productIsPayed.length = 0;
-}
-
+// Được gọi khi ấn nút Xóa
 function xoaKhoiGioHang() {
-    if (productIsPayed.length === 0) {
+    if (orderItemIsPayed.length === 0) {
         openAlertNotSelect("xóa");
         return;
     }
@@ -507,6 +532,14 @@ function xoaKhoiGioHang() {
 
     displayOrderItems();
     ganSuKienChoCheckbox();
+}
+// Xóa sản phẩm được chọn
+function deleteItem() {
+    orderItemIsPayed.forEach(itemPayed => {
+        let index = orderItems.findIndex(item => item.name === itemPayed.name);
+        orderItems.splice(index, 1);
+    });
+    orderItemIsPayed.length = 0;
 }
 
 
@@ -530,6 +563,7 @@ function quayLaiGioHang() {
     document.querySelector('.footer-cart-actions').classList.remove('hidden');
 }
 
+// Tạo thuộc tính và thêm cho Tóm tắt mua hàng
 function createOrderSummary() {
     orderSummary.FullName = address2Deliver.userFullName;
     orderSummary.Sdt = address2Deliver.phoneNumber;
@@ -540,7 +574,7 @@ function createOrderSummary() {
 }
 
 
-
+// Lấy tổng của 1 đơn
 function getTotalAmount(productList) {
     let totalAmount = 0;
     productList.forEach(product => {
@@ -551,20 +585,20 @@ function getTotalAmount(productList) {
     return totalAmount;
 }
 
-
+// Hiển thị những sản phẩm sẽ mua
 function displayOrderItemsIsPayed() {
     var s = "";
-    for (let i = 0; i < productIsPayed.length; i++) {
+    for (let i = 0; i < orderItemIsPayed.length; i++) {
         s += `
                 <div class="order-item">
                     <div class="text-size product-descript">
-                        <img src="` + productIsPayed[i].img + `">
-                        <a>`+ productIsPayed[i].name + `</a>
+                        <img src="` + orderItemIsPayed[i].img + `">
+                        <a>`+ orderItemIsPayed[i].name + `</a>
                     </div>
-                    <div class="text-size other">` + productIsPayed[i].price.toLocaleString('vi-VN') + `đ</div>
-                    <div class="text-size other alter-quantity">` + productIsPayed[i].quantity + `</div>
+                    <div class="text-size other">` + orderItemIsPayed[i].price.toLocaleString('vi-VN') + `đ</div>
+                    <div class="text-size other alter-quantity">` + orderItemIsPayed[i].quantity + `</div>
                     <div class="text-size other">
-                        <span class = "total-price">` + productIsPayed[i].totalPrice1Item.toLocaleString('vi-VN') + `đ</span>
+                        <span class = "total-price">` + orderItemIsPayed[i].totalPrice1Item.toLocaleString('vi-VN') + `đ</span>
                     </div>
 
                 </div>`
@@ -574,14 +608,14 @@ function displayOrderItemsIsPayed() {
         <div class = "summary">
             <div class = "total-amount">
                 <div ><strong>Tổng Tiền: </strong></div>
-                <div class = "text-total">${getTotalAmount(productIsPayed)}đ</div>
+                <div class = "text-total">${getTotalAmount(orderItemIsPayed)}đ</div>
             </div> 
         </div> 
     `;
     document.querySelector('.product-is-payed .orderItems-list').innerHTML = s;
 }
 
-
+// Chọn lựa chọn thanh toán
 function setupPaymentSelection() {
     let selections = document.querySelectorAll('.select-checkout');
 
@@ -594,6 +628,7 @@ function setupPaymentSelection() {
 }
 setupPaymentSelection();
 
+// Hiển thị bảng nhập dữ liệu khi chọn Thanh Toán Bằng Thẻ
 function showPaymentForm(method) {
     // Ẩn tất cả các form thanh toán
     const cashForm = document.querySelector('.cash-payment-form');
@@ -614,6 +649,7 @@ function showPaymentForm(method) {
     }
 }
 
+// Kiểm tra các thông tin trong thẻ đã đủ ch
 function checkInfoCardMethod() {
     let selectedMethod = document.querySelector('.select-checkout:checked').value;
 
@@ -641,6 +677,7 @@ function checkInfoCardMethod() {
     return true;
 }
 
+// Ấn nút thanh toán là xong
 function hoanTatThanhToan() {
     let selectionsCheckout = document.querySelectorAll('.select-checkout');
     let haveSelect = false;
@@ -655,19 +692,21 @@ function hoanTatThanhToan() {
         alert("Vui lòng chọn phương thức thanh toán");
         return;
     }
-    console.log(orderSummary.PaymentMethod);
+
     if (!checkInfoCardMethod()) return;
     closeCheckoutSection();
     closeNoneOrderHistory()
     createOrderSummary();
-    displayOrderItemsSummary()
+    displayOrderSummary();
+    deleteItem();               // Xóa các SP đã mua ra khỏi giỏ
 }
 
+// Đóng giao diện thanh toán
 function closeCheckoutSection() {
     document.querySelector('.checkout-section').classList.add('hidden');
 }
 
-
+//  Lấy ngày hiện tại
 function getDateNow() {
     let today = new Date();
     let day = today.getDate().toString().padStart(2, '0');
@@ -678,6 +717,7 @@ function getDateNow() {
     return currentDate;
 }
 
+// Hiển thị Tóm tắt Thanh toán
 function displayOrderSummary() {
     let userFullName = orderSummary.FullName;
     let userSDT = orderSummary.Sdt;
@@ -716,26 +756,24 @@ function displayOrderSummary() {
 
         
     `;
-
-
     document.querySelector('.order-summary').innerHTML = s;
+    displayOrderItemsSummary();
 }
 
+// Hiển thị các sản phẩm đã mua trong phần tóm tắt
 function displayOrderItemsSummary() {
-
-    displayOrderSummary();
     var s = "";
-    for (let i = 0; i < productIsPayed.length; i++) {
+    for (let i = 0; i < orderItemIsPayed.length; i++) {
         s += `
                 <div class="order-item">
                     <div class="text-size product-descript">
-                        <img src="` + productIsPayed[i].img + `">
-                        <a>`+ productIsPayed[i].name + `</a>
+                        <img src="` + orderItemIsPayed[i].img + `">
+                        <a>`+ orderItemIsPayed[i].name + `</a>
                     </div>
-                    <div class="text-size other">` + productIsPayed[i].price.toLocaleString('vi-VN') + `đ</div>
-                    <div class="text-size other alter-quantity">` + productIsPayed[i].quantity + `</div>
+                    <div class="text-size other">` + orderItemIsPayed[i].price.toLocaleString('vi-VN') + `đ</div>
+                    <div class="text-size other alter-quantity">` + orderItemIsPayed[i].quantity + `</div>
                     <div class="text-size other">
-                        <span class = "total-price">` + productIsPayed[i].totalPrice1Item.toLocaleString('vi-VN') + `đ</span>
+                        <span class = "total-price">` + orderItemIsPayed[i].totalPrice1Item.toLocaleString('vi-VN') + `đ</span>
                     </div>
 
                 </div>`
@@ -745,15 +783,15 @@ function displayOrderItemsSummary() {
         <div class = "summary">
             <div class = "total-amount">
                 <div ><strong>Tổng Tiền: </strong></div>
-                <div class = "text-total">${getTotalAmount(productIsPayed)}đ</div>
+                <div class = "text-total">${getTotalAmount(orderItemIsPayed)}đ</div>
             </div> 
         </div> 
     `;
     document.querySelector('.order-summary .product-is-payed .orderItems-list').innerHTML = s;
-    console.log(books);
     saveAsLocalStorage();
 }
 
+// Lưu vào localStorage các thuộc tính để admin làm việc xác nhận đơn
 function saveAsLocalStorage() {
     let DonHang = JSON.parse(localStorage.getItem('orderList'));
     if (DonHang === null) DonHang = [];
@@ -763,9 +801,10 @@ function saveAsLocalStorage() {
         UserID: address2Deliver.userID,
         FullName: address2Deliver.userFullName,
         Sdt: address2Deliver.phoneNumber,
-        Address: address2Deliver.addressDetail.trim,
-        OrderItems: productIsPayed,
+        Address: address2Deliver.addressDetail.trim(),
+        OrderItems: orderItemIsPayed,
         OrderDate: getDateNow(),
+        PaymentMethod: orderSummary.PaymentMethod,
         Status: 0,
     };
     console.log(new_DonHang.OrderItems[0]);
@@ -784,15 +823,20 @@ function getStatusLabel(status) {
     }
 }
 
+// Hiển thị Lịch Sử mua hàng
 function displayOrderHistory() {
     let s = '';
     const orderHistoryList = JSON.parse(localStorage.getItem('orderList'));
-
+    if (orderHistoryList === null) return;
     for (let i = 0; i < orderHistoryList.length; i++) {
         const order = orderHistoryList[i];
         let orderItems = '';
         let orderTotalPrice = 0;
         let orderStatus = getStatusLabel(order.Status);
+
+        let orderID = -1;
+        if (order.OrderID !== 'N/A') orderID = order.OrderID;
+
         order.OrderItems.forEach(item => {
             orderItems += `${item.name} x ${item.quantity}, `;
             orderTotalPrice += item.quantity * item.price;
@@ -806,19 +850,96 @@ function displayOrderHistory() {
                     ${orderItems}
                 </div>
 
-                <div>${orderTotalPrice.toLocaleString('vn-VN') || 'N/A'}đ</div>
+                <div>${orderTotalPrice.toLocaleString('vn-VN')}đ</div>
                 <div>${orderStatus}</div>
 
                 <div>
-                    <button class = "btn-detail" onclick="viewOrderDetails(${order.OrderID})">Xem</button>
+                    <button class = "btn-detail" 
+                    onclick="viewOrderDetails(${orderID})">Xem</button>
                 </div>
             </div>
         `;
     }
 
     document.querySelector('.orderHistory-list').innerHTML = s;
+    saveOrderDetail();
 }
 
-function viewOrderDetails(orderId) {
-    console.log(`Xem chi tiết đơn hàng với ID: ${orderId}`);
+// Chi tiết Đơn hàng đã mua
+function saveOrderDetail() {
+    let s = '';
+    const orderList = JSON.parse(localStorage.getItem('orderList'));
+    if (orderList === null) return;
+
+    for (let i = 0; i < orderList.length; i++) {
+        const orderDetail = orderList[i];
+        let orderItem = '';
+        let orderTotalPrice = 0;
+        orderDetail.OrderItems.forEach(item => {
+            orderItem += `
+                <li>${item.name} - Số lượng: ${item.quantity} - Giá: ${item.price.toLocaleString('vn-VN')}đ</li>
+            `;
+            orderTotalPrice += item.quantity * item.price;
+        })
+
+        s += `
+            <div class="order-detail hidden">
+                <div class = "orderID">
+                    <div class = "title">Mã đơn hàng: </div>
+                    <div class = "id">${orderDetail.OrderID}</div>
+                </div>
+                <p><strong>Tên khách hàng: </strong>${orderDetail.FullName}</p>
+                <p><strong>Số điện thoại: </strong>${orderDetail.Sdt}</p>
+                <p><strong>Địa chỉ giao hàng: </strong>${orderDetail.Address}</p>
+                <p><strong>Ngày đặt: </strong>${orderDetail.OrderDate}</p>
+                <p><strong>Phương thức thanh toán: </strong>${orderDetail.PaymentMethod}</p>
+                <p><strong>Trạng thái: </strong>${getStatusLabel(orderDetail.Status)}</p>
+                <div class="orderItem-list">
+                    <h2>Danh sách sản phẩm</h2>
+                    <ul class="orderItem">${orderItem}</ul>
+                </div>
+                <p class="totalAmount"><strong>Tổng tiền: ${orderTotalPrice.toLocaleString('vn-VN')}đ</strong></p>
+                <div class = "btn-close">
+                    <button onclick = "closeOrderDetail()">Đóng</button>
+                </div>
+            </div>
+        `;
+    }
+
+    document.querySelector('.modal-order-detail').innerHTML = s;
 }
+
+//  Đóng chi tiết mua hàng
+function closeOrderDetail() {
+    // Ẩn modal chính
+    document.querySelector('.modal').classList.add('hidden');
+    document.querySelector('.modal-order-detail').classList.add('hidden');
+
+    // Ẩn tất cả các chi tiết đơn hàng
+    let ordersDetail = document.querySelectorAll('.order-detail');
+    ordersDetail.forEach(order => {
+        order.classList.add('hidden');
+    });
+    console.log("Đã đóng chi tiết đơn hàng.");
+}
+
+//  Hiển thị Chi tiết mua hàng
+function viewOrderDetails(orderId) {
+    if (orderId === -1) {
+        alert("Đơn hàng này đang chờ xử lý. Vui lòng thử lại sau.");
+        return;
+    }
+    document.querySelector('.modal').classList.remove('hidden');
+    document.querySelector('.modal-order-detail').classList.remove('hidden');
+    let ordersDetail = document.querySelectorAll('.order-detail');
+    let ordDetailNeedOpen;
+    ordersDetail.forEach(order => {
+        if (parseInt(order.querySelector('.id').textContent) === orderId) {
+            ordDetailNeedOpen = order;
+        }
+    });
+    ordDetailNeedOpen.classList.remove('hidden');
+}
+// ===========================================================--------------------=========================================================
+// ===========================================================      End Cart      =========================================================
+// ===========================================================--------------------=========================================================
