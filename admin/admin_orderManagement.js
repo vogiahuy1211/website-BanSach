@@ -1,4 +1,3 @@
-// Hàm khởi tạo sự kiện click cho menu
 function initMenuEvents() {
     const menuItems = document.querySelectorAll('.nav_left-menu');
     for (let i = 0; i < menuItems.length; i++) {
@@ -7,7 +6,7 @@ function initMenuEvents() {
                 menuItems[j].classList.remove('active');
             }
             this.classList.add('active');
-            toggleMainContent(this.id);
+            toggleMainContent(this.id);  // Gọi toggle để hiển thị nội dung tương ứng
         });
     }
 }
@@ -15,10 +14,14 @@ function initMenuEvents() {
 // Hàm ẩn/hiện nội dung chính
 function toggleMainContent(clickedId) {
     const mainContent = document.querySelector(".Huy_maincontent");
+
+    // Ẩn nội dung đơn hàng nếu không phải "Đơn hàng"
     if (clickedId === "donHangLink") {
-        mainContent.style.display = "block";
+        mainContent.style.display = "block"; // Hiển thị danh sách đơn hàng
+        let orderList = JSON.parse(localStorage.getItem("orderList")) || [];
+        hienThiDonHang(orderList);  // Hiển thị danh sách đơn hàng
     } else {
-        mainContent.style.display = "none";
+        mainContent.style.display = "none";  // Ẩn nếu không phải "Đơn hàng"
     }
 }
 
@@ -278,7 +281,10 @@ document.addEventListener("DOMContentLoaded", () => {
     initFilterModal();
     let orderList = JSON.parse(localStorage.getItem("orderList")) || [];
     updateOrderID(orderList);
+
+    // hienThiDonHang(orderList);
     hienThiDonHang(orderList);
+
 });
 
 
