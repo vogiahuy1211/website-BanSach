@@ -764,4 +764,79 @@ body {
     padding: 10px 3px;
 }
 
+.modal-order-detail {
+    width: 50%;
+}
+
+.order-detail {
+    width: 100%;
+    background-color: white;
+    padding: 25px;
+    padding-bottom: 50px;
+    border-radius: 12px;
+}
+
+.order-detail p {
+    margin-top: 5px;
+    padding: 10px 0;
+}
+
+.order-detail .orderItem-list {
+    padding-top: 15px;
+}
+
+.order-detail .totalAmount {
+    color: #FFBF00;
+    border-top: 1px solid rgba(0, 0, 0, 0.3);
+    margin-bottom: 10px;
+}
+
+.order-detail .orderItem-list h2 {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+    margin-bottom: 5px;
+    color: #2980b9;
+}
+
+.orderItem-list .orderItem {
+    padding-top: 15px;
+    padding-left: 20px;
+    overflow-y: auto;
+    max-height: 200px;
+}
+
+.order-detail button {
+    padding: 5px;
+    font-size: 20px;
+    cursor: pointer;
+    background-color: #FFBF00;
+    border: none;
+    border-radius: 5px;
+    float: right;
+}
+
+.order-detail button:hover {
+    background-color: #FFD34A;
+}
+
+.order-detail button:active {
+    background-color: #CC9900;
+}
+
+.order-detail .orderID {
+    display: flex;
+}
+
+.order-detail .title {
+    font-weight: bolder;
+}
+
+.order-detail .id {
+    margin-left: 10px;
+}
+
+.orderItem-list .orderItem li {
+    padding-left: 10px;
+    margin-bottom: 30px;
+}
+
 /* End Modal */
