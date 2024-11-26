@@ -23,12 +23,22 @@ function openSelectAddress() {
 }
 
 // Lấy dữ liệu từ User khi đăng nhập
+getLocalStorageUserLogin()
 function getLocalStorageUserLogin() {
     userLogin = JSON.parse(localStorage.getItem('userLogin'));
     document.querySelector('#idName').value = userLogin.fullname;
     document.querySelector('#idPhoneNumber').value = userLogin.phoneNumber;
+
+    let province = getProvinceNameByID(userLogin.address2);
+    let district = getDistrictNameByID(userLogin.address3);
+    let ward = getWardNameByID(userLogin.address4);
+    let AddressDetail = userLogin.address1 + ", " + ward + ", " + district + ", " + province;
+
     addressInfoList = [
-        { userID: userLogin.userId, userFullName: userLogin.fullname, phoneNumber: userLogin.phoneNumber, addressDetail: userLogin.address1 },
+        {
+            userID: userLogin.userId, userFullName: userLogin.fullname, phoneNumber: userLogin.phoneNumber,
+            addressDetail: AddressDetail
+        },
     ];
     address2Deliver = addressInfoList[0];
     changeDeliveInfo(); // Dùng để đổi địa chỉ hiển thị ở Địa Chỉ Nhận Hàng
@@ -580,8 +590,6 @@ function getTotalAmount(productList) {
     productList.forEach(product => {
         totalAmount += product.price * product.quantity;
     })
-    totalAmount = totalAmount.toLocaleString('vi-VN');
-
     return totalAmount;
 }
 
@@ -608,7 +616,7 @@ function displayOrderItemsIsPayed() {
         <div class = "summary">
             <div class = "total-amount">
                 <div ><strong>Tổng Tiền: </strong></div>
-                <div class = "text-total">${getTotalAmount(orderItemIsPayed)}đ</div>
+                <div class = "text-total">${getTotalAmount(orderItemIsPayed).toLocaleString('vn-VN')}đ</div>
             </div> 
         </div> 
     `;
@@ -783,7 +791,7 @@ function displayOrderItemsSummary() {
         <div class = "summary">
             <div class = "total-amount">
                 <div ><strong>Tổng Tiền: </strong></div>
-                <div class = "text-total">${getTotalAmount(orderItemIsPayed)}đ</div>
+                <div class = "text-total">${getTotalAmount(orderItemIsPayed).toLocaleString('vn-VN')}đ</div>
             </div> 
         </div> 
     `;
@@ -797,15 +805,16 @@ function saveAsLocalStorage() {
     if (DonHang === null) DonHang = [];
 
     let new_DonHang = {
-        OrderID: "N/A",
+        OrderID: (DonHang.length + 1) + "",
         UserID: address2Deliver.userID,
         FullName: address2Deliver.userFullName,
         Sdt: address2Deliver.phoneNumber,
         Address: address2Deliver.addressDetail.trim(),
         OrderItems: orderItemIsPayed,
+        TotalOrderItems: getTotalAmount(orderItemIsPayed),
         OrderDate: getDateNow(),
         PaymentMethod: orderSummary.PaymentMethod,
-        Status: 0,
+        Status: "0",
     };
     console.log(new_DonHang.OrderItems[0]);
     DonHang.push(new_DonHang);
@@ -815,27 +824,25 @@ function saveAsLocalStorage() {
 // Hàm chuyển đổi trạng thái số thành chuỗi 
 function getStatusLabel(status) {
     switch (status) {
-        case 0: return "Chưa xử lý";
-        case 1: return "Đã xử lý";
-        case 2: return "Đã giao";
-        case 3: return "Đã hủy";
+        case "0": return "Chưa xử lý";
+        case "1": return "Đã xử lý";
+        case "2": return "Đã giao";
+        case "3": return "Đã hủy";
         default: return "Không xác định";
     }
 }
-
 // Hiển thị Lịch Sử mua hàng
 function displayOrderHistory() {
     let s = '';
     const orderHistoryList = JSON.parse(localStorage.getItem('orderList'));
     if (orderHistoryList === null) return;
     for (let i = 0; i < orderHistoryList.length; i++) {
+        if (orderHistoryList[i].UserID !== userLogin.userId) continue;
         const order = orderHistoryList[i];
         let orderItems = '';
         let orderTotalPrice = 0;
         let orderStatus = getStatusLabel(order.Status);
 
-        let orderID = -1;
-        if (order.OrderID !== 'N/A') orderID = order.OrderID;
 
         order.OrderItems.forEach(item => {
             orderItems += `${item.name} x ${item.quantity}, `;
@@ -844,25 +851,93 @@ function displayOrderHistory() {
 
         s += `
             <div class="orderHistory">
-                <div>${order.OrderID}</div>
+                <div class = "orderID">${order.OrderID}</div>
 
-                <div class="product">
-                    ${orderItems}
-                </div>
+                <div class="product">${orderItems}</div>
 
                 <div>${orderTotalPrice.toLocaleString('vn-VN')}đ</div>
-                <div>${orderStatus}</div>
+                <div class = "orderStatus">${orderStatus}</div>
 
-                <div>
-                    <button class = "btn-detail" 
-                    onclick="viewOrderDetails(${orderID})">Xem</button>
+                <div class = "btn-detail">
+
                 </div>
             </div>
         `;
     }
 
     document.querySelector('.orderHistory-list').innerHTML = s;
+
+    displayBtnWatchCancel();
     saveOrderDetail();
+}
+
+function displayBtnWatchCancel() {
+
+    // Lấy tất cả các đơn hàng
+    let orderHistory = document.querySelectorAll('.orderHistory-list .orderHistory');
+    orderHistory.forEach(order => {
+        // Lấy orderID
+        let orderID = order.querySelector('.orderID').textContent.trim();
+        console.log(orderID);
+        // Lấy trạng thái đơn hàng
+        let orderStatus = order.querySelector('.orderStatus').textContent.trim();
+
+
+        // Tạo nút Xem
+        let btn_Watch = `
+            <button class="btn-watch" 
+            onclick="viewOrderDetails('`+ orderID + `')">Xem</button>
+        `;
+
+        // Tạo nút Hủy
+        let btn_Cancel = `
+            <div class="distance"></div>
+            <div class="display-btn-cancel">
+                <button class="btn-cancel" 
+                onclick="cancelOrder('`+ orderID + `')">Hủy</button>
+            </div>
+        `;
+
+        // Lấy container của các nút
+        let btnContainer = order.querySelector('.btn-detail');
+
+        // Hiển thị các nút dựa trên trạng thái
+        if (orderStatus === "Chưa xử lý" || orderStatus === "Đã xử lý") {
+            btnContainer.innerHTML = btn_Watch + btn_Cancel;
+        } else {
+            btnContainer.innerHTML = btn_Watch;
+        }
+    });
+}
+
+// Hủy đơn hàng sẽ chuyển trạng thái đơn hàng thành Hủy
+function cancelOrder(orderID) {
+    let orderHistory
+        = document.querySelectorAll('.orderHistory-list .orderHistory');
+
+    orderHistory.forEach(order => {
+        // Lấy orderID
+        let orderIDHistory = order.querySelector('.orderID').textContent.trim();
+        console.log(orderIDHistory);
+        console.log(orderID);
+        if (orderIDHistory === orderID) {
+            order.querySelector('.orderStatus').textContent = "Đã hủy";
+            // Đổi status trong LocalStorage!!!
+            updateCancelStatus(orderID);
+        }
+    })
+}
+function updateCancelStatus(orderID) {
+    const orderList = JSON.parse(localStorage.getItem("orderList"));
+    console.log(orderList);
+    orderList.forEach(order => {
+        if (orderID === order.OrderID) {
+            order.Status = "3";
+            localStorage.setItem("orderList", JSON.stringify(orderList));
+            alert("Đã Hủy Thành Công Đơn Hàng " + orderID);
+            displayOrderHistory();
+        }
+    })
 }
 
 // Chi tiết Đơn hàng đã mua
@@ -924,17 +999,14 @@ function closeOrderDetail() {
 }
 
 //  Hiển thị Chi tiết mua hàng
-function viewOrderDetails(orderId) {
-    if (orderId === -1) {
-        alert("Đơn hàng này đang chờ xử lý. Vui lòng thử lại sau.");
-        return;
-    }
+function viewOrderDetails(orderID) {
+
     document.querySelector('.modal').classList.remove('hidden');
     document.querySelector('.modal-order-detail').classList.remove('hidden');
     let ordersDetail = document.querySelectorAll('.order-detail');
     let ordDetailNeedOpen;
     ordersDetail.forEach(order => {
-        if (parseInt(order.querySelector('.id').textContent) === orderId) {
+        if (order.querySelector('.id').textContent === orderID) {
             ordDetailNeedOpen = order;
         }
     });
