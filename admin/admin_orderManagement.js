@@ -1,3 +1,5 @@
+
+
 function initMenuEvents() {
     const menuItems = document.querySelectorAll('.nav_left-menu');
     for (let i = 0; i < menuItems.length; i++) {
@@ -6,7 +8,7 @@ function initMenuEvents() {
                 menuItems[j].classList.remove('active');
             }
             this.classList.add('active');
-            toggleMainContent(this.id);  // Gọi toggle để hiển thị nội dung tương ứng
+            toggleMainContent(this.id); 
         });
     }
 }
@@ -14,14 +16,12 @@ function initMenuEvents() {
 // Hàm ẩn/hiện nội dung chính
 function toggleMainContent(clickedId) {
     const mainContent = document.querySelector(".Huy_maincontent");
-
-    // Ẩn nội dung đơn hàng nếu không phải "Đơn hàng"
     if (clickedId === "donHangLink") {
-        mainContent.style.display = "block"; // Hiển thị danh sách đơn hàng
+        mainContent.style.display = "block"; 
         let orderList = JSON.parse(localStorage.getItem("orderList")) || [];
-        hienThiDonHang(orderList);  // Hiển thị danh sách đơn hàng
+        hienThiDonHang(orderList); 
     } else {
-        mainContent.style.display = "none";  // Ẩn nếu không phải "Đơn hàng"
+        mainContent.style.display = "none";  
     }
 }
 
@@ -53,10 +53,10 @@ function hienThiDonHang(orderList) {
             <td>${order.OrderItems.reduce((total, item) => total + item.price * item.quantity, 0).toLocaleString('vi-VN')} đ</td>
             <td class="centering">
                 <select class="status-dropdown" onchange="changeSelectColor(this)">
-                    <option value="0" ${order.Status === 0 ? "selected" : ""}>Chưa xử lý</option>
-                    <option value="1" ${order.Status === 1 ? "selected" : ""}>Đã xử lý</option>
-                    <option value="2" ${order.Status === 2 ? "selected" : ""}>Đã giao</option>
-                    <option value="3" ${order.Status === 3 ? "selected" : ""}>Đã hủy</option>
+                    <option value="0" ${order.Status === "0" ? "selected" : ""}>Chưa xử lý</option>
+                    <option value="1" ${order.Status === "1" ? "selected" : ""}>Đã xử lý</option>
+                    <option value="2" ${order.Status === "2" ? "selected" : ""}>Đã giao</option>
+                    <option value="3" ${order.Status === "3" ? "selected" : ""}>Đã hủy</option>
                 </select>
             </td>
             <td class="centering"><button class="detail-button" onclick="xemChiTiet(${order.OrderID - 1})">Xem</button></td>
@@ -66,31 +66,76 @@ function hienThiDonHang(orderList) {
         const dropdown = tr.querySelector(".status-dropdown");
         changeSelectColor(dropdown);
 
+        // Thay đổi trạng thái đơn hàng
         dropdown.addEventListener("change", () => {
-            updateOrderStatus(orderList, order.OrderID - 1, parseInt(dropdown.value));
+            const previousStatus = order.Status; 
+            const newStatus = dropdown.value;
+        
+            updateOrderStatus(orderList, order.OrderID - 1, newStatus);
+            if (order.Status !== newStatus) {
+                dropdown.value = previousStatus;
+                changeSelectColor(dropdown); 
+            }
         });
+
+       
     }
 }
 
 // Hàm cập nhật trạng thái đơn hàng
 function updateOrderStatus(orderList, index, newStatus) {
-    if (orderList[index].Status !== newStatus) {
-        orderList[index].Status = newStatus;
-        localStorage.setItem("orderList", JSON.stringify(orderList));
-        console.log(`Cập nhật trạng thái đơn hàng ${orderList[index].OrderID} thành công: ${newStatus}`);
-        alert(`Cập nhật trạng thái đơn hàng ${orderList[index].OrderID} thành công thành: ${getStatusLabel(newStatus)}`);
+    const currentStatus = orderList[index].Status;
+    
+
+    // Không được thay đổi nếu đơn hàng "đã giao" hoặc "đã hủy"
+    if (currentStatus === "2" || currentStatus === "3") {
+        alert(`Không thể cập nhật trạng thái đơn hàng ${orderList[index].OrderID} vì trạng thái hiện tại là "${getStatusLabel(currentStatus)}".`);
+        return;
+    }
+
+    if (currentStatus === "1" && newStatus === "0") {
+        alert(`Không thể thay đổi trạng thái đơn hàng ${orderList[index].OrderID} từ "Đã xử lý" về "Chưa xử lý".`);
+        return;
+    }
+
+    if (confirm(`Bạn có chắc chắn muốn thay đổi trạng thái đơn hàng ${orderList[index].OrderID} từ "${getStatusLabel(currentStatus)}" thành "${getStatusLabel(newStatus)}"?`)) {
+        if (currentStatus !== newStatus) {
+            orderList[index].Status = newStatus;
+            localStorage.setItem("orderList", JSON.stringify(orderList)); 
+            alert(`Cập nhật trạng thái đơn hàng ${orderList[index].OrderID} thành công thành: ${getStatusLabel(newStatus)}`);
+        } else {
+            alert(`Trạng thái đơn hàng ${orderList[index].OrderID} đã là "${getStatusLabel(currentStatus)}". Không cần cập nhật.`);
+        }
+    } else {
+        alert(`Đơn hàng ${orderList[index].OrderID} vẫn giữ nguyên trạng thái.`);
     }
 }
+
 
 // Hàm chuyển đổi trạng thái số thành chuỗi 
 function getStatusLabel(status) {
     switch (status) {
-        case 0: return "Chưa xử lý";
-        case 1: return "Đã xử lý";
-        case 2: return "Đã giao";
-        case 3: return "Đã hủy";
+        case "0": return "Chưa xử lý";
+        case "1": return "Đã xử lý";
+        case "2": return "Đã giao";
+        case "3": return "Đã hủy";
         default: return "Không xác định";
     }
+}
+
+// Thay đổi màu chữ theo trạng thái
+function changeSelectColor(selectElement) {
+    const selectedValue = parseInt(selectElement.value);
+    let color = "black";
+
+    switch (selectedValue) {
+        case 0: color = "orange"; break;
+        case 1: color = "blue"; break;
+        case 2: color = "green"; break;
+        case 3: color = "red"; break;
+    }
+
+    selectElement.style.color = color;
 }
 
 // Hàm hiển thị chi tiết đơn hàng
@@ -191,12 +236,13 @@ function locDonHangTheoTrangThai(orderList, selectedStatus) {
     if (selectedStatus === "" || selectedStatus === undefined) {
         return orderList;
     }
-    selectedStatus = parseInt(selectedStatus);
+
     const filteredOrders = [];
 
     for (let i = 0; i < orderList.length; i++) {
-        if (orderList[i].Status === selectedStatus) {
-            filteredOrders.push(orderList[i]);
+        const order = orderList[i];
+        if (order.Status === selectedStatus) {
+            filteredOrders.push(order);
         }
     }
 
@@ -216,7 +262,6 @@ function locDonHangTheoDiaChi(orderList, userAccountList) {
 
     const filteredOrders = []; 
 
-    // Duyệt qua tất cả các đơn hàng trong orderList bằng vòng lặp for
     for (let i = 0; i < orderList.length; i++) {
         const order = orderList[i];
         const user = getUserByOrderID(order, userAccountList);  
@@ -253,6 +298,9 @@ function filterOrders() {
     hienThiDonHang(filteredOrders);
 }
 
+
+
+
 // Hàm chuyển đổi ngày để đúng form so sánh
 function convertToDateFormat(dateString, isFromDate = false) {
     if (isFromDate) {
@@ -264,47 +312,15 @@ function convertToDateFormat(dateString, isFromDate = false) {
     }
 }
 
-// Hàm cập nhật OrderID cho các đơn hàng
-function updateOrderID(orderList) {
-    for (let i = 0; i < orderList.length; i++) {
-        const order = orderList[i];
-        if (!order.OrderID || order.OrderID === "N/A") {
-            order.OrderID = i + 1;
-        }
-    }
-    localStorage.setItem("orderList", JSON.stringify(orderList));
-}
+
 
 // Khởi tạo tất cả chức năng khi Load
 document.addEventListener("DOMContentLoaded", () => {
     initMenuEvents();
     initFilterModal();
     let orderList = JSON.parse(localStorage.getItem("orderList")) || [];
-    updateOrderID(orderList);
-
-    // hienThiDonHang(orderList);
-    hienThiDonHang(orderList);
-
+   
 });
-
-
-
-// Thay đổi màu chữ theo trạng thái
-function changeSelectColor(selectElement) {
-    const selectedValue = parseInt(selectElement.value);
-    let color = "black";
-
-    switch (selectedValue) {
-        case 0: color = "orange"; break;
-        case 1: color = "blue"; break;
-        case 2: color = "green"; break;
-        case 3: color = "red"; break;
-    }
-
-    selectElement.style.color = color;
-}
-
-
 
 // Hàm để khởi tạo các tỉnh vào dropdown
 function populateProvinces() {
