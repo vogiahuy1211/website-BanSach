@@ -547,7 +547,7 @@ body {
     justify-content: center;
 }
 
-.orderHistory .btn-detail {
+.orderHistory .btn-watch {
     background-color: #3498db;
     border: none;
     border-radius: 5px;
@@ -556,14 +556,41 @@ body {
     cursor: pointer;
 }
 
-.orderHistory .btn-detail:hover {
+.orderHistory .btn-watch:hover {
     background-color: #4a9fea;
 }
 
-.orderHistory .btn-detail:active {
+.orderHistory .btn-watch:active {
     background-color: #2e86c1;
 }
 
+.orderHistory .btn-cancel {
+    background-color: red;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    padding: 7px 14px;
+    cursor: pointer;
+}
+
+.orderHistory .btn-cancel:hover {
+    background-color: #FF6666;
+}
+
+.orderHistory .btn-cancel:active {
+    background-color: #CC0000;
+}
+
+.btn-detail .display-btn-cancel {
+    border: none;
+    padding: 0;
+}
+
+
+.btn-detail .distance{
+    margin: 0px 5px;
+    padding: 0;
+}
 /* End History-Cart */
 /* End Right-Content */
 
