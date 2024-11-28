@@ -1,6 +1,8 @@
 // ===========================================================-----------------------------=========================================================
 // ===========================================================      Start Address Cart     =========================================================
 // ===========================================================-----------------------------=========================================================
+
+
 let userLogin = {};
 let addressInfoList = [];
 let address2Deliver = {};
@@ -8,6 +10,7 @@ let address2Deliver = {};
 function closeSelectAddress() {
     document.querySelector('.modal').classList.add('hidden');
     document.querySelector('.select-address').classList.add('hidden');
+
 }
 // Mở ô chọn địa chỉ 
 function openSelectAddress() {
@@ -34,7 +37,7 @@ function getLocalStorageUserLogin() {
     addressInfoList = [
         {
             userID: userLogin.userId, userFullName: userLogin.fullname, phoneNumber: userLogin.phoneNumber,
-            addressDetail: AddressDetail
+            addressDetail: AddressDetail, province: userLogin.address2, district: userLogin.address3, ward: userLogin.address4
         },
     ];
     address2Deliver = addressInfoList[0];
@@ -807,6 +810,9 @@ function saveAsLocalStorage() {
         FullName: address2Deliver.userFullName,
         Sdt: address2Deliver.phoneNumber,
         Address: address2Deliver.addressDetail.trim(),
+        Province: address2Deliver.province,
+        District: address2Deliver.district,
+        Ward: address2Deliver.ward,
         OrderItems: orderItemIsPayed,
         TotalOrderItems: getTotalAmount(orderItemIsPayed),
         OrderDate: getDateNow(),
