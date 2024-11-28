@@ -1,8 +1,6 @@
 // ===========================================================-----------------------------=========================================================
 // ===========================================================      Start Address Cart     =========================================================
 // ===========================================================-----------------------------=========================================================
-
-
 let userLogin = {};
 let addressInfoList = [];
 let address2Deliver = {};
@@ -10,7 +8,6 @@ let address2Deliver = {};
 function closeSelectAddress() {
     document.querySelector('.modal').classList.add('hidden');
     document.querySelector('.select-address').classList.add('hidden');
-
 }
 // Mở ô chọn địa chỉ 
 function openSelectAddress() {
