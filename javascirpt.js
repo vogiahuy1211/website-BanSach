@@ -170,6 +170,7 @@ function createnewbook() {
     <div class="info-book price"> <i class="fas fa-coins newcoin"></i>giá: ${newbooks[i].price}Đ</div>`
         arrnewproduct[i].innerHTML = s;
     }
+    console.log('tạo sách mới');
 }
 function changePage1(pageNumber) {
     // Lấy tất cả các button có class "page-item"
@@ -271,18 +272,25 @@ function showproduct (page,arrdisplay1){
         </div>`;
         }
         renderproduct.innerHTML=s;
-      
+        console.log('đã chạy');
 }    
-
-
-window.onload = function() {
-    // Các hàm bạn muốn gọi khi trang tải xong
+window.addEventListener('load', function () {
     createProduct();
     createnewbook();
+    console.log('Nút Close không tìm thấyưetvttbetty');
     rederpage('all'); 
     resetActivePage();
-   // Ví dụ, mảng arrproducts đã được xác định
-}
+});
+
+// window.onload = function() {
+//     // Các hàm bạn muốn gọi khi trang tải xong
+//     createProduct();
+//     createnewbook();
+//     console.log('Nút Close không tìm thấyưetvttbetty');
+//     rederpage('all'); 
+//     resetActivePage();
+//    // Ví dụ, mảng arrproducts đã được xác định
+// }
 
 
 function changecategory (category){

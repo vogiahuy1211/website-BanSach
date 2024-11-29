@@ -133,6 +133,144 @@
     <img class="thanhtoan" src="/assets/images/thanhtoan.webp" alt="">
     <img class="thanhtoan2" src="/assets/images/thanhtoan2.webp" alt="">
 </div></div>
+<div class="modal">
+    <div class="login-container">
+        <div class="close-btn">&times;</div>
+        <h2>Đăng nhập</h2>
+        <div class="tab-container">
+          <div class="tab active-tab" onclick="showLogin()">Đăng nhập</div>
+          <div class="tab" onclick="showRegister()">Đăng kí</div>
+        </div>
+        <div id="login-form">
+          <div class="input-group">
+            <input type="text" id="username" placeholder="Tên đăng nhập" />
+          </div>
+          <div class="input-group">
+            <input type="password" id="password" placeholder="Mật khẩu" />
+          </div>
+          <a href="#" class="forgot-password">Quên mật khẩu ?</a>
+          <button class="login-btn" onclick="login()">Đăng nhập</button>
+        </div>
+        <div id="register-form" style="display: none">
+          <div class="input-group">
+            <input 
+              type="text" 
+              id="register-fullname" 
+              placeholder="Họ và tên" 
+            />
+            <span class="form-message-fullname form-message"></span>
+          </div>
+          <div class="input-group">
+            <input
+              type="text"
+              id="register-username"
+              placeholder="Tên đăng nhập"
+            />
+          </div>
+          <div class="input-group">
+            <input
+              type="password"
+              id="register-password"
+              placeholder="Mật khẩu"
+            />
+            <span class="form-message-password form-message"></span>
+          </div>
+          <div class="input-group">
+            <input
+              type="password"
+              id="confirm-password"
+              placeholder="Nhập lại mật khẩu"
+            />
+            <span class="form-message-password-confi form-message"></span>
+          </div>
+          <div class="input-group">
+            <input type="text" id="phone-number" placeholder="Số điện thoại" />
+            <span class="form-message-phone form-message"></span>
+          </div>
+          <button class="login-btn" onclick="register()">Đăng kí</button>
+        </div>
+      </div>
+  </div>
+<!--Thông tin tài khoản-->
+<div class="modal1" id="account-user">
+  <div class="main-account">
+      <div class="main-account-header">
+          <h3>Thông tin tài khoản của bạn</h3>
+          <p>Quản lý thông tin để bảo mật tài khoản</p>
+      </div>
+      <div class="main-account-body">
+          <div class="main-account-body-col">
+              <form action="" class="info-user">
+                  <div class="form-group">
+                      <label for="infoname" class="form-label">Họ và tên</label>
+                      <input class="form-control" type="text" name="infoname" id="infoname" placeholder="">
+                  </div>
+                  <div class="form-group">
+                      <label for="infophone" class="form-label">Số điện thoại</label>
+                      <input class="form-control" type="text" name="infophone" id="infophone" disabled="true"
+                          placeholder="">
+                  </div>
+                  <div class="form-group">
+                      <label for="infoemail" class="form-label">Email</label>
+                      <input class="form-control" type="email" name="infoemail" id="infoemail"
+                          placeholder="Thêm địa chỉ email của bạn">
+                      <span class="inforemail-error form-message"></span>
+                  </div>
+                  <div class="form-group">
+                      <label for="infoaddress" class="form-label">Địa chỉ</label>
+                      <input class="form-control" type="text" name="infoaddress" id="infoaddress"
+                          placeholder="Thêm địa chỉ giao hàng của bạn">
+                  </div>
+                  <div class="address">
+                    <select id="provinces" onchange="populateDistricts()">
+                        <option value="">Chọn Tỉnh / Thành phố</option>
+                    </select>
+        
+                    <select id="districts" onchange="populateWards()">
+                        <option value="">Chọn Quận / Huyện</option>
+                    </select>
+        
+                    <select id="wards">
+                        <option value="">Chọn Phường / Xã</option>
+                    </select>
+                  </div>
+              </form>
+          </div>
+          <div class="main-account-body-col">
+              <form action="" class="change-password">
+                  <div class="form-group">
+                      <label class="form-label w60">Mật khẩu hiện tại</label>
+                      <input class="form-control" type="password" name="" id="password-cur-info"
+                          placeholder="Nhập mật khẩu hiện tại">
+                      <span class="password-cur-info-error form-message"></span>
+                  </div>
+                  <div class="form-group">
+                      <label class="form-label w60">Mật khẩu mới </label>
+                      <input class="form-control" type="password" name="" id="password-after-info"
+                          placeholder="Nhập mật khẩu mới">
+                      <span class="password-after-info-error form-message"></span>
+                  </div>
+                  <div class="form-group">
+                      <label class="form-label">Xác nhận mật khẩu mới</label>
+                      <input class="form-control" type="password" name="" id="password-comfirm-info"
+                          placeholder="Nhập lại mật khẩu mới">
+                      <span class="password-after-comfirm-error form-message"></span>
+                  </div>
+              </form>
+          </div>
+          <div class="main-account-body-row">
+              <div>
+                  <button id="save-info-user" onclick="changeInformation()"><i
+                          class="fa-regular fa-floppy-disk"></i> Lưu thay đổi</button>
+              </div>
+              <div>
+                  <button id="save-password" onclick="changePassword()"><i class="fa-solid fa-key"></i> Đổi
+                      mật khẩu</button>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>
     <script src="javascirpt.js"></script>
     <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
     <script src="main.js"></script>

@@ -1,9 +1,55 @@
 
+"use strict";
 
-// ĐƯA LÊN 
+// Tải sản phẩm từ localStorage
 const productsFromLocal = JSON.parse(localStorage.getItem('product')) || [];
+const pageSize = 8;
 
-const pageSize = 8; 
+// Gợi ý hiển thị sản phẩm
+function showSearchSuggestions(searchTerm) {
+  const searchResultsContainer = document.getElementById("show-product");
+  const showProductContainer = searchResultsContainer.querySelector('#show-product');
+  searchResultsContainer.innerHTML = ''; // Xóa nội dung hiện tại
+
+  // Lọc các sản phẩm phù hợp với từ khóa
+  const filteredProducts = productsFromLocal.filter(product =>
+      product.name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+  // Nếu không có sản phẩm phù hợp
+  if (filteredProducts.length === 0 && searchTerm.trim() !== '') {
+      const noResultsMessage = document.createElement('div');
+      noResultsMessage.classList.add('no-results');
+      noResultsMessage.innerText = 'Không có gợi ý phù hợp.';
+      searchResultsContainer.appendChild(noResultsMessage);
+      return;
+  }
+
+  // Hiển thị danh sách sản phẩm phù hợp
+  filteredProducts.slice(0, 5).forEach(product => { // Giới hạn gợi ý 5 sản phẩm
+      const suggestionItem = document.createElement('div');
+      suggestionItem.classList.add('search-suggestion');
+      suggestionItem.innerHTML = `
+          <img src="${product.src}" alt="${product.name}" class="suggestion-img">
+          <div class="suggestion-info">
+              <p class="suggestion-name">${product.name}</p>
+              <p class="suggestion-price">${product.price}Đ</p>
+          </div>
+      `;
+      suggestionItem.addEventListener('click', () => {
+          // Chọn sản phẩm và cập nhật ô tìm kiếm
+          document.querySelector('.search-bar input').value = product.name;
+          searchResultsContainer.innerHTML = ''; // Ẩn gợi ý
+          searchProducts(); // Tìm kiếm sản phẩm
+      });
+      searchResultsContainer.appendChild(suggestionItem);
+  });
+}
+// Gắn sự kiện cho ô tìm kiếm
+document.querySelector('.search-bar input').addEventListener('input', (event) => {
+  const searchTerm = event.target.value.trim();
+  showSearchSuggestions(searchTerm);
+});
 
 // Hiển thị sản phẩm và phân trang
 function displayFilteredProducts(filteredProducts, currentPage) {
@@ -100,7 +146,8 @@ document.getElementById('reset-search').addEventListener('click', function(event
   resetSearch();  
 }); // ĐƯA ĐẾN ĐÂY 
 
-"use strict";
+
+
 
 document.addEventListener("DOMContentLoaded", function () {
   const swiper = new Swiper(".mySwiper", {
@@ -122,25 +169,30 @@ document.addEventListener("DOMContentLoaded", function () {
 //
 
 
-document.addEventListener("DOMContentLoaded", function () {
-  const user = localStorage.getItem("currentUser");
 
+document.addEventListener("DOMContentLoaded", function () {
+  // Kiểm tra trạng thái đăng nhập từ localStorage
+  const userAccount = localStorage.getItem("userLogin")
   const loginLink = document.getElementById("login-link");
   const logoutLink = document.getElementById("logout-link");
+  const accountinfo = document.getElementById("account-info-link")
 
-  if (user) {
-    loginLink.style.display = "none";
+  if (userAccount) {
+    loginLink.style.display = "inline-block";
     logoutLink.style.display = "inline-block";
+    accountinfo.style.display = "inline-block"
   } else {
     loginLink.style.display = "inline-block";
     logoutLink.style.display = "none";
+    accountinfo.style.display = "none"
   }
 
   logoutLink.addEventListener("click", function () {
-    localStorage.removeItem("user");
-    window.location.href = "auth.html";
+    localStorage.removeItem("userLogin");
+
     loginLink.style.display = "inline-block";
     logoutLink.style.display = "none";
+    accountinfo.style.display = "none"
   });
 });
 // ĐƯA LÊN ĐẾN CUỐI
@@ -168,43 +220,360 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   });
 });
-document.addEventListener("DOMContentLoaded", function () {
-  const loginLink = document.getElementById("login-link");
-  const logoutLink = document.getElementById("logout-link");
-  const accountInfoLink = document.getElementById("account-info-link");
 
-  // Kiểm tra nếu người dùng đã đăng nhập
-  const currentUser = localStorage.getItem("currentUser");
-
-  if (currentUser) {
-    loginLink.style.display = "none";
-    logoutLink.style.display = "inline-block";
-    accountInfoLink.style.display = "inline-block";
-  } else {
-    loginLink.style.display = "inline-block";
-    logoutLink.style.display = "none";
-    accountInfoLink.style.display = "none";
-  }
-
-  // Xử lý khi nhấn nút Đăng xuất
-  logoutLink.addEventListener("click", function () {
-    // Xóa thông tin người dùng khỏi localStorage
-    localStorage.removeItem("currentUser");
-
-    // Cập nhật hiển thị
-    loginLink.style.display = "inline-block";
-    logoutLink.style.display = "none";
-    accountInfoLink.style.display = "none";
-
-    // Chuyển hướng về trang đăng nhập
-    window.location.href = "auth.html";
-  });
-});
 
 // nút đóng lọc
 function closeSearchAdvanced() {
   document.querySelector(".advanced-search").classList.toggle("open");
 }
+// Đăng ký, đăng nhập
+/* ÔNG LẤY HẾT CODE NÀY ĐỔI LẠI CODE TRONG GIT HỘ TUI CÁI */
+"use strict";
 
-// Thông tin tài khoản 
+document.querySelector("#login-link").addEventListener("click", () => {
+  // Hiển thị modal
+  document.querySelector(".modal").style.display = "flex";
+  showLogin();
+});
 
+//Thông tin tài khoản
+document.querySelector("#account-info-link").addEventListener("click", () => {
+  // hien thi thong tin
+  document.querySelector(".modal1").style.display = "flex";
+})
+document.querySelector(".modal1").addEventListener("click", (event) => {
+  // Kiểm tra nếu người dùng click vào phần nền bên ngoài (không phải nội dung bên trong)
+  if (event.target.classList.contains("modal1")) {
+    document.querySelector(".modal1").style.display = "none";
+  }
+});
+//
+
+document.querySelector(".close-btn").addEventListener("click", () => {
+  // Ẩn modal khi đóng
+  document.querySelector(".modal").style.display = "none";
+  showLogin();
+});
+/*
+document.querySelector("#logout-link").addEventListener("click", () => {
+  // Ẩn modal khi đóng
+  document.querySelector(".modal").style.display = "none";
+});*/
+function showLogin() {
+  document.getElementById("login-form").style.display = "block";
+  document.getElementById("register-form").style.display = "none";
+  document.querySelector(".tab-container .tab.active-tab").classList.remove("active-tab");
+  document.querySelector(".tab-container .tab").classList.add("active-tab");
+}
+
+function showRegister() {
+  document.getElementById("login-form").style.display = "none";
+  document.getElementById("register-form").style.display = "block";
+  document.querySelector(".tab-container .tab.active-tab").classList.remove("active-tab");
+  document.querySelectorAll(".tab-container .tab")[1].classList.add("active-tab");
+}
+
+function register() {
+  const username = document.getElementById("register-username").value;
+  const fullname = document.getElementById("register-fullname").value;
+  const password = document.getElementById("register-password").value;
+  const confirmPassword = document.getElementById("confirm-password").value;
+  const phoneNumber = document.getElementById("phone-number").value;
+  let presentId = parseInt(localStorage.getItem("presentId"));
+ /* const address1 = document.getElementById("infoaddress").value ='';
+  const address2 = document.getElementById("provinces").value=0;
+  const address3 = document.getElementById("districts").value=0;
+  const address4 = document.getElementById("wards").value=0;*/
+if (fullname.length == 0) {
+  document.querySelector('.form-message-fullname').innerHTML = 'Vui lòng nhập họ vâ tên';
+  document.getElementById('register-fullname').focus();
+  return;
+} else if (fullname.length < 3) {
+  document.getElementById('register-fullname').value = '';
+  document.querySelector('.form-message-fullname').innerHTML = 'Vui lòng nhập họ và tên lớn hơn 3 kí tự';
+  return;
+} else {
+  document.querySelector('.form-message-fullname').innerHTML = '';
+}
+if (password.length == 0) {
+  document.querySelector('.form-message-password').innerHTML = 'Vui lòng nhập mật khẩu';
+  return;
+} else if (password.length < 6) {
+  document.querySelector('.form-message-password').innerHTML = 'Vui lòng nhập mật khẩu lớn hơn 6 kí tự';
+  document.getElementById('register-password').value = '';
+  return;
+} else {
+  document.querySelector('.form-message-password').innerHTML = '';
+}
+if (confirmPassword == 0) {
+  document.querySelector('.form-message-password-confi').innerHTML = 'Vui lòng nhập lại mật khẩu';
+  return;
+} else if (confirmPassword !== password) {
+  document.querySelector('.form-message-password-confi').innerHTML = 'Mật khẩu không khớp';
+  document.getElementById('confirm-password').value = '';
+  return;
+} else {
+  document.querySelector('.form-message-password-confi').innerHTML = '';
+}
+if (phoneNumber.length == 0) {
+  document.querySelector('.form-message-phone').innerHTML = 'Vui lòng nhập vào số điện thoại';
+  return;
+} else if (!/^\d{10}$/.test(phoneNumber)) {
+  document.querySelector('.form-message-phone').innerHTML = 'Vui lòng nhập vào số điện thoại 10 số';
+  document.getElementById('phone-number').value = '';
+  return;
+} else {
+  document.querySelector('.form-message-phone').innerHTML = '';
+}
+
+  if (!presentId) {
+    presentId = 10001;
+  }
+
+  if (!username || !password || !confirmPassword || !phoneNumber || !fullname /*|| !address2 || !address3 || !address4*/) {
+    alert("Vui lòng điền đầy đủ thông tin!");
+    return;
+  }
+
+  if (password !== confirmPassword) {
+    alert("Mật khẩu nhập lại không khớp!");
+    return;
+  }
+  const userAccountList = JSON.parse(localStorage.getItem("userAccountList")) || [];
+
+  const isUsernameTaken = userAccountList.some((user) => user.username === username);
+  if (isUsernameTaken) {
+    alert("Tên đăng nhập đã tồn tại!");
+    return;
+  }
+
+  const newUser = {
+    userId: presentId,
+    username,
+    fullname,
+    password,
+    phoneNumber,
+    address1:'',
+    address2:0,
+    address4:0,
+    address3:0,
+  };
+
+  userAccountList.push(newUser);
+
+  localStorage.setItem("userAccountList", JSON.stringify(userAccountList));
+  localStorage.setItem("presentId", presentId + 1);
+   // Sau khi đăng ký thành công, hiển thị thông tin người dùng
+  alert("Đăng kí thành công!");
+  showLogin();
+}
+
+function login() {
+  const username = document.getElementById("username").value;
+  const password = document.getElementById("password").value;
+
+  const userAccountList = JSON.parse(localStorage.getItem("userAccountList")) || [];
+
+  const matchedUser = userAccountList.find(
+    (user) => user.username === username && user.password === password
+  );
+
+  if (matchedUser) {
+    alert("Đăng nhập thành công!");
+    localStorage.setItem("userLogin", JSON.stringify(matchedUser));
+    localStorage.setItem("isLoggedIn", 1); // Đánh dấu trạng thái đăng nhập
+    window.location.href = "index.html";
+  } else {
+    alert("Tên đăng nhập hoặc mật khẩu không đúng!");
+  }
+}
+
+// Hàm hiển thị thông tin người dùng trong tài khoản
+function displayUserInfo(user) {
+  // Lấy các trường thông tin từ người dùng đã đăng nhập
+  document.getElementById("infoname").value = user.fullname;
+  document.getElementById("infophone").value = user.phoneNumber;
+  document.getElementById("infoemail").value = user.email;
+  document.getElementById("infoaddress").value = user.address1;
+  // Điền vào các dropdown tỉnh, quận, phường
+  document.getElementById("provinces").value = user.address2;
+  populateDistricts(); // Gọi hàm để điền quận huyện dựa trên tỉnh
+  document.getElementById("districts").value = user.address3;
+  populateWards(); // Gọi hàm để điền phường xã dựa trên quận
+  document.getElementById("wards").value = user.address4;
+  // Đặt sự kiện lưu thay đổi thông tin người dùng
+  document.getElementById("save-info-user").addEventListener("click", function() {
+      changeInformation(user);
+  });
+
+  // Đặt sự kiện thay đổi mật khẩu
+  document.getElementById("save-password").addEventListener("click", function() {
+      changePassword(user);
+  });
+}
+
+// Hàm thay đổi thông tin người dùng
+function changeInformation(user) {
+  const updatedFullname = document.getElementById("infoname").value;
+  const updatedPhone = document.getElementById("infophone").value;
+  const updatedEmail = document.getElementById("infoemail").value;
+  const updatedAddress = document.getElementById("infoaddress").value;
+  const updatedAddress2 = document.getElementById("provinces").value;
+  const updatedAddress3 = document.getElementById("districts").value;
+  const updatedAddress4 = document.getElementById("wards").value;
+
+  // Cập nhật thông tin vào đối tượng người dùng
+  user.fullname = updatedFullname;
+  user.phoneNumber = updatedPhone;
+  user.email = updatedEmail;
+  user.address1 = updatedAddress.trim();
+  user.address2 = updatedAddress2.trim();
+  user.address3 = updatedAddress3.trim();
+  user.address4 = updatedAddress4.trim();
+
+  // Lưu lại thông tin người dùng vào localStorage
+  const userAccountList = JSON.parse(localStorage.getItem("userAccountList"));
+  const index = userAccountList.findIndex((u) => u.username === user.username);
+  userAccountList[index] = user; // Cập nhật người dùng trong danh sách
+  localStorage.setItem("userAccountList", JSON.stringify(userAccountList));
+  localStorage.setItem("userLogin", JSON.stringify(user));
+
+  alert("Cập nhật thông tin thành công!");
+}
+
+// Hàm thay đổi mật khẩu
+function changePassword(user) {
+  const currentPassword = document.getElementById("password-cur-info").value;
+  const newPassword = document.getElementById("password-after-info").value;
+  const confirmPassword = document.getElementById("password-comfirm-info").value;
+
+  // Kiểm tra mật khẩu cũ và mật khẩu mới
+  if (currentPassword !== user.password) {
+      alert("Mật khẩu hiện tại không đúng!");
+      return;
+  }
+
+  if (newPassword !== confirmPassword) {
+      alert("Mật khẩu mới không khớp!");
+      return;
+  }
+
+  if (newPassword.length < 6) {
+      alert("Mật khẩu mới phải dài hơn 6 ký tự!");
+      return;
+  }
+
+  // Cập nhật mật khẩu
+  user.password = newPassword;
+
+  // Lưu lại thông tin vào localStorage
+  const userAccountList = JSON.parse(localStorage.getItem("userAccountList"));
+  const index = userAccountList.findIndex((u) => u.username === user.username);
+  userAccountList[index] = user;
+  localStorage.setItem("userAccountList", JSON.stringify(userAccountList));
+  localStorage.setItem("userLogin", JSON.stringify(user));
+
+  alert("Đổi mật khẩu thành công!");
+}
+
+// Kiểm tra và hiển thị thông tin khi trang tải
+document.addEventListener("DOMContentLoaded", function() {
+  const userLogin = JSON.parse(localStorage.getItem("userLogin"));
+  if (userLogin) {
+      displayUserInfo(userLogin); // Hiển thị thông tin người dùng
+  }
+});
+document.querySelector(".close-btn").onclick = function () {
+  document.querySelector(".login-container").style.display = "none";
+};
+
+
+// Hàm để khởi tạo các tỉnh vào dropdown
+function populateProvinces() {
+  const provinces = JSON.parse(localStorage.getItem('Tinh_TP')) || [];
+  const provincesSelect = document.getElementById('provinces');
+  
+  provincesSelect.innerHTML = '<option value="">Chọn Tỉnh / Thành phố</option>'; // Reset dropdown
+  
+  provinces.forEach(province => {
+      const option = document.createElement('option');
+      option.value = province.TinhID;
+      option.textContent = province.TinhName;
+      provincesSelect.appendChild(option);
+  });
+}
+
+// Hàm để hiển thị quận/huyện khi chọn tỉnh
+function populateDistricts() {
+  const provinceId = document.getElementById('provinces').value;
+  const districts = JSON.parse(localStorage.getItem('Quan_Huyen')) || [];
+  const districtsSelect = document.getElementById('districts');
+  
+  if (!provinceId) {
+      districtsSelect.innerHTML = '<option value="">Chọn Quận / Huyện</option>';
+      return;
+  }
+  
+  const filteredDistricts = districts.filter(district => district.TinhID === provinceId);
+  
+  districtsSelect.innerHTML = '<option value="">Chọn Quận / Huyện</option>'; // Reset dropdown
+  filteredDistricts.forEach(district => {
+      const option = document.createElement('option');
+      option.value = district.Quan_HuyenID;
+      option.textContent = district.Quan_HuyenName;
+      districtsSelect.appendChild(option);
+  });
+}
+
+// Hàm để hiển thị phường/xã khi chọn quận/huyện
+function populateWards() {
+  const districtId = document.getElementById('districts').value;
+  const wards = JSON.parse(localStorage.getItem('Phuong_Xa')) || [];
+  const wardsSelect = document.getElementById('wards');
+  
+  if (!districtId) {
+      wardsSelect.innerHTML = '<option value="">Chọn Phường / Xã</option>';
+      return;
+  }
+  
+  const filteredWards = wards.filter(ward => ward.Quan_HuyenID === districtId);
+  
+  wardsSelect.innerHTML = '<option value="">Chọn Phường / Xã</option>'; // Reset dropdown
+  filteredWards.forEach(ward => {
+      const option = document.createElement('option');
+      option.value = ward.PhuongID;
+      option.textContent = ward.PhuongName;
+      wardsSelect.appendChild(option);
+  });
+}
+
+// Hàm khởi tạo dropdown và các sự kiện
+window.onload = function() {
+  populateProvinces();
+  
+  // Gắn sự kiện onchange cho các dropdown
+  document.getElementById('provinces').addEventListener('change', populateDistricts);
+  document.getElementById('districts').addEventListener('change', populateWards);
+};
+
+// tìm kiếm drop
+// Lấy các phần tử
+const searchBar = document.querySelector('.search-bar');
+const searchDropdown = document.querySelector('#search-results');
+
+// Hiển thị dropdown khi nhấn vào search bar
+searchBar.addEventListener('click', function(event) {
+    searchDropdown.classList.toggle('show'); // Chuyển đổi lớp 'show'
+    event.stopPropagation(); // Ngăn chặn sự kiện nhấp chuột nổi bọt
+});
+
+// Ẩn dropdown khi nhấn ra ngoài
+document.addEventListener('click', function(event) {
+    if (!searchBar.contains(event.target) && !searchDropdown.contains(event.target)) {
+        searchDropdown.classList.remove('show'); // Xóa lớp 'show'
+    }
+});
+
+// Lưu thông tin người dùng
+
+// Thay đổi thông tin
